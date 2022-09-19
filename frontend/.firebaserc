@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "staging": "solvedeep",
+    "default": "solvedeep-base"
+  }
+}

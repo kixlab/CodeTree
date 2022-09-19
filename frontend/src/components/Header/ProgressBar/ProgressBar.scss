@@ -1,0 +1,66 @@
+@import '../../../shared/Common.scss';
+
+.progress-bar {
+    display: flex;
+    position: relative;
+    width: 200px;
+    height: 24px;
+    justify-content: space-around;
+    border: 1px solid $green;
+    margin-right: 15px;
+    margin-left: 90px;
+
+    .stage {
+        background: $white;
+        flex: 1;
+        position: relative;
+        border-right: 1px solid $green;
+
+        &:last-child {
+            border-right: none;
+        }
+
+        &.finished {
+            background: $green;
+            border-right: 1px solid $green-20;
+
+            &:hover {
+                background: $green-20;
+            }
+        }
+
+        &.on-going {
+            background: $blue;
+
+            &:hover {
+                background: $blue-20;
+            }
+        }
+
+        &:hover {
+            background: $gray-5;
+
+            &:after {
+                content: attr(data-tool-tip);
+                position: absolute;
+                width: auto;
+                padding: 5px;
+                top: 100%;
+                left: 0;
+                background-color: $gray-75;
+                color: $white;
+                font-size: 12px;
+                white-space: nowrap;
+                z-index: 10;
+            }
+        }
+    }
+
+    &:before {
+        position: absolute;
+        right: calc(100% + 5px);
+        font-size: 18px;
+        content: attr(data-prefix);
+        white-space: nowrap;
+    }
+}
