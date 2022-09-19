@@ -1,0 +1,154 @@
+@import '../../shared/Common.scss';
+
+.tutorial-container {
+  padding-left: 5%;
+  padding-right: 5%;
+  height: calc(100vh - #{$header-height});
+  overflow: scroll;
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-items: stretch;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    &:first-child {
+      padding-top: 25px;
+    }
+
+    &:last-child {
+      padding-bottom: 40px;
+    }
+
+    .text-container {
+      flex: 1;
+      margin-right: 15px;
+
+      .tutorial-title {
+        margin: 0;
+        padding: 0;
+        font-size: 24px;
+        color: $gray-75;
+        margin-top: 15px;
+        margin-bottom: 10px;
+      }
+
+      .tutorial-text {
+        font-size: 16px;
+        align-self: center;
+        color: $gray-50;
+        text-align: justify;
+      }
+
+      .start-button {
+        display: inline-block;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 25px;
+        padding-right: 25px;
+        background: $blue;
+        color: $white;
+        font-size: 18px;
+        font-weight: bold;
+        text-decoration: none;
+        outline: none;
+        user-select: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+        margin-left: auto;
+        margin-right: 0px;
+        border: none;
+
+        &:hover {
+          background: $blue-20;
+        }
+      }
+
+      .checkbox {
+        font-weight: bold;
+
+        label {
+          color: $gray-75;
+        }
+      }
+
+      .practice {
+        border: 1px solid $gray-15;
+        display: flex;
+        align-items: stretch;
+        flex-wrap: wrap;
+
+        .task-container {
+          height: initial;
+        }
+      }
+    }
+
+    .figure-container {
+      max-width: 500px;
+      flex: 1;
+      padding-top: 25px;
+      display: flex;
+      text-align: center;
+
+      .figure {
+        align-self: center;
+        width: calc(100% - 40px);
+        padding: 10px;
+        border: 1px solid $gray-15;
+        margin: 10px;
+        user-select: none;
+
+        img {
+          width: 100%;
+          -webkit-user-drag: none;
+        }
+
+        label {
+          font-size: 14px;
+          color: $gray-75;
+        }
+
+        &.hidden {
+          background: $gray-5;
+          position: relative;
+
+          img {
+            visibility: hidden;
+          }
+
+          &:after {
+            content: attr(data-hidden);
+            font-size: 18px;
+            color: $gray-50;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+        }
+      }
+    }
+  }
+}
+
+.tutorial-skip {
+  background: $error-red;
+  color: $white;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  font-weight: bold;
+  border: none;
+
+  &:hover {
+    background: $error-red-20;
+  }
+}

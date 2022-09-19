@@ -1,0 +1,73 @@
+{
+  "name": "code-tree",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@loadable/component": "^5.12.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/jest": "^24.0.0",
+    "@types/loadable__component": "^5.10.0",
+    "@types/node": "^12.0.0",
+    "@types/react-codemirror": "^1.0.3",
+    "immer": "^9.0.12",
+    "lodash": "^4.17.21",
+    "react": "^16.12.0",
+    "react-beautiful-dnd": "^13.1.0",
+    "react-codemirror": "^1.0.0",
+    "react-dom": "^16.12.0",
+    "react-markdown": "^8.0.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^5.0.0",
+    "react-use": "^17.3.2",
+    "sass": "^1.49.9",
+    "sass-loader": "^8.0.2",
+    "typescript": "~3.7.2"
+  },
+  "scripts": {
+    "start": "./setConfig.sh prod; react-scripts start",
+    "start:staging": "./setConfig.sh staging; react-scripts start",
+    "dev": "./setConfig.sh local; react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "type-check": "tsc --noemit",
+    "lint": "eslint"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.178",
+    "@types/react": "^16.9.22",
+    "@types/react-beautiful-dnd": "^13.1.2",
+    "@types/react-dom": "^16.9.5",
+    "@types/react-router-dom": "^5.1.3",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "firebase-tools": "^10.5.0",
+    "prettier": "2.5.1"
+  }
+}

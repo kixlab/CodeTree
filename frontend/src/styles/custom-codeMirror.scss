@@ -1,0 +1,17 @@
+.CodeMirror-lines {
+  padding: 0px;
+
+  .CodeMirror-line {
+    font-size: 22px !important;
+    background-color: transparent;
+  }
+}
+
+.ReactCodeMirror {
+  height: 100%;
+
+  .CodeMirror {
+    height: 100%;
+    background-color: transparent;
+  }
+}
