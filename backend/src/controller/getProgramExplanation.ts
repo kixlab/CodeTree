@@ -5,7 +5,7 @@ import { storageService } from '../service/storage'
 export const getProgramExplanationController = Get<GetProgramExplanationParams, GetProgramExplanationResults>(
   async ({ fileName, lectureName }, send) => {
     try {
-      const explanation = await storageService.getFile(`${lectureName}/${fileName}.explanation.txt`)
+      const explanation = await storageService.getFile(`cs101_sample_code/${lectureName}/${fileName}.explanation.txt`)
       send(200, { explanations: explanation.split('\n') })
     } catch (error) {
       send(500, {

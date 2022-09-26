@@ -5,7 +5,7 @@ import { storageService } from '../service/storage'
 export const getProblemMarkDownController = Get<GetProblemMarkDownParams, GetProblemMarkDownResults>(
   async (params, send) => {
     try {
-      const markdown = await storageService.getFile(`${params.lectureName}/${params.fileName.split('.')[0]}.prob.md`)
+      const markdown = await storageService.getFile(`${params.lectureName}/${params.fileName}/problem.md`)
       send(200, { problem: markdown })
     } catch (error) {
       send(500, {

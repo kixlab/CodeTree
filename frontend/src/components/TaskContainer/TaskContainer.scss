@@ -21,20 +21,11 @@
             padding-bottom: 20px;
             padding-left: 20px;
             padding-right: 20px;
-
-            h1 {
-                font-size: 18px;
-                font-weight: bold;
-                margin-top: 5px;
-                margin-bottom: 5px;
-                color: $gray-60;
-            }
         }
     }
 
     .submit {
         background: $blue;
-        width: 100%;
         max-width: $task-container-max-width;
         height: $submit-button-height;
         color: $white;

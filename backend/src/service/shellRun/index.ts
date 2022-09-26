@@ -6,7 +6,7 @@ class ShellRunService {
     pythonOptions: ['-I'],
   }
 
-  async runPython(code: string) {
+  async runPython(code: string): Promise<string[]> {
     let shell: PythonShell
     return Promise.race([
       new Promise<string[]>((resolve, reject) => {
@@ -17,9 +17,19 @@ class ShellRunService {
           resolve(result as string[])
         })
       }),
-      new Promise<string[]>((resolve, reject) => {
+      new Promise<string[]>((_, reject) => {
         setTimeout(() => {
           shell.terminate()
+          reject(new Error('Time limit exceeded'))
+        }, 4000)
+      }),
+    ])
+  }
+
+  async runCpp(code: string): Promise<string[]> {
+    return Promise.race([
+      new Promise<string[]>((_, reject) => {
+        setTimeout(() => {
           reject(new Error('Time limit exceeded'))
         }, 4000)
       }),

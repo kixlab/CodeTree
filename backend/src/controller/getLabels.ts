@@ -12,7 +12,7 @@ export const GetLabelsController = Get<GetLabelsParams, GetLabelsResults>(async 
       throw new Error('No subgoals data found')
     }
 
-    const codeLines = (await storageService.getFile(`test/example${problemNumber}.py`)).split('\n')
+    const codeLines = (await storageService.getFile(`cs101_sample_code/test/example${problemNumber}.py`)).split('\n')
 
     const labelsGroup = new Map<string, string[]>()
     for (const key of Object.keys(snapshot)) {
