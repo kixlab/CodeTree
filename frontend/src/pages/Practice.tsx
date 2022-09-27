@@ -4,7 +4,7 @@ import min from 'lodash/min'
 import repeat from 'lodash/repeat'
 import React, { useCallback, useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import CodeEditor from '../components/CodeEditor/CodeEditor'
+import CodeEditor from '../components/CodeEditor'
 import { CodeMirror } from '../components/CodeMirror'
 import Header from '../components/Header/Header'
 import OutputTerminal from '../components/OutputTerminal'
@@ -13,6 +13,7 @@ import ProgramRunner from '../components/ProgramRunner/ProgramRunner'
 import TaskContainer from '../components/TaskContainer/TaskContainer'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { GetProblemMarkDownParams, GetProblemMarkDownResults } from '../protocol/GetProblemMarkDown'
+import { GetProblemSkeletonParams, GetProblemSkeletonResults } from '../protocol/GetProblemSkeleton'
 import { GetProgramCodeParams, GetProgramCodeResults } from '../protocol/GetProgramCode'
 import { PostPracticeAnswerParams, PostPracticeAnswerResults } from '../protocol/PostPracticeAnswer'
 import { PostPracticeCodeParams, PostPracticeCodeResults } from '../protocol/PostPracticeCode'
@@ -36,6 +37,7 @@ function Practice(props: RouteComponentProps<MatchParams>) {
   const [outputCorrect, setOutputCorrect] = useState<boolean | null>(null)
   const [isRunning, setIsRunning] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [mode, setMode] = useState<'python' | 'javascript'>('python')
 
   const { category, problemId } = props.match.params
 
@@ -98,7 +100,7 @@ function Practice(props: RouteComponentProps<MatchParams>) {
         code,
         category,
         problemId,
-        codeType: 'python3',
+        codeType: mode,
       },
       result => {
         setIsRunning(false)
@@ -112,7 +114,7 @@ function Practice(props: RouteComponentProps<MatchParams>) {
         setOutputCorrect(false)
       }
     )
-  }, [category, code, problemId])
+  }, [category, code, mode, problemId])
 
   const submit = useCallback(() => {
     setIsSubmitting(true)
@@ -135,8 +137,23 @@ function Practice(props: RouteComponentProps<MatchParams>) {
     )
   }, [category, code, problemId, props.history])
 
+  useEffect(() => {
+    Get<GetProblemSkeletonParams, GetProblemSkeletonResults>(
+      `${SERVER_ADDRESS}/getProblemSkeleton`,
+      {
+        category,
+        problemId,
+        codeType: mode,
+      },
+      result => {
+        setCode(result.code)
+      },
+      error => window.alert(error.message)
+    )
+  }, [category, mode, problemId])
+
   return (
-    <div>
+    <>
       <Header />
       <InstructionTask
         instruction={
@@ -159,9 +176,9 @@ function Practice(props: RouteComponentProps<MatchParams>) {
             }
           />
         }
-        task={<CodeEditor code={code} onCodeChange={setCode} />}
+        task={<CodeEditor code={code} onCodeChange={setCode} mode={mode} onChangeMode={setMode} />}
       />
-    </div>
+    </>
   )
 }
 

@@ -1,11 +1,10 @@
+import { PythonSolutionTemplate, JavascriptSolutionTemplate } from '../constants/codeTemplates'
 import { Post } from '../HttpResponse'
 import { PostPracticeAnswerParams, PostPracticeAnswerResults } from '../protocol/PostPracticeAnswer'
 import { shellRunService } from '../service/shellRun'
 import { storageService } from '../service/storage'
 
 type Result = [boolean, string, string, string]
-
-const PythonSolutionTemplate = (code: string, args: string) => `${code}\n\nprint(solution(${args}))`
 
 export const postPracticeAnswerController = Post<PostPracticeAnswerParams, PostPracticeAnswerResults>(
   async ({ code, problemId, codeType, category }, send) => {
@@ -20,26 +19,21 @@ export const postPracticeAnswerController = Post<PostPracticeAnswerParams, PostP
       }
       const results: Result[] = await Promise.all(
         testCases?.map(async args => {
-          let result: string[] = []
-          let answerResult: string[] = []
-          if (codeType === 'python3') {
+          let result = ''
+          if (codeType === 'python') {
             result = await shellRunService.runPython(PythonSolutionTemplate(code, args))
-            answerResult = await shellRunService.runPython(PythonSolutionTemplate(answerCode, args))
-          } else if (codeType === 'c++') {
-            result = await shellRunService.runCpp(PythonSolutionTemplate(code, args))
-            answerResult = await shellRunService.runCpp(PythonSolutionTemplate(answerCode, args))
+          } else if (codeType === 'javascript') {
+            result = await shellRunService.runJavascript(JavascriptSolutionTemplate(code, args))
           }
+          result = result.replace(/ /g, '')
+          const answerResult = (await shellRunService.runPython(PythonSolutionTemplate(answerCode, args))).replace(
+            / /g,
+            ''
+          )
 
-          return [
-            result.toString() === answerResult.toString(),
-            result.toString(),
-            answerResult.toString(),
-            args,
-          ] as Result
+          return [result === answerResult, result, answerResult, args] as Result
         }) ?? []
       )
-
-      console.log(results)
 
       send(200, {
         output: results

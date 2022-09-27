@@ -20,7 +20,7 @@ export const postPythonCodeController = Post<PostPythonCodeParams, PostPythonCod
         }
       })()
 
-      send(200, { output: results.join('\n'), correct })
+      send(200, { output: results, correct })
     } catch (err) {
       send(200, { output: (err as { message: string }).message, correct: false })
     }

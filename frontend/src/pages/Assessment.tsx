@@ -1,6 +1,6 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import CodeEditor from '../components/CodeEditor/CodeEditor'
+import CodeEditor from '../components/CodeEditor'
 import Header from '../components/Header/Header'
 import ProblemContainer from '../components/ProblemContainer'
 import TaskContainer from '../components/TaskContainer/TaskContainer'

@@ -12,6 +12,7 @@ import { getParsonsListController } from './controller/getParsonsList'
 import { getParticipationAvailabilityController } from './controller/getParticipationAvailability'
 import { getProblemController } from './controller/getProblem'
 import { getProblemMarkDownController } from './controller/getProblemMarkDown'
+import { getProblemSkeletonController } from './controller/getProblemSkeleton'
 import { getProgramCodeController } from './controller/getProgramCode'
 import { getProgramExplanationController } from './controller/getProgramExplanation'
 import { getSkeletonCodeController } from './controller/getSkeletonCode'
@@ -57,6 +58,7 @@ app.get('/getProgramExplanation', getProgramExplanationController)
 app.get('/getAssessmentAnswers', GetAssessmentAnswersController)
 app.get('/getCodeGroups', GetCodeGroupsController)
 app.get('/getLabels', GetLabelsController)
+app.get('/getProblemSkeleton', getProblemSkeletonController)
 app.post('/postVotingChoices', postVotingChoicesController)
 app.post('/postSubgoals', postSubgoalsController)
 app.post('/postPythonCode', postPythonCodeController)

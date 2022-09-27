@@ -1,6 +1,6 @@
 export interface PostPracticeAnswerParams {
   code: string
-  codeType: 'python3' | 'c++'
+  codeType: 'python' | 'javascript'
   category: string
   problemId: string
 }
