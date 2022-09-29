@@ -21,13 +21,12 @@ jobs:
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
 
-      - name: Move to Front
-        run: cd frontend
-
       - name: Install Dependencies
+        working-directory: ./frontend
         run: npm i
         
       - name: Build...
+        working-directory: ./frontend
         run: CI=false npm run build
         
       - name: Deploy to S3
