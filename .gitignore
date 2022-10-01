@@ -12,7 +12,6 @@
 
 # production
 */build
-frontend/src/environments/Configuration.ts
 
 # misc
 .DS_Store
