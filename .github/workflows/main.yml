@@ -2,7 +2,7 @@ name: master
 
 on:
   push:
-    branches: [ main, develop, test ]
+    branches: [ main, develop, ci/cd ]
 
 jobs:
   build:
@@ -21,9 +21,18 @@ jobs:
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
 
+      - name: Setting .env.production
+        run: |
+          echo "REACT_APP_SERVER_ADDRESS=$REACT_APP_SERVER_ADDRESS" >> .env.production
+          echo "REACT_APP_PRODUCTION=$REACT_APP_PRODUCTION" >> .env.production
+          cat .env.production
+        env:
+          REACT_APP_SERVER_ADDRESS: ${{ secrets.REACT_APP_SERVER_ADDRESS }}
+          REACT_APP_PRODUCTION: ${{ secrets.REACT_APP_PRODUCTION }}
+
       - name: Install Dependencies
         working-directory: ./frontend
-        run: npm i
+        run: yarn install
         
       - name: Build...
         working-directory: ./frontend
