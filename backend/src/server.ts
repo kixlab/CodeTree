@@ -1,5 +1,7 @@
 import bodyParser from 'body-parser'
 import express from 'express'
+import morgan from 'morgan'
+import { IncomingMessage } from 'http'
 import { GetAssessmentAnswersController } from './controller/getAssessmentAnswers'
 import { GetCodeGroupsController } from './controller/getCodeGroups'
 import { getDocumentationController } from './controller/getDocumentation'
@@ -26,15 +28,28 @@ import { postPythonCodeController } from './controller/postPythonCode'
 import { postSubgoalsController } from './controller/postSubgoals'
 import { postVotingChoicesController } from './controller/postVotingChoices'
 import { cors } from './middleware/cors'
-import { requestLogger } from './middleware/requestLogger'
 import { getEnv } from './utils/getEnv'
 
 const { PORT } = getEnv()
 const app = express()
 
+// TODO: fix 이후 interface 이동
+interface Request extends IncomingMessage {
+  path: string
+  query: {
+    participantId: string
+  }
+}
+
 app.use(bodyParser.json())
-app.use(requestLogger)
 app.use(cors)
+
+morgan.token('originUrl', (req: Request) => req.path)
+morgan.token('userId', (req: Request) => req.query.participantId)
+morgan.token('label', () => `codetree-${process.env.PRODUCTION === 'true' ? 'prod' : 'dev'}`)
+// eslint-disable-next-line prettier/prettier, no-useless-escape
+app.use(morgan(`{"remote-addr"\: ":remote-addr", "method"\: ":method", "origin-url"\: ":originUrl", "url"\: ":url","status"\: ":status", "referrer"\: ":referrer", "user-agent"\: ":user-agent", "userId"\: ":userId", "label"\: ":label","duration"\: :response-time}`)
+)
 
 app.get('/getIdAndGroup', getIdAndGroupController)
 app.get('/getProgramCode', getProgramCodeController)
