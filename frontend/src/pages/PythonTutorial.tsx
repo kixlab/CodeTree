@@ -12,8 +12,10 @@ import {
   ExampleCode7,
 } from '../data/TutorialExamples'
 import { Color } from '../shared/Common'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 export default function PythonTutorial() {
+  useDocumentTitle('PythonTutorial')
   return (
     <FormatContainer>
       <h1>1. Hello, World!를 출력하는 프로그램 작성</h1>

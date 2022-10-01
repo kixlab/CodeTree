@@ -29,6 +29,7 @@ class Instruction extends React.Component<RouteComponentProps<MatchParams>, Stat
   }
 
   componentDidMount() {
+    document.title = `Instruction - CodeTree`
     if (shouldMoveStage()) {
       this.props.history.push(nextStage())
     }
