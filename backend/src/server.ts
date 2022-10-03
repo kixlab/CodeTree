@@ -47,8 +47,16 @@ app.use(cors)
 morgan.token('originUrl', (req: Request) => req.path)
 morgan.token('userId', (req: Request) => req.query.participantId)
 morgan.token('label', () => `codetree-${process.env.PRODUCTION === 'true' ? 'prod' : 'dev'}`)
-// eslint-disable-next-line prettier/prettier, no-useless-escape
-app.use(morgan(`{"remote-addr"\: ":remote-addr", "method"\: ":method", "origin-url"\: ":originUrl", "url"\: ":url","status"\: ":status", "referrer"\: ":referrer", "user-agent"\: ":user-agent", "userId"\: ":userId", "label"\: ":label","duration"\: :response-time}`)
+morgan.token('timestamp', () => {
+  const date = new Date(+new Date() + 3240 * 10000).toISOString().split('T')[0]
+  const time = new Date().toTimeString().split(' ')[0]
+
+  return `${date} ${time}`
+})
+app.use(
+  // eslint-disable-next-line prettier/prettier, no-useless-escape
+  morgan(`{"timestamp"\: ":timestamp", "remote-addr"\: ":remote-addr", "method"\: ":method", "origin-url"\: ":originUrl", "url"\: ":url","status"\: ":status", "referrer"\: ":referrer", "user-agent"\: ":user-agent", "userId"\: ":userId", "label"\: ":label","duration"\: :response-time}`,
+  )
 )
 
 app.get('/getIdAndGroup', getIdAndGroupController)
