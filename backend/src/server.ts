@@ -55,7 +55,7 @@ morgan.token('timestamp', () => {
 })
 app.use(
   // eslint-disable-next-line prettier/prettier, no-useless-escape
-  morgan(`{"timestamp"\: ":timestamp", "remote-addr"\: ":remote-addr", "method"\: ":method", "origin-url"\: ":originUrl", "url"\: ":url","status"\: ":status", "referrer"\: ":referrer", "user-agent"\: ":user-agent", "userId"\: ":userId", "label"\: ":label","duration"\: :response-time}`,
+  morgan(`{"timestamp"\: ":timestamp", "remote-addr"\: ":remote-addr", "method"\: ":method", "origin-url"\: ":originUrl", "url"\: ":url","status"\: ":status", "referrer"\: ":referrer", "user-agent"\: ":user-agent", "userId"\: ":userId", "label"\: ":label"}`,
   )
 )
 
