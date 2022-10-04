@@ -1,7 +1,8 @@
 export interface PostPracticeAnswerParams {
   code: string
-  lectureName: string
-  fileName: string
+  codeType: 'python' | 'javascript'
+  category: string
+  problemId: string
 }
 
 export interface PostPracticeAnswerResults {

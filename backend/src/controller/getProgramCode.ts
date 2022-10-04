@@ -4,7 +4,7 @@ import { storageService } from '../service/storage'
 
 export const getProgramCodeController = Get<GetProgramCodeParams, GetProgramCodeResults>(async (params, send) => {
   try {
-    const code = await storageService.getFile(`${params.lectureName}/${params.fileName}`)
+    const code = await storageService.getFile(`cs101_sample_code/${params.lectureName}/${params.fileName}`)
     send(200, { code })
   } catch (error) {
     send(500, {

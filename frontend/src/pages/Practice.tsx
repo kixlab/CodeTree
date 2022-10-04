@@ -1,80 +1,66 @@
-import React from 'react'
-import { RouteComponentProps } from 'react-router-dom'
-import styled from '@emotion/styled'
 import { css } from '@emotion/react'
-import repeat from 'lodash/repeat'
+import styled from '@emotion/styled'
 import min from 'lodash/min'
+import repeat from 'lodash/repeat'
+import React, { useCallback, useEffect, useState } from 'react'
+import { RouteComponentProps } from 'react-router-dom'
+import CodeEditor from '../components/CodeEditor'
+import { CodeMirror } from '../components/CodeMirror'
 import Header from '../components/Header/Header'
+import OutputTerminal from '../components/OutputTerminal'
+import ProblemContainer from '../components/ProblemContainer'
+import ProgramRunner from '../components/ProgramRunner/ProgramRunner'
 import TaskContainer from '../components/TaskContainer/TaskContainer'
 import { SERVER_ADDRESS } from '../environments/Configuration'
-import CodeEditor from '../components/CodeEditor/CodeEditor'
-import { PostPythonCodeParams, PostPythonCodeResults } from '../protocol/PostPythonCode'
-import OutputTerminal from '../components/OutputTerminal'
-import ProgramRunner from '../components/ProgramRunner/ProgramRunner'
-import { nextStage, getId, ID_NOT_FOUND } from '../shared/ExperimentHelper'
-import ProblemContainer from '../components/ProblemContainer'
-import { PostPracticeCodeParams, PostPracticeCodeResults } from '../protocol/PostPracticeCode'
-import { Post, Get } from '../shared/HttpRequest'
-import { getString } from '../shared/Localization'
-import { InstructionTask } from '../templates/InstructionTask'
-import { getPracticeNumber, getSubgoals } from '../shared/Utils'
-import { GetProgramCodeParams, GetProgramCodeResults } from '../protocol/GetProgramCode'
-import { Color } from '../shared/Common'
 import { GetProblemMarkDownParams, GetProblemMarkDownResults } from '../protocol/GetProblemMarkDown'
-import { CodeMirror } from '../components/CodeMirror'
+import { GetProblemSkeletonParams, GetProblemSkeletonResults } from '../protocol/GetProblemSkeleton'
+import { GetProgramCodeParams, GetProgramCodeResults } from '../protocol/GetProgramCode'
+import { PostPracticeAnswerParams, PostPracticeAnswerResults } from '../protocol/PostPracticeAnswer'
+import { PostPracticeCodeParams, PostPracticeCodeResults } from '../protocol/PostPracticeCode'
+import { Color } from '../shared/Common'
+import { getId, ID_NOT_FOUND, nextStage } from '../shared/ExperimentHelper'
+import { Get, Post } from '../shared/HttpRequest'
+import { getString } from '../shared/Localization'
+import { getSubgoals } from '../shared/Utils'
+import { InstructionTask } from '../templates/InstructionTask'
 
 interface MatchParams {
-  lecture: string
-  fileName: string
+  category: string
+  problemId: string
 }
 
-interface State {
-  problem: string
-  code: string
-  codeExample: string
-  programOutput: string
-  outputCorrect: boolean | null
-  isRunning: boolean
-  isSubmitting: boolean
-}
+function Practice(props: RouteComponentProps<MatchParams>) {
+  const [problem, setProblem] = useState('')
+  const [code, setCode] = useState('')
+  const [codeExample, setCodeExample] = useState('')
+  const [programOutput, setProgramOutput] = useState(getString('practice_terminal_output'))
+  const [outputCorrect, setOutputCorrect] = useState<boolean | null>(null)
+  const [isRunning, setIsRunning] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [mode, setMode] = useState<'python' | 'javascript'>('python')
 
-class Practice extends React.Component<RouteComponentProps<MatchParams>, State> {
-  constructor(props: RouteComponentProps<MatchParams>) {
-    super(props)
-    this.state = {
-      problem: '',
-      code: '',
-      codeExample: '',
-      programOutput: getString('practice_terminal_output'),
-      outputCorrect: null,
-      isRunning: false,
-      isSubmitting: false,
-    }
-  }
+  const { category, problemId } = props.match.params
 
-  componentDidMount() {
-    const { lecture, fileName } = this.props.match.params
+  useEffect(() => {
     Get<GetProblemMarkDownParams, GetProblemMarkDownResults>(
       `${SERVER_ADDRESS}/getProblemMarkDown`,
       {
-        lectureName: lecture,
-        fileName,
+        lectureName: category,
+        fileName: problemId,
       },
       result => {
-        this.setState({
-          problem: result.problem,
-        })
+        setProblem(result.problem)
       },
       error => window.alert(error.message)
     )
     Get<GetProgramCodeParams, GetProgramCodeResults>(
       `${SERVER_ADDRESS}/getProgramCode`,
       {
-        lectureName: lecture,
-        fileName: `example${fileName.split('-')[0].slice(-1)}.py`,
+        lectureName: category,
+        fileName: problemId,
       },
       result => {
-        const subgoals = getSubgoals(`example${fileName.split('-')[0].slice(-1)}.py`).sort((a, b) => {
+        const subgoals = getSubgoals(problemId).sort((a, b) => {
           const bMin = min(b.group) ?? 0
           const aMin = min(a.group) ?? 0
           return aMin === bMin ? a.group.length - b.group.length : bMin - aMin
@@ -87,136 +73,113 @@ class Practice extends React.Component<RouteComponentProps<MatchParams>, State> 
           lines.splice(firstLine, 0, `${repeat('\t', indentation)}# ${subgoal.label}`)
         })
 
-        this.setState({
-          codeExample: lines.join('\n'),
-        })
+        setCodeExample(lines.join('\n'))
       },
       error => window.alert(error.message)
     )
 
     window.addEventListener('beforeunload', onBeforeUnload)
-  }
 
-  componentWillUnmount() {
-    window.removeEventListener('beforeunload', onBeforeUnload)
-  }
+    return () => {
+      window.removeEventListener('beforeunload', onBeforeUnload)
+    }
+  }, [category, problemId])
 
-  onCodeChange = (code: string) => {
-    this.setState({
-      code,
-    })
-  }
-
-  run = () => {
-    if (this.state.code.trim().length <= 0) {
+  const run = useCallback(() => {
+    if (code.trim().length <= 0) {
       return
     }
 
-    this.setState({
-      isRunning: true,
-      programOutput: getString('practice_terminal_running'),
-      outputCorrect: null,
-    })
+    setIsRunning(true)
+    setProgramOutput(getString('practice_terminal_running'))
+    setOutputCorrect(null)
 
-    Post<PostPythonCodeParams, PostPythonCodeResults>(
-      `${SERVER_ADDRESS}/postPythonCode`,
+    Post<PostPracticeAnswerParams, PostPracticeAnswerResults>(
+      `${SERVER_ADDRESS}/postPracticeAnswer`,
       {
-        code: this.state.code,
-        lectureName: this.props.match.params.lecture,
-        fileName: this.props.match.params.fileName,
+        code,
+        category,
+        problemId,
+        codeType: mode,
       },
       result => {
-        this.setState({
-          isRunning: false,
-          programOutput: result.output,
-          outputCorrect: result.correct,
-        })
+        setIsRunning(false)
+        setProgramOutput(result.output)
+        setOutputCorrect(result.correct)
       },
       error => {
         console.error(error)
-        this.setState({
-          isRunning: false,
-          programOutput: 'program crashed.',
-          outputCorrect: false,
-        })
+        setIsRunning(false)
+        setProgramOutput('program crashed.')
+        setOutputCorrect(false)
       }
     )
-  }
+  }, [category, code, mode, problemId])
 
-  submit = () => {
-    this.setState({
-      isSubmitting: true,
-    })
+  const submit = useCallback(() => {
+    setIsSubmitting(true)
     Post<PostPracticeCodeParams, PostPracticeCodeResults>(
       `${SERVER_ADDRESS}/postPracticeCode`,
       {
         participantId: getId() ?? ID_NOT_FOUND,
-        lectureName: this.props.match.params.lecture,
-        fileName: this.props.match.params.fileName,
-        code: this.state.code,
+        lectureName: category,
+        fileName: problemId,
+        code,
       },
       () => {
-        this.setState(
-          {
-            isSubmitting: false,
-          },
-          () => this.props.history.push(nextStage())
-        )
+        setIsSubmitting(false)
+        props.history.push(nextStage())
       },
       error => {
-        this.setState(
-          {
-            isSubmitting: false,
-          },
-          () => window.alert(error.message)
-        )
+        window.alert(error.message)
+        setIsSubmitting(false)
       }
     )
-  }
+  }, [category, code, problemId, props.history])
 
-  render() {
-    return (
-      <div>
-        <Header />
-        <InstructionTask
-          instruction={
-            <TaskContainer
-              instruction={
-                <div>
-                  <h1>{`${getString('practice_title')} ${getPracticeNumber()}`}</h1>
-                  <div>{getString('practice_instruction')}</div>
-                  <ProblemContainer problem={this.state.problem} />
-                </div>
-              }
-              task={
-                <TaskWrapper>
-                  <TaskSubTitle>{getString('practice_code_example')}</TaskSubTitle>
-                  <CodeMirror key={this.state.codeExample} code={this.state.codeExample} />
-                  {this.state.outputCorrect !== null ? (
-                    <Result correct={this.state.outputCorrect}>
-                      {this.state.outputCorrect
-                        ? getString('practice_result_correct')
-                        : getString('practice_result_incorrect')}
-                    </Result>
-                  ) : null}
-                  <OutputTerminal output={this.state.programOutput} />
-                </TaskWrapper>
-              }
-              footer={
-                <ProgramRunner
-                  onClickRun={this.run}
-                  onSubmit={this.submit}
-                  isRunning={this.state.isRunning}
-                  isSubmitting={this.state.isSubmitting}
-                />
-              }
-            />
-          }
-          task={<CodeEditor code={this.state.code} onCodeChange={this.onCodeChange} />}
-        />
-      </div>
+  useEffect(() => {
+    Get<GetProblemSkeletonParams, GetProblemSkeletonResults>(
+      `${SERVER_ADDRESS}/getProblemSkeleton`,
+      {
+        category,
+        problemId,
+        codeType: mode,
+      },
+      result => {
+        setCode(result.code)
+      },
+      error => window.alert(error.message)
     )
-  }
+  }, [category, mode, problemId])
+
+  return (
+    <>
+      <Header />
+      <InstructionTask
+        instruction={
+          <TaskContainer
+            instruction={<ProblemContainer problem={problem} />}
+            task={
+              <TaskWrapper>
+                <TaskSubTitle>{getString('practice_code_example')}</TaskSubTitle>
+                <CodeMirror key={codeExample} code={codeExample} />
+                {outputCorrect !== null ? (
+                  <Result correct={outputCorrect}>
+                    {outputCorrect ? getString('practice_result_correct') : getString('practice_result_incorrect')}
+                  </Result>
+                ) : null}
+                <OutputTerminal output={programOutput} />
+              </TaskWrapper>
+            }
+            footer={
+              <ProgramRunner onClickRun={run} onSubmit={submit} isRunning={isRunning} isSubmitting={isSubmitting} />
+            }
+          />
+        }
+        task={<CodeEditor code={code} onCodeChange={setCode} mode={mode} onChangeMode={setMode} />}
+      />
+    </>
+  )
 }
 
 const TaskWrapper = styled.div`

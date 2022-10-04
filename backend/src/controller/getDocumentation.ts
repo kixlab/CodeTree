@@ -12,7 +12,7 @@ const openai = new OpenAIApi(configuration)
 export const getDocumentationController = Get<GetDocumentationParams, GetDocumentationResults>(
   async ({ lectureName, fileName }, send) => {
     try {
-      const code = await storageService.getFile(`${lectureName}/${fileName}`)
+      const code = await storageService.getFile(`cs101_sample_code/${lectureName}/${fileName}`)
 
       const completion = await openai.createEdit('code-davinci-edit-001', {
         instruction: 'Add documentation for each line',

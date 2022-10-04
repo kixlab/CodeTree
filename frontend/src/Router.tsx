@@ -43,7 +43,7 @@ function Router() {
         <Route exact path="/worked-example/:lecture/:fileName" component={WorkedExample} />
         <Route exact path="/label/:lecture/:fileName" component={Label} />
         <Route exact path="/vote/:lecture/:fileName" component={Vote} />
-        <Route exact path="/practice/:lecture/:fileName" component={Practice} />
+        <Route exact path="/practice/:category/:problemId" component={Practice} />
         <Route exact path="/assessment/:lecture/:fileName" component={Assessment} />
         <Route exact path="/parsons/:lecture/:fileName" component={Parsons} />
         <Route exact path="/personalized-present/:lecture/:fileName" component={PersonalizedPresent} />

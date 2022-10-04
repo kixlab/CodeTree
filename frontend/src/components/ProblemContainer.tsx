@@ -1,8 +1,7 @@
 import styled from '@emotion/styled'
-import ReactMarkdown from 'react-markdown'
 import React from 'react'
+import ReactMarkdown from 'react-markdown'
 import { Color } from '../shared/Common'
-import { getString } from '../shared/Localization'
 import { WrapLoading } from '../wrappers/WrapLoading/WrapLoading'
 
 interface Props {
@@ -24,19 +23,24 @@ const Container = styled.div`
     padding: 0.1em 0.3em;
     border-radius: 3px;
   }
-`
 
-const Title = styled.div`
-  font-weight: bold;
-  color: ${Color.Gray60};
-  font-size: 16px;
+  h1 {
+    font-size: 1.5em;
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
 `
 
 function ProblemContainer(props: Props) {
   return (
     <WrapLoading loaded={props.problem.length > 0}>
       <Container>
-        <Title>{getString('problem_container_title')}</Title>
         <ReactMarkdown>{props.problem}</ReactMarkdown>
       </Container>
     </WrapLoading>

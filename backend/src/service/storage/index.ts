@@ -7,7 +7,7 @@ class StorageService {
     return new Promise<string>((resolve, reject) => {
       this.bucket.getFiles(
         {
-          prefix: `cs101_sample_code/${path}`,
+          prefix: path,
         },
         (getFileErr, files) => {
           if (files) {
