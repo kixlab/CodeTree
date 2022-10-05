@@ -3,6 +3,8 @@ name: master
 on:
   push:
     branches: [ main, develop, ci/cd ]
+    paths:
+        - ./frontend/**
 
 jobs:
   build:
@@ -33,7 +35,7 @@ jobs:
 
       - name: Install Dependencies
         working-directory: ./frontend
-        run: yarn install
+        run: yarn install --frozen-lockfile
         
       - name: Build...
         working-directory: ./frontend
