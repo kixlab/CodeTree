@@ -37,7 +37,7 @@ jobs:
         
       - name: Build...
         working-directory: ./frontend
-        run: CI=false npm run build
+        run: CI=false yarn build
         
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
