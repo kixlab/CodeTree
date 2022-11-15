@@ -3,6 +3,7 @@ import express from 'express'
 import { GetAssessmentAnswersController } from './controller/getAssessmentAnswers'
 import { GetCodeGroupsController } from './controller/getCodeGroups'
 import { getDocumentationController } from './controller/getDocumentation'
+import { getHealthController } from './controller/getHealth'
 import { getIdAndGroupController } from './controller/getIdAndGroup'
 import { GetLabelsController } from './controller/getLabels'
 import { getNewSubgoalTreeController } from './controller/getNewSubgoalTree'
@@ -36,6 +37,7 @@ app.use(bodyParser.json())
 app.use(requestLogger)
 app.use(cors)
 
+app.get('/getHealth', getHealthController)
 app.get('/getIdAndGroup', getIdAndGroupController)
 app.get('/getProgramCode', getProgramCodeController)
 app.get('/getProblem', getProblemController)

@@ -2,9 +2,9 @@ name: master
 
 on:
   push:
-    branches: [ main, develop, ci/cd ]
+    branches: [ main, ci/cd ]
     paths:
-        - ./frontend/**
+        - frontend/**
 
 jobs:
   build:
@@ -36,11 +36,11 @@ jobs:
       - name: Install Dependencies
         working-directory: ./frontend
         run: yarn install --frozen-lockfile
-        
+
       - name: Build...
         working-directory: ./frontend
         run: CI=false yarn build
-        
+
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:

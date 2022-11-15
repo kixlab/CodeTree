@@ -1,0 +1,70 @@
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ main, ci/cd ]
+    paths:
+        - backend/**
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - name: Checkout source code.
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: create env file
+        working-directory: ./backend
+        run: |
+          touch .env
+          cat << EOF >> .env
+          ${{ secrets.ENV }}
+
+      - name: Cache node modules # node modules 캐싱
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+
+      - name: Install Dependencies
+        working-directory: ./backend
+        run: npm install
+
+      - name: zip create
+        working-directory: ./backend
+        run: zip -qq -r back.zip ./
+        shell: bash
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Upload to S3 # Upload build file to S3
+        working-directory: ./backend
+        run: aws s3 cp ./back.zip s3://${{ secrets.DEV_AWS_S3_BUCKET }}/public/
+
+      - name: Deploy # Deploy to EC2
+        working-directory: ./backend
+        run: aws deploy create-deployment
+          --application-name codetree-ec2-deploy
+          --deployment-config-name CodeDeployDefault.AllAtOnce
+          --deployment-group-name deploy-group
+          --s3-location bucket=${{ secrets.DEV_AWS_S3_BUCKET }},key=public/back.zip,bundleType=zip
