@@ -14,6 +14,7 @@ const Container = styled.div`
   background: ${Color.Gray85};
   flex: 1;
   min-height: 10vh;
+  white-space: pre-line;
 `
 
 function OutputTerminal(props: Props) {

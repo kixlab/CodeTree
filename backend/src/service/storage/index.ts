@@ -25,6 +25,21 @@ class StorageService {
       )
     })
   }
+
+  async getFiles(path: string) {
+    const [files] = await this.bucket.getFiles({
+      prefix: path,
+    })
+
+    return Promise.all(
+      files
+        .filter(file => file.name !== path)
+        .map(async file => {
+          const [content] = await file.download()
+          return content.toString('utf8')
+        })
+    )
+  }
 }
 
 export const storageService = new StorageService()
