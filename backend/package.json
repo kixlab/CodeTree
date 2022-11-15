@@ -6,11 +6,13 @@
     "type-check": "tsc --noEmit",
     "start": "npm run build && node -r dotenv/config build/server.js dotenv_config_path=environments/.env.production",
     "start:staging": "npm run build && node -r dotenv/config build/server.js dotenv_config_path=environments/.env.development",
+    "start:deploy": "npm run build && node -r dotenv/config build/server.js dotenv_config_path=.env",
     "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node -r dotenv/config src/server.ts dotenv_config_path=environments/.env.development",
     "pm2:restart:staging": "npx pm2 restart staging",
     "pm2:restart:prod": "npx pm2 restart prod",
     "pm2:start:staging": "npx pm2 --name staging start npm -- run 'start:staging'",
-    "pm2:start:prod": "npx pm2 --name prod start npm -- run 'start'"
+    "pm2:start:prod": "npx pm2 --name prod start npm -- run 'start'",
+    "deploy": "npx pm2 --name codetree-prod start npm -- run 'start:deploy' -i 0"
   },
   "engines": {
     "node": "14"

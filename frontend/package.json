@@ -17,6 +17,7 @@
     "@types/node": "^12.0.0",
     "@types/react-codemirror": "^1.0.3",
     "@uiw/react-codemirror": "^4.12.3",
+    "env-cmd": "^10.1.0",
     "immer": "^9.0.12",
     "lodash": "^4.17.21",
     "react": "^16.12.0",
@@ -31,9 +32,10 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "./setConfig.sh prod; react-scripts start",
-    "start:staging": "./setConfig.sh staging; react-scripts start",
-    "dev": "./setConfig.sh local; react-scripts start",
+    "start": "react-scripts start",
+    "start:staging": "env-cmd -f .env.staging react-scripts start",
+    "start:production": "env-cmd -f .env.production react-scripts start",
+    "dev": "env-cmd -f .env react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
