@@ -1,10 +1,10 @@
-export const PythonSolutionTemplate = (code: string, args: string) => `
+export const PythonSolutionTemplate = (code: string, ...args: string[]) => `
 ${code}
 
-print(solution(${args}))
+print(solution(${args.join(',')}))
 `
 
-export const CppSolutionTemplate = (code: string, args: string) => `
+export const CppSolutionTemplate = (code: string, ...args: string[]) => `
 #include <iostream>
 #include <vector>
 #include <boost/assign/std/vector.hpp>
@@ -22,8 +22,8 @@ int main()
 }
 `
 
-export const JavascriptSolutionTemplate = (code: string, args: string) => `
+export const JavascriptSolutionTemplate = (code: string, ...args: string[]) => `
 ${code}
 
-console.log(solution(${args}))
+console.log(solution(${args.join(', ')}))
 `
