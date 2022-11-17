@@ -71,6 +71,7 @@ function Practice(props: RouteComponentProps<MatchParams>) {
         category,
         problemId,
         codeType: mode,
+        participantId: getId() ?? ID_NOT_FOUND,
       },
       result => {
         setIsRunning(false)

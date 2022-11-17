@@ -1,14 +1,20 @@
 import { PythonSolutionTemplate, JavascriptSolutionTemplate } from '../constants/codeTemplates'
+import { SetData2 } from '../database/DataBaseRef'
 import { Post } from '../HttpResponse'
-import { PostPracticeAnswerParams, PostPracticeAnswerResults } from '../protocol/PostPracticeAnswer'
+import { PostPracticeAnswerParams, PostPracticeAnswerResults, PracticeCode } from '../protocol/PostPracticeAnswer'
 import { shellRunService } from '../service/shellRun'
 import { storageService } from '../service/storage'
 
 type Result = [boolean, string, string, string]
 
 export const postPracticeAnswerController = Post<PostPracticeAnswerParams, PostPracticeAnswerResults>(
-  async ({ code, problemId, codeType, category }, send) => {
+  async ({ code, problemId, codeType, category, participantId }, send) => {
     try {
+      await SetData2<PracticeCode>(
+        `/result/${category}/${problemId}/${participantId}/${Date.now()}`,
+        { code }
+      )
+
       const answerCode = await storageService.getFile(`${category}/${problemId}/solution.py`)
       if (!answerCode) {
         throw new Error('비교할 정답 파일을 불러올 수 없습니다.')
