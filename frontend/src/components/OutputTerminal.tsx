@@ -12,9 +12,8 @@ const Container = styled.div`
   font-family: monospace;
   font-size: 14px;
   background: ${Color.Gray85};
-  flex: 1;
-  min-height: 10vh;
   white-space: pre-line;
+  overflow-x: auto;
 `
 
 function OutputTerminal(props: Props) {
