@@ -43,7 +43,7 @@ export const postPracticeAnswerController = Post<PostPracticeAnswerParams, PostP
       const score = results.reduce((prev, cur) => (cur[0] ? prev + 1 : prev), 0)
 
       send(200, {
-        output: `${score}\n${results
+        output: `${score}/${results.length}\n${results
           .filter(r => r[0] === false)
           .map(r => {
             return `입력: ${r[3]}\n출력: ${r[1]}\n기대출력: ${r[2]}\n`
