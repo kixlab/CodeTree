@@ -6,6 +6,7 @@ import { getDocumentationController } from './controller/getDocumentation'
 import { getHealthController } from './controller/getHealth'
 import { getIdAndGroupController } from './controller/getIdAndGroup'
 import { GetLabelsController } from './controller/getLabels'
+import { getMyProgramCodeController } from './controller/getMyProgramCode'
 import { getNewSubgoalTreeController } from './controller/getNewSubgoalTree'
 import { getParsonsListController } from './controller/getParsonsList'
 import { getParticipationAvailabilityController } from './controller/getParticipationAvailability'
@@ -39,6 +40,7 @@ app.use(cors)
 
 app.get('/getHealth', getHealthController)
 app.get('/getIdAndGroup', getIdAndGroupController)
+app.get('/getMyProgramCode', getMyProgramCodeController)
 app.get('/getProgramCode', getProgramCodeController)
 app.get('/getProblem', getProblemController)
 app.get('/getProblemMarkDown', getProblemMarkDownController)
