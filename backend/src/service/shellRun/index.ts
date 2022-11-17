@@ -9,7 +9,7 @@ class ShellRunService {
   private async run(
     code: string,
     runner: typeof c | typeof cpp | typeof node | typeof python,
-    tle = 4000
+    tle = 10_000
   ): Promise<string> {
     return Promise.race([
       new Promise<string>((resolve, reject) => {
