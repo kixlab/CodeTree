@@ -2,11 +2,11 @@ name: master
 
 on:
   push:
-    branches: [ main, ci/cd ]
+    branches: [ main, develop ]
     paths:
         - frontend/**
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
     paths:
         - frontend/**
 
