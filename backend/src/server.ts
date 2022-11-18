@@ -24,6 +24,7 @@ import { postParticipantFinishedController } from './controller/postParticipantF
 import { postParticipantProgressController } from './controller/postParticipantProgress'
 import { postPracticeAnswerController } from './controller/postPracticeAnswer'
 import { postPracticeCodeController } from './controller/postPracticeCode'
+import { postPracticeRunController } from './controller/postPracticeRun'
 import { postPythonCodeController } from './controller/postPythonCode'
 import { postSubgoalsController } from './controller/postSubgoals'
 import { postVotingChoicesController } from './controller/postVotingChoices'
@@ -64,6 +65,7 @@ app.post('/postAssessmentCode', postAssessmentCodeController)
 app.post('/postParsonsAnswer', postParsonsAnswerController)
 app.post('/postParticipantProgress', postParticipantProgressController)
 app.post('/postParticipantFinished', postParticipantFinishedController)
+app.post('/postPracticeRun', postPracticeRunController)
 app.post('/postPracticeAnswer', postPracticeAnswerController)
 
 // https.createServer(options, app).listen(PORT)
