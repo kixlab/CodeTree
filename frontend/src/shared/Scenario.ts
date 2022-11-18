@@ -30,11 +30,6 @@ export const SCENARIO: Stage[] = [
     timeLimit: 180,
   },
   {
-    name: getString('progress_bar_stage_pretest'),
-    url: '/pretest',
-    timeLimit: 300,
-  },
-  {
     name: getString('progress_bar_stage_training'),
     isVariable: true,
     url: [
@@ -75,57 +70,6 @@ export const SCENARIO: Stage[] = [
   {
     name: `${getString('progress_bar_stage_practice')} 2`,
     url: '/practice/test/practice2-1.py',
-    timeLimit: 300,
-  },
-  {
-    name: `${getString('progress_bar_stage_worked_example')} 3`,
-    isVariable: true,
-    url: [
-      { group: 'A', url: '/worked-example/test/example3.py' },
-      { group: 'B', url: '/label/test/example3.py' },
-      { group: 'C', url: '/vote/test/example3.py' },
-    ],
-    canRevisit: true,
-    timeLimit: 0,
-  },
-  {
-    name: `${getString('progress_bar_stage_practice')} 3`,
-    url: '/practice/test/practice3-1.py',
-    timeLimit: 300,
-  },
-  {
-    name: getString('progress_bar_stage_cognitive'),
-    url: '/cognitive',
-    timeLimit: 0,
-  },
-  {
-    name: `${getString('progress_bar_stage_assessment')} 1`,
-    url: '/assessment/test/assessment1.py',
-    timeLimit: 300,
-  },
-  {
-    name: `${getString('progress_bar_stage_assessment')} 2`,
-    url: '/assessment/test/assessment2.py',
-    timeLimit: 300,
-  },
-  {
-    name: `${getString('progress_bar_stage_assessment')} 3`,
-    url: '/assessment/test/assessment3.py',
-    timeLimit: 300,
-  },
-  {
-    name: `${getString('progress_bar_stage_assessment')} 4`,
-    url: '/assessment/test/assessment4.py',
-    timeLimit: 300,
-  },
-  {
-    name: `${getString('progress_bar_stage_assessment')} 5`,
-    url: '/parsons/test/assessment5.py',
-    timeLimit: 300,
-  },
-  {
-    name: getString('progress_bar_stage_posttest'),
-    url: '/posttest',
     timeLimit: 300,
   },
   {
