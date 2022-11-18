@@ -30,6 +30,7 @@ function Practice(props: RouteComponentProps<MatchParams>) {
   const [programOutput, setProgramOutput] = useState(getString('practice_terminal_output'))
   const [outputCorrect, setOutputCorrect] = useState<boolean | null>(null)
   const [isRunning, setIsRunning] = useState(false)
+  const [isJudging, setIsJudging] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [mode, setMode] = useState<'python' | 'javascript'>('python')
 
@@ -65,7 +66,7 @@ function Practice(props: RouteComponentProps<MatchParams>) {
     setOutputCorrect(null)
 
     Post<PostPracticeAnswerParams, PostPracticeAnswerResults>(
-      `${SERVER_ADDRESS}/postPracticeAnswer`,
+      `${SERVER_ADDRESS}/postPracticeRun`,
       {
         code,
         category,
@@ -81,6 +82,38 @@ function Practice(props: RouteComponentProps<MatchParams>) {
       error => {
         console.error(error)
         setIsRunning(false)
+        setProgramOutput('program crashed.')
+        setOutputCorrect(false)
+      }
+    )
+  }, [category, code, mode, problemId])
+
+  const judge = useCallback(() => {
+    if (code.trim().length <= 0) {
+      return
+    }
+
+    setIsJudging(true)
+    setProgramOutput(getString('practice_terminal_running'))
+    setOutputCorrect(null)
+
+    Post<PostPracticeAnswerParams, PostPracticeAnswerResults>(
+      `${SERVER_ADDRESS}/postPracticeAnswer`,
+      {
+        code,
+        category,
+        problemId,
+        codeType: mode,
+        participantId: getId() ?? ID_NOT_FOUND,
+      },
+      result => {
+        setIsJudging(false)
+        setProgramOutput(result.output)
+        setOutputCorrect(result.correct)
+      },
+      error => {
+        console.error(error)
+        setIsJudging(false)
         setProgramOutput('program crashed.')
         setOutputCorrect(false)
       }
@@ -141,7 +174,14 @@ function Practice(props: RouteComponentProps<MatchParams>) {
               </TaskWrapper>
             }
             footer={
-              <ProgramRunner onClickRun={run} onSubmit={submit} isRunning={isRunning} isSubmitting={isSubmitting} />
+              <ProgramRunner
+                onClickRun={run}
+                onJudging={judge}
+                onSubmit={submit}
+                isRunning={isRunning}
+                isJudging={isJudging}
+                isSubmitting={isSubmitting}
+              />
             }
           />
         }

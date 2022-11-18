@@ -1,10 +1,11 @@
 @import '../../shared/Common.scss';
 
 .program-runner {
+    display: flex;
 
     @mixin runner-button {
         height: $submit-button-height;
-        width: 50%;
+        flex: 1;
         outline: none;
         font-weight: bold;
         border: none;
@@ -16,6 +17,21 @@
     }
 
     .run {
+        @include runner-button;
+        background: $gray-60;
+        border-right: 1px solid $gray-30;
+
+        &:hover {
+            background: $gray-75;
+        }
+
+        &:disabled {
+            background: $gray-30;
+            cursor: not-allowed;
+        }
+    }
+
+    .judge {
         @include runner-button;
         background: $green-20;
         border-right: 1px solid $gray-30;

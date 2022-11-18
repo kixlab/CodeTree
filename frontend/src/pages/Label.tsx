@@ -7,7 +7,6 @@ import { HierarchyVisualizer } from '../components/HierarchyVisualizer'
 import ProblemContainer from '../components/ProblemContainer'
 import { SubgoalContainer } from '../components/SubgoalContainer'
 import TaskContainer from '../components/TaskContainer/TaskContainer'
-import { useCode } from '../hooks/useCode'
 import { useExplanation } from '../hooks/useExplanation'
 import { useGroupSubgoals } from '../hooks/useGroupSubgoals'
 import { useLabelSubmit } from '../hooks/useLabelSubmit'
@@ -16,6 +15,8 @@ import { getString } from '../shared/Localization'
 import { getExampleNumber } from '../shared/Utils'
 import { InstructionTask } from '../templates/InstructionTask'
 import { LinearLayout } from '../templates/LinearLayout'
+import { useMyCode } from '../hooks/useMyCode'
+import { getId, ID_NOT_FOUND } from '../shared/ExperimentHelper'
 
 interface MatchParams {
   lecture: string
@@ -55,7 +56,7 @@ function useOnExitAlert() {
 function Label(props: RouteComponentProps<MatchParams>) {
   const { lecture, fileName } = props.match.params
   const problem = useProblem(lecture, fileName)
-  const code = useCode(lecture, fileName)
+  const code = useMyCode(lecture, fileName, getId() ?? ID_NOT_FOUND)
   const { explanations } = useExplanation(lecture, fileName)
   const {
     addSubgoal,

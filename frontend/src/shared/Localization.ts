@@ -123,43 +123,43 @@ const Localiztion: Dictionary = {
     en: 'Learn Subgoals',
   },
   tutorial_subgoal_explanation1: {
-    ko: `수학 문제나 프로그래밍 문제를 풀 때 예제의 풀이를 꼼꼼히 이해하지 않고 그대로 가져다 쓴 경험이 모두 한 번쯤은 있을 겁니다. 
+    ko: `수학 문제나 프로그래밍 문제를 풀 때 예제의 풀이를 꼼꼼히 이해하지 않고 그대로 가져다 쓴 경험이 모두 한 번쯤은 있을 겁니다.
             하지만 이렇게 문제를 풀 경우, 문제 풀이가 잘 기억나지 않을 뿐더러 비슷한 유형의 다른 문제를 맞닥뜨렸을 때 풀이를 문제에 맞게 어떻게 고쳐야 하는지 몰라 새로운 문제들을 못 푸는 경우가 많습니다.
-            선행 연구에 따르면, 예제를 공부할 때 예제의 각 풀이 과정이 어떤 목적을 가지는지, 또 전체 풀이 과정에서 어떠한 역할을 하는지 이해함으로써 새로운 문제를 풀 때 기존의 풀이를 알맞게 고쳐 풀 수 있게 되고, 
+            선행 연구에 따르면, 예제를 공부할 때 예제의 각 풀이 과정이 어떤 목적을 가지는지, 또 전체 풀이 과정에서 어떠한 역할을 하는지 이해함으로써 새로운 문제를 풀 때 기존의 풀이를 알맞게 고쳐 풀 수 있게 되고,
             나아가 새로운 문제로의 "전이"가 더 잘 일어납니다. 하위 목표란 이렇듯 학습자가 학습의 전이를 위해 배워야 할 예제의 담긴 각 풀이 과정의 목표를 의미합니다.
       `,
     en: ``,
   },
   tutorial_subgoal_explanation2: {
-    ko: `예를 들어 오른쪽 그림과 같이 방정식 2x + 4 = 6x + 10을 푼다고 할 때, 그림과 같이 변수와 수를 이항하는 여러 단계를 밟습니다. 
+    ko: `예를 들어 오른쪽 그림과 같이 방정식 2x + 4 = 6x + 10을 푼다고 할 때, 그림과 같이 변수와 수를 이항하는 여러 단계를 밟습니다.
             여기서 각 단계들을 "변수를 같은 변으로 모으기", "양변 정리하기", "변수의 계수를 1로 만들기"와 같은 목표들로 묶어,
-            문제 풀이 과정을 크게 세 부분으로 나눌 수 있습니다. 하위 목표를 기준으로 문제 풀이를 이해하면, 복잡한 문제 풀이의 구조도 쉽게 이해할 수 있고, 
-            또 연관된 문제를 풀 때도 풀이의 어느 부분을 고쳐야 하는지 더 쉽게 파악할 수 있습니다. 하위 목표 학습법은 이렇듯 수학 또는 프로그래밍 예제를 공부할 때 
+            문제 풀이 과정을 크게 세 부분으로 나눌 수 있습니다. 하위 목표를 기준으로 문제 풀이를 이해하면, 복잡한 문제 풀이의 구조도 쉽게 이해할 수 있고,
+            또 연관된 문제를 풀 때도 풀이의 어느 부분을 고쳐야 하는지 더 쉽게 파악할 수 있습니다. 하위 목표 학습법은 이렇듯 수학 또는 프로그래밍 예제를 공부할 때
             학습자가 예제의 각 과정이 가지는 하위 목표를 스스로 설명해보는 활동을 통해 예제가 가지는 하위 목표 구조를 이해하고 다른 문제로 더 쉽게 전이할 수 있도록 돕는 학습법입니다.`,
     en: ``,
   },
   tutorial_subgoal_explanation3: {
-    ko: `앞으로의 실험에서 참가자는 예시 코드에 존재하는 하위 목표들을 설명해보는 활동을 통해 찾는 활동을 통해 while 문을 사용법을 익히게 됩니다. 
-            이 과정에서 참가자는 주어진 예시 코드에서 하위 목표를 가장 올바른 문구를 보기에서 고르거나 직접 작성합니다. 
+    ko: `앞으로의 실험에서 참가자는 예시 코드에 존재하는 하위 목표들을 설명해보는 활동을 통해 찾는 활동을 통해 while 문을 사용법을 익히게 됩니다.
+            이 과정에서 참가자는 주어진 예시 코드에서 하위 목표를 가장 올바른 문구를 보기에서 고르거나 직접 작성합니다.
             올바른 하위 목표 문구는 "~를 ~하기"와 같은 형태로 문제 해결 과정을 단계별로 묶어 설명해야 합니다.
             아래 3가지 연습 활동을 통해 하위 목표 학습법을 간단히 경험해보고 올바른 하위 목표가 어떤 것인지 익혀보세요.`,
-    en: `While you are learning by looking at code samples, you will be asked 
-            to provide your own subgoal labels for the examples that you receive. 
-            To do this, you will be asked to identify the purpose of groups of steps 
-            in the examples (label the subgoals). Good subgoal labels are action-based 
-            phrases (i.e. similarly to imperative sentences like "Close the door," 
+    en: `While you are learning by looking at code samples, you will be asked
+            to provide your own subgoal labels for the examples that you receive.
+            To do this, you will be asked to identify the purpose of groups of steps
+            in the examples (label the subgoals). Good subgoal labels are action-based
+            phrases (i.e. similarly to imperative sentences like "Close the door,"
             or "Press the button"); they tell the problem solver what to do next.`,
   },
   tutorial_subgoal_explanation3_vote: {
-    ko: `앞으로의 실험에서 참가자는 예시 코드에 존재하는 하위 목표들을 설명해보는 활동을 통해 찾는 활동을 통해 while 문을 사용법을 익히게 됩니다. 
-            이 과정에서 참가자는 주어진 예시 코드에서 하위 목표를 가장 올바른 문구를 보기에서 고르거나 직접 작성합니다. 
+    ko: `앞으로의 실험에서 참가자는 예시 코드에 존재하는 하위 목표들을 설명해보는 활동을 통해 찾는 활동을 통해 while 문을 사용법을 익히게 됩니다.
+            이 과정에서 참가자는 주어진 예시 코드에서 하위 목표를 가장 올바른 문구를 보기에서 고르거나 직접 작성합니다.
             올바른 하위 목표 문구는 문제 해결 과정을 단계별로 묶어 설명하며, 비슷한 유형의 문제에도 적용될 수 있도록 특정 문제에 국한된 정보를 최대한 배제합니다.
             아래 2가지 연습 활동을 통해 하위 목표 학습법을 간단히 경험하고 익혀보세요.`,
-    en: `While you are learning by looking at code samples, you will be asked 
-            to provide your own subgoal labels for the examples that you receive. 
-            To do this, you will be asked to identify the purpose of groups of steps 
-            in the examples (label the subgoals). Good subgoal labels are action-based 
-            phrases (i.e. similarly to imperative sentences like "Close the door," 
+    en: `While you are learning by looking at code samples, you will be asked
+            to provide your own subgoal labels for the examples that you receive.
+            To do this, you will be asked to identify the purpose of groups of steps
+            in the examples (label the subgoals). Good subgoal labels are action-based
+            phrases (i.e. similarly to imperative sentences like "Close the door,"
             or "Press the button"); they tell the problem solver what to do next.`,
   },
   tutorial_practice_title: {
@@ -179,21 +179,21 @@ const Localiztion: Dictionary = {
     en: '',
   },
   tutorial_practice1_instruction: {
-    ko: `위에서 소개한 하위 목표 예시를 참고하여, 다음 풀이 과정의 단계들을 왼쪽에 나열된 
+    ko: `위에서 소개한 하위 목표 예시를 참고하여, 다음 풀이 과정의 단계들을 왼쪽에 나열된
             하위 목표와 연관지어 분류하고 묶어보세요. 먼저, 나열된 하위 목표 중 하나를 선택하고,
             해당 하위 목표를 가지는 풀이 과정 단계를 선택하세요.`,
-    en: `Group and label the steps of the following example using the same 
-            subgoal labels from Figure 1. You can label steps by first clicking 
-            one of the subgoal labels below and then putting checkmarks on the 
+    en: `Group and label the steps of the following example using the same
+            subgoal labels from Figure 1. You can label steps by first clicking
+            one of the subgoal labels below and then putting checkmarks on the
             steps that are applicable.`,
   },
   tutorial_practice2_instruction: {
     ko: `이번에는 직접 하위 목표를 작성해보세요. 아래의 입력창을 선택하면, 작성해야할 하위 목표와
             관련된 풀이 단계들이 오른쪽에 표시됩니다. 지정된 풀이 단계들을 아우를 수 있는 하위 목표를
             "~를 ~하기" 형태로 작성해보세요.`,
-    en: `For this order of operations problem, create subgoal labels for 
-            each group of steps (by labeling each group of steps with its purpose). 
-            You can create labels by clicking one of the text input boxes and fill 
+    en: `For this order of operations problem, create subgoal labels for
+            each group of steps (by labeling each group of steps with its purpose).
+            You can create labels by clicking one of the text input boxes and fill
             in it. Grouping of steps will appear once you click a box.`,
   },
   tutorial_practice3_instruction: {
@@ -222,27 +222,27 @@ const Localiztion: Dictionary = {
     en: 'Start subgoal learning',
   },
   tutorial_start_instruction: {
-    ko: `간단한 수학 풀이에서 하위 목표에 따라 풀이 단계를 분류하고 하위 목표를 직접 작성해 봤으니, 
-            이제 조금 더 복잡한 프로그램 코드에서 하위 목표를 찾으며 while 문을 배워보는 활동을 시작합니다. 
-            이 활동에서 주어지는 코드들은 모두 같은 하위 목표를 가지고 있지만, 모두 같은 문구로 설명되지는 않을 
-            수 있습니다. 주어진 문제와 코드에 맞게 문구를 작성해보세요. 또한, 이 활동에서는 방금 전 위에서 사용한 
-            인터페이스와 비슷한 인터페이스를 이용해 하위 목표를 찾습니다. 새 인터페이스에서는 참가자가 하위 목표를 
-            더 자유롭게 정의할 수 있도록 하위 목표를 더 추가하거나 제거할 수 있는 기능이 추가됩니다. 
+    ko: `간단한 수학 풀이에서 하위 목표에 따라 풀이 단계를 분류하고 하위 목표를 직접 작성해 봤으니,
+            이제 조금 더 복잡한 프로그램 코드에서 하위 목표를 찾으며 while 문을 배워보는 활동을 시작합니다.
+            이 활동에서 주어지는 코드들은 모두 같은 하위 목표를 가지고 있지만, 모두 같은 문구로 설명되지는 않을
+            수 있습니다. 주어진 문제와 코드에 맞게 문구를 작성해보세요. 또한, 이 활동에서는 방금 전 위에서 사용한
+            인터페이스와 비슷한 인터페이스를 이용해 하위 목표를 찾습니다. 새 인터페이스에서는 참가자가 하위 목표를
+            더 자유롭게 정의할 수 있도록 하위 목표를 더 추가하거나 제거할 수 있는 기능이 추가됩니다.
             이 페이지에서 소개한 하위 목표를 충분히 이해했다면, "학습 시작"을 눌러주세요.`,
-    en: `Now that you have some practice applying and creating subgoal labels, 
-            it is time to make subgoal labels for solving problems using a loop. 
-            The examples that you will be given all have the same subgoals, but 
-            this does not mean that you have to stick to the subgoal labels that 
-            you create in the first example. Please feel free to update your subgoal 
-            labels as you learn more about using loops. For this task, you will use an 
-            interface that is similar to the one you used above but with more functionalities, 
-            such as adding/deleting subgoals. If you are ready to start a real task, 
+    en: `Now that you have some practice applying and creating subgoal labels,
+            it is time to make subgoal labels for solving problems using a loop.
+            The examples that you will be given all have the same subgoals, but
+            this does not mean that you have to stick to the subgoal labels that
+            you create in the first example. Please feel free to update your subgoal
+            labels as you learn more about using loops. For this task, you will use an
+            interface that is similar to the one you used above but with more functionalities,
+            such as adding/deleting subgoals. If you are ready to start a real task,
             press "Start Task".`,
   },
   tutorial_vote_start_instruction: {
-    ko: `이제 조금 더 복잡한 Python 코드 예제에서 하위 목표를 찾으며 while 문의 사용법을 배워봅니다. 
-            위에서 사용한 인터페이스를 사용하여 코드 예제의 각 줄의 하위 목표를 올바르게 설명한 보기를 고르거나, 더 좋은 하위 목표가 생각난다면 직접 작성해보세요. 
-            또한, 연습 활동에서는 정답에 대한 해설이 제공되었으나, 이후 하위 목표 학습 활동에서는 실험 설계상 정답/오답만 표기될 뿐 해설이 제공되지 않습니다. 
+    ko: `이제 조금 더 복잡한 Python 코드 예제에서 하위 목표를 찾으며 while 문의 사용법을 배워봅니다.
+            위에서 사용한 인터페이스를 사용하여 코드 예제의 각 줄의 하위 목표를 올바르게 설명한 보기를 고르거나, 더 좋은 하위 목표가 생각난다면 직접 작성해보세요.
+            또한, 연습 활동에서는 정답에 대한 해설이 제공되었으나, 이후 하위 목표 학습 활동에서는 실험 설계상 정답/오답만 표기될 뿐 해설이 제공되지 않습니다.
             이 페이지에서 소개한 하위 목표 학습법과 인터페이스 사용법 충분히 숙지했다면, 아래의 "학습 시작하기"를 눌러주세요.`,
     en: ``,
   },
@@ -294,12 +294,12 @@ const Localiztion: Dictionary = {
     en: 'Verbal Analogies',
   },
   verbal_analogy_learn_content: {
-    ko: `단어 유추 테스트(verbal analogy test)는 개념간의 관계를 이해하는 데 도움을 주는 연습입니다. 
-            단어 유추는 각종 시험에서 인지능력을 평가하는 데 사용되어 왔으나, 최근에는 고용시장 등에서 지원자의 
+    ko: `단어 유추 테스트(verbal analogy test)는 개념간의 관계를 이해하는 데 도움을 주는 연습입니다.
+            단어 유추는 각종 시험에서 인지능력을 평가하는 데 사용되어 왔으나, 최근에는 고용시장 등에서 지원자의
             순발력과 언어능력을 평가하는 데에도 쓰이고 있습니다.`,
-    en: `analogies were previously used to test cognitive ability on standardized tests 
-            (like the SAT, the GRE, and other professional exams). Increasingly, too, 
-            employers may use these word comparisons on personnel and screening tests to 
+    en: `analogies were previously used to test cognitive ability on standardized tests
+            (like the SAT, the GRE, and other professional exams). Increasingly, too,
+            employers may use these word comparisons on personnel and screening tests to
             determine an applicant’s quickness and verbal acuity.`,
   },
   verbal_analogy_method: {
@@ -307,11 +307,11 @@ const Localiztion: Dictionary = {
     en: 'How to "Read" Analogies',
   },
   verbal_analogy_method_content: {
-    ko: `(:)과 (=) 기호는 비례식에서 해당 기호들이 가지는 의미와 동일합니다. 예를 들어 “aspirin : headache = 
+    ko: `(:)과 (=) 기호는 비례식에서 해당 기호들이 가지는 의미와 동일합니다. 예를 들어 “aspirin : headache =
             nap : fatigue”는 아스피린과 두통의 관계는 낮잠과 피로의 관계와 동일함을 의미합니다.`,
-    en: `The symbol (:) means “is to” and the symbol (::) means “as.” Thus, the analogy, 
-            “aspirin: headache::nap: fatigue,” should be read “aspirin is to headache as nap 
-            is to fatigue.” Stated another way, the relationship between aspirin and headache 
+    en: `The symbol (:) means “is to” and the symbol (::) means “as.” Thus, the analogy,
+            “aspirin: headache::nap: fatigue,” should be read “aspirin is to headache as nap
+            is to fatigue.” Stated another way, the relationship between aspirin and headache
             is the same as the relationship between nap and fatigue.`,
   },
   verbal_analogy_tips: {
@@ -423,10 +423,10 @@ const Localiztion: Dictionary = {
     en: 'Worked Example',
   },
   label_instruction: {
-    ko: `예시 문제 풀이를 보며 while 문의 사용법을 확인해보세요. 풀이에 존재하는 하위 목표들을 찾아보며 코드가 어떠한 하위 목표로 구성되어 있는지 설명해보세요. 
+    ko: `예시 문제 풀이를 보며 while 문의 사용법을 확인해보세요. 풀이에 존재하는 하위 목표들을 찾아보며 코드가 어떠한 하위 목표로 구성되어 있는지 설명해보세요.
             다음 단계에서 연관된 연습 문제를 풀어 사용법을 직접 익혀봅니다.`,
-    en: `The program code on the right solves the following problem. In this task, 
-            you will self-explain the code by identifying subgoals. Click 
+    en: `The program code on the right solves the following problem. In this task,
+            you will self-explain the code by identifying subgoals. Click
             a group of code lines that go together and write a subgoal label on the text input on the left.`,
   },
   label_warning: {
@@ -471,9 +471,9 @@ const Localiztion: Dictionary = {
   },
   vote_instruction: {
     ko: `예시 문제 풀이를 보며 while 문의 사용법을 확인해보세요. 코드의 각 부분에 가장 적절한 하위 목표를
-            보기에서 고르거나 직접 작성해보며 코드를 구성하는 하위 목표들을 찾아보세요. 다음 단계에서 연관된 연습 
+            보기에서 고르거나 직접 작성해보며 코드를 구성하는 하위 목표들을 찾아보세요. 다음 단계에서 연관된 연습
             문제를 풀며 직접 익혀봅니다.`,
-    en: `The program code on the right solves the following problem. In this task, you 
+    en: `The program code on the right solves the following problem. In this task, you
             will identify subgoals in the code by selecting the most appropriate labels from
             given choices. Please identify subgoals for all lines, and press the blue button.`,
   },
@@ -575,14 +575,18 @@ const Localiztion: Dictionary = {
   },
   practice_instruction: {
     ko: '앞서 공부한 예시 문제 풀이를 응용하여 아래의 문제를 while 문을 사용해 풀어보세요.',
-    en: `Now practice the usages of a while loop by writing 
-            a problem that solves the following problem. Solving 
-            the problem requires the steps and approach used in the 
+    en: `Now practice the usages of a while loop by writing
+            a problem that solves the following problem. Solving
+            the problem requires the steps and approach used in the
             worked example you just studied.`,
   },
   practice_run: {
     ko: '코드 실행',
     en: 'Run',
+  },
+  practice_submit: {
+    ko: '채점하기',
+    en: 'Submit',
   },
   practice_terminal_output: {
     ko: '코드 실행 결과가 여기 표시됩니다.',
@@ -617,10 +621,10 @@ const Localiztion: Dictionary = {
     en: 'Assessment Problem',
   },
   assessment_instruction: {
-    ko: `앞서 공부한 예시 문제 풀이와 연습 문제를 되짚으며, while 문을 사용하여 아래의 문제를 해결하는 
+    ko: `앞서 공부한 예시 문제 풀이와 연습 문제를 되짚으며, while 문을 사용하여 아래의 문제를 해결하는
             프로그램을 제한 시간 내에 작성해보세요. 제한 시간이 다 되면 자동으로 코드가 제출됩니다.`,
-    en: `Recall the worked examples and practice problems you studied. 
-            Write a program that solves the following problem. When the time is out, 
+    en: `Recall the worked examples and practice problems you studied.
+            Write a program that solves the following problem. When the time is out,
             your code will be submitted automatically.`,
   },
   assessment_action_button: {
@@ -669,11 +673,11 @@ const Localiztion: Dictionary = {
     en: 'Thank you for your participation.',
   },
   wrapup_document_submission_instruction: {
-    ko: `실험 참가비 지급은 집행 절차에 따라 대략 한 달정도 소요될 수 있습니다. 
+    ko: `실험 참가비 지급은 집행 절차에 따라 대략 한 달정도 소요될 수 있습니다.
             또한, 실험 참가비 지급을 위해 다음 서류를 작성하여 jinhw@kaist.ac.kr로 꼭 제출해주세요.
             서류가 누락되거나 불완전할 경우, 참가비 지급이 어렵습니다.`,
-    en: `Your participation fee will be delivered in about a month due to the 
-            lab's payment process. Most importatnly, make sure to fill the following 
+    en: `Your participation fee will be delivered in about a month due to the
+            lab's payment process. Most importatnly, make sure to fill the following
             documents and send to jinhw@kaist.ac.kr. Participation fee will be not
             paid if any of your document is missing or incomplete.`,
   },
