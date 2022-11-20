@@ -33,6 +33,8 @@ export const postPracticeAnswerController = Post<PostPracticeAnswerParams, PostP
               result = await shellRunService.runPython(PythonSolutionTemplate(code, ...args))
             } else if (codeType === 'javascript') {
               result = await shellRunService.runJavascript(JavascriptSolutionTemplate(code, ...args))
+            } else if (codeType === 'cpp') {
+              result = await shellRunService.judgeCpp(code, "1234") // TODO: update input type for cpp
             }
             result = result.replace(/(\n| )/g, '')
             const answerResult = (await shellRunService.runPython(PythonSolutionTemplate(answerCode, ...args))).replace(

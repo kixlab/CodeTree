@@ -31,6 +31,8 @@ export const postPracticeRunController = Post<PostPracticeAnswerParams, PostPrac
           output = await shellRunService.runPython(PythonSolutionTemplate(code, ...sampleArgs))
         } else if (codeType === 'javascript') {
           output = await shellRunService.runJavascript(JavascriptSolutionTemplate(code, ...sampleArgs))
+        } else if (codeType === 'cpp') {
+          output = await shellRunService.runCpp(code) // TODO: update input type for cpp
         }
         output = output.replace(/(\n| )/g, '')
       } catch (error) {
