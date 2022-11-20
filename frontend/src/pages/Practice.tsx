@@ -32,7 +32,7 @@ function Practice(props: RouteComponentProps<MatchParams>) {
   const [isRunning, setIsRunning] = useState(false)
   const [isJudging, setIsJudging] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [mode, setMode] = useState<'python' | 'javascript'>('python')
+  const [mode, setMode] = useState<'python' | 'javascript' | 'cpp'>('python')
 
   const { category, problemId } = props.match.params
 
@@ -142,6 +142,11 @@ function Practice(props: RouteComponentProps<MatchParams>) {
   }, [category, code, problemId, props.history])
 
   useEffect(() => {
+    if (mode === 'cpp') {
+      setCode('')
+      return
+    }
+
     Get<GetProblemSkeletonParams, GetProblemSkeletonResults>(
       `${SERVER_ADDRESS}/getProblemSkeleton`,
       {

@@ -8,14 +8,14 @@ import React, { ChangeEvent, useMemo } from 'react'
 interface Props {
   code: string
   editorKey?: string
-  mode?: 'python' | 'javascript'
+  mode?: 'python' | 'javascript' | 'cpp'
   onCodeChange: (code: string) => void
-  onChangeMode?: (mode: 'python' | 'javascript') => void
+  onChangeMode?: (mode: 'python' | 'javascript' | 'cpp') => void
 }
 
 function CodeEditor({ code, editorKey, mode = 'python', onCodeChange, onChangeMode }: Props) {
   const onClickLanguage = (e: ChangeEvent<HTMLSelectElement>) => {
-    const language = e.target.value as 'python' | 'javascript'
+    const language = e.target.value as 'python' | 'javascript' | 'cpp'
     onChangeMode?.(language)
   }
 
@@ -26,13 +26,16 @@ function CodeEditor({ code, editorKey, mode = 'python', onCodeChange, onChangeMo
     if (mode === 'javascript') {
       return [javascript()]
     }
+    if (mode === 'cpp') {
+      return [cpp()]
+    }
     return [cpp()]
   }, [mode])
 
   return (
     <Container>
       <Select onChange={onClickLanguage} defaultValue={mode}>
-        {['javascript', 'python'].map(language => (
+        {['javascript', 'python', 'cpp'].map(language => (
           <option key={language} value={language}>
             {language}
           </option>
