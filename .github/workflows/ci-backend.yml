@@ -1,8 +1,10 @@
-name: CI
+name: CI Backend
 
 on:
   pull_request:
     branches: [ main, develop ]
+    paths:
+      - backend/**
 
 jobs:
   build:
@@ -22,12 +24,8 @@ jobs:
             ${{ runner.OS }}-
 
       - name: Install Dependencies
-        working-directory: ./frontend
+        working-directory: ./backend
         run: yarn install --frozen-lockfile
-
-      - name: Frontend Type Check
-        working-directory: ./frontend
-        run: yarn type-check
 
       - name: Backend Type Check
         working-directory: ./backend
