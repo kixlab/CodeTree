@@ -1,13 +1,9 @@
-name: backend
+name: CD Backend
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ main, develop ]
-    paths:
-        - backend/**
-  pull_request:
     branches: [ main, develop ]
     paths:
         - backend/**
