@@ -10,22 +10,16 @@ type Result = [boolean, string, string, string]
 export const postPracticeAnswerController = Post<PostPracticeAnswerParams, PostPracticeAnswerResults>(
   async ({ code, problemId, codeType, category, participantId }, send) => {
     try {
-      await SetData2<PracticeCode>(
-        `/result/${category}/${problemId}/${participantId}/${Date.now()}`,
-        { code }
-      )
+      await SetData2<PracticeCode>(`/result/${category}/${problemId}/${participantId}/${Date.now()}`, { code })
 
-      const answerCode = await storageService.getFile(`${category}/${problemId}/solution.py`)
-      if (!answerCode) {
-        throw new Error('비교할 정답 파일을 불러올 수 없습니다.')
-      }
+      const inFiles = await storageService.getFiles(`${category}/${problemId}/in/`)
+      const outFiles = await storageService.getFiles(`${category}/${problemId}/out/`)
 
-      const testCases = await storageService.getFiles(`${category}/${problemId}/testcases/`)
-      if (!testCases) {
+      if (!inFiles) {
         throw new Error('테스트 케이스를 불러올 수 없습니다.')
       }
       const results: Result[] = await Promise.all(
-        testCases.map(async argStr => {
+        inFiles.map(async (argStr, i) => {
           try {
             let result = ''
             const args = argStr.split('\n')
@@ -34,14 +28,11 @@ export const postPracticeAnswerController = Post<PostPracticeAnswerParams, PostP
             } else if (codeType === 'javascript') {
               result = await shellRunService.runJavascript(JavascriptSolutionTemplate(code, ...args))
             } else if (codeType === 'cpp') {
-              result = await shellRunService.judgeCpp(code, "1234") // TODO: update input type for cpp
+              result = await shellRunService.judgeCpp(code, '1234') // TODO: update input type for cpp
             }
             result = result.replace(/(\n| )/g, '')
-            const answerResult = (await shellRunService.runPython(PythonSolutionTemplate(answerCode, ...args))).replace(
-              /(\n| )/g,
-              ''
-            )
-            return [result === answerResult, result, answerResult, argStr] as Result
+            const answer = outFiles[i].replace(/(\n| )/g, '')
+            return [result === answer, result, answer, argStr] as Result
           } catch (e) {
             return [false, e, '', argStr] as Result
           }
