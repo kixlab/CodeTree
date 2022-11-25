@@ -5,7 +5,7 @@ import { shellRunService } from '../service/shellRun'
 export const postPythonCodeController = Post<PostPythonCodeParams, PostPythonCodeResults>(
   async ({ code, fileName }, send) => {
     try {
-      const results = await shellRunService.runPython(code)
+      const results = await shellRunService.runCpp(code)
 
       const correct = (() => {
         switch (true) {

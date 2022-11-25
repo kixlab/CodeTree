@@ -13,22 +13,23 @@ export const postPracticeRunController = Post<PostPracticeAnswerParams, PostPrac
         { code }
       )
 
-      const answerCode = await storageService.getFile(`${category}/${problemId}/solution.py`)
-      if (!answerCode) {
+      const inFile = await storageService.getFile(`${category}/${problemId}/in/t1.in`)
+      if (!inFile) {
         throw new Error('비교할 정답 파일을 불러올 수 없습니다.')
       }
 
-      const testCases = await storageService.getFiles(`${category}/${problemId}/testcases/`)
-      if (!testCases) {
+      const outFile = await storageService.getFile(`${category}/${problemId}/out/t1.out`)
+      if (!outFile) {
         throw new Error('테스트 케이스를 불러올 수 없습니다.')
       }
 
-      const sampleArgs = testCases[0].split('\n')
+      const sampleArgs = inFile.split('\n')
+
       let output = ''
 
       try {
         if (codeType === 'python') {
-          output = await shellRunService.runPython(PythonSolutionTemplate(code, ...sampleArgs))
+          output = await shellRunService.runPython(participantId, problemId, 1, PythonSolutionTemplate(code, ...sampleArgs))
         } else if (codeType === 'javascript') {
           output = await shellRunService.runJavascript(JavascriptSolutionTemplate(code, ...sampleArgs))
         } else if (codeType === 'cpp') {
@@ -40,11 +41,9 @@ export const postPracticeRunController = Post<PostPracticeAnswerParams, PostPrac
         throw new Error('코드 실행중 에러가 발생하였습니다.')
       }
 
-
-      const answerResult = (await shellRunService.runPython(PythonSolutionTemplate(answerCode, ...sampleArgs))).replace(
-        /(\n| )/g,
-        ''
-      )
+      const answerResult = outFile.replace(/(\n| )/g, '')
+      const isClear = shellRunService.clearPython(participantId, problemId, 1)
+      if (!isClear) throw new Error('파일이 정상적으로 삭제되지 않았습니다.')
 
       send(200, {
         output: `입력: ${sampleArgs}\n출력: ${output}\n기대출력: ${answerResult}\n`,
