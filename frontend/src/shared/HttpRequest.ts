@@ -6,7 +6,9 @@ export async function Get<P, R>(
   callback: (res: R) => void,
   onError: (error: ErrorResult) => void
 ) {
-  const url = `${baseUrl}?${[...Object.entries(params)].map(([key, value]) => `${key}=${value}`).join('&')}`
+  const url = `${baseUrl}?${[...Object.entries(params as Record<string, unknown>)]
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&')}`
   return fetch(url)
     .then(res => {
       if (res.ok) {
@@ -25,7 +27,9 @@ export async function Get<P, R>(
 }
 
 export async function Get2<P, R>(baseUrl: string, params: P): Promise<R> {
-  const url = `${baseUrl}?${[...Object.entries(params)].map(([key, value]) => `${key}=${value}`).join('&')}`
+  const url = `${baseUrl}?${[...Object.entries(params as Record<string, unknown>)]
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&')}`
   return (await fetch(url).then(res => res.json())) as R
 }
 

@@ -1,6 +1,7 @@
 import { c, cpp, java, node, python } from 'compile-run'
 import { exec, spawnSync } from 'child_process'
 import fs from 'fs/promises'
+
 class ShellRunService {
   pythonShellOptions = {
     mode: 'text' as const,
@@ -35,20 +36,39 @@ class ShellRunService {
   }
 
   execPromise(command: string): Promise<string> {
-    return new Promise(function(resolve, reject) {
-        exec(command, (error, stdout, stderr) => {
-            if (error) {
-                reject(error);
-                return;
-            }
+    return new Promise((resolve, reject) => {
+      exec(command, (error, stdout) => {
+        if (error) {
+          reject(error)
+          return
+        }
 
-            resolve(stdout.trim());
-        });
-    });
-}
+        resolve(stdout.trim())
+      })
+    })
+  }
 
-  async runPython(code: string): Promise<string> {
-    return this.run(code, python)
+  async runPython(participantId: string, problemId: string, testNumber: number, code: string): Promise<string> {
+    const name = `p${participantId}-${problemId}-${testNumber}`
+
+    await fs.writeFile(`${name}.py`, code)
+    await this.execPromise(`python3 ${name}.py > ${name}.out`)
+
+    const resp = (await fs.readFile(`${name}.out`)).toString()
+    return resp
+  }
+
+  async clearPython(participantId: string, problemId: string, testNumber: number) {
+    try {
+      const name = `p${participantId}-${problemId}-${testNumber}`
+
+      await fs.unlink(`${name}.py`)
+      await fs.unlink(`${name}.out`)
+
+      return true
+    } catch (error) {
+      return false
+    }
   }
 
   async runJave(code: string): Promise<string> {
@@ -59,11 +79,11 @@ class ShellRunService {
     return this.run(code, cpp)
   }
 
-  async judgeCpp(code: string, stdin: string): Promise<any> {
+  async judgeCpp(code: string, stdin: string): Promise<string> {
     await fs.writeFile('test.cpp', code)
     await this.execPromise('g++ -o test test.cpp')
 
-    const output = await spawnSync('./test', [], { input: stdin })
+    const output = spawnSync('./test', [], { input: stdin })
     return output.stdout.toString()
   }
 

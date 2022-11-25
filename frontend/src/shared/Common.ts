@@ -22,3 +22,5 @@ export enum Color {
   Gray75 = '#404040',
   Gray85 = '#262626',
 }
+
+export const SUBMIT_BUTTON_HEIGHT = 40

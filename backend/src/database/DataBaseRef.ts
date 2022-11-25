@@ -64,7 +64,7 @@ export async function GetAndUpdateData<T>(path: string, handler: (snapshot: T) =
       firebaseAdmin
         .database()
         .ref(path)
-        .update(data)
+        .update(data as Record<string, unknown>)
         .catch(error => {
           throw error
         })
