@@ -48,8 +48,27 @@ class ShellRunService {
     })
   }
 
-  async runPython(code: string): Promise<string> {
-    return this.run(code, python)
+  async runPython(participantId: string, problemId: string, testNumber: number, code: string): Promise<string> {
+    const name = `p${participantId}-${problemId}-${testNumber}`
+
+    await fs.writeFile(`${name}.py`, code)
+    await this.execPromise(`python3 ${name}.py > ${name}.out`)
+
+    const resp = (await fs.readFile(`${name}.out`)).toString()
+    return resp
+  }
+
+  async clearPython(participantId: string, problemId: string, testNumber: number) {
+    try {
+      const name = `p${participantId}-${problemId}-${testNumber}`
+
+      await fs.unlink(`${name}.py`)
+      await fs.unlink(`${name}.out`)
+
+      return true
+    } catch (error) {
+      return false
+    }
   }
 
   async runJave(code: string): Promise<string> {
