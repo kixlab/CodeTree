@@ -167,7 +167,14 @@ function Practice(props: RouteComponentProps<MatchParams>) {
       <InstructionTask
         instruction={
           <TaskContainer
-            instruction={<ProblemContainer problem={problem} />}
+            instruction={
+              <div>
+                <h1>{getString('practice_title')}</h1>
+                <div>{getString('practice_instruction')}</div>
+                <br />
+                <ProblemContainer problem={problem} />
+              </div>
+            }
             task={
               <TaskWrapper>
                 {outputCorrect !== null ? (

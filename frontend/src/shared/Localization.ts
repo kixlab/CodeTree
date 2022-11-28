@@ -58,11 +58,11 @@ const Localiztion: Dictionary = {
     en: 'Traning',
   },
   progress_bar_stage_worked_example: {
-    ko: '예시 문제 풀이',
+    ko: '하위 목표 학습',
     en: 'Worked Example',
   },
   progress_bar_stage_practice: {
-    ko: '연습 문제',
+    ko: '문제 풀이',
     en: 'Practice Problem',
   },
   progress_bar_stage_cognitive: {
@@ -407,7 +407,7 @@ const Localiztion: Dictionary = {
     en: 'Problem',
   },
   example_title: {
-    ko: '예시 문제 풀이',
+    ko: '하위 목표 학습',
     en: 'Worked Example',
   },
   example_instruction: {
@@ -415,11 +415,11 @@ const Localiztion: Dictionary = {
     en: '',
   },
   example_action_button: {
-    ko: '연습 문제 풀기',
+    ko: '다음',
     en: 'Solve Practice Problem',
   },
   label_title: {
-    ko: '예시 문제 풀이',
+    ko: '하위 목표 학습',
     en: 'Worked Example',
   },
   label_instruction: {
@@ -450,8 +450,8 @@ const Localiztion: Dictionary = {
     en: 'Please remove text input boxes without any lines clicked.',
   },
   label_action_button: {
-    ko: '연습 문제 풀기',
-    en: 'Solve Practice Problem',
+    ko: '다음',
+    en: 'Next',
   },
   label_alert_back: {
     ko: '페이지를 벗어나면 작성하신 내용이 저장되지 않습니다.',
@@ -466,11 +466,11 @@ const Localiztion: Dictionary = {
     en: '└ Add a subgoal below this goal',
   },
   vote_title: {
-    ko: '예시 문제 풀이',
+    ko: '문제 풀이',
     en: 'Worked Example',
   },
   vote_instruction: {
-    ko: `예시 문제 풀이를 보며 while 문의 사용법을 확인해보세요. 코드의 각 부분에 가장 적절한 하위 목표를
+    ko: `문제 풀이를 보며 while 문의 사용법을 확인해보세요. 코드의 각 부분에 가장 적절한 하위 목표를
             보기에서 고르거나 직접 작성해보며 코드를 구성하는 하위 목표들을 찾아보세요. 다음 단계에서 연관된 연습
             문제를 풀며 직접 익혀봅니다.`,
     en: `The program code on the right solves the following problem. In this task, you
@@ -558,7 +558,7 @@ const Localiztion: Dictionary = {
     en: 'Check Answer',
   },
   vote_action_button: {
-    ko: '연습 문제 풀기',
+    ko: '다음',
     en: 'Next',
   },
   vote_correct: {
@@ -570,7 +570,7 @@ const Localiztion: Dictionary = {
     en: '+ Add Subgoal',
   },
   practice_title: {
-    ko: '연습 문제',
+    ko: '문제 풀이',
     en: 'Practice Problem',
   },
   practice_instruction: {
