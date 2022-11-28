@@ -35,7 +35,7 @@ export function initialize(id: string, group: string) {
   localStorage.setItem(TIME_STAMP, new Date().getTime().toString())
 }
 
-export function nextStage(jump = 0): string {
+export function nextStage(jump = 1): string {
   const id = getId()
   const group = getGroup()
   if (id === null || group === null) {
