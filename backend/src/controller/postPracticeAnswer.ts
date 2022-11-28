@@ -32,10 +32,10 @@ export const postPracticeAnswerController = Post<PostPracticeAnswerParams, PostP
             }
             result = result.replace(/(\n| )/g, '')
             const answer = outFiles[i].replace(/(\n| )/g, '')
-
             const isClear = shellRunService.clearPython(participantId, problemId, i)
-            if (!isClear) throw new Error('파일이 정상적으로 삭제되지 않았습니다.')
-
+            if (!isClear) {
+              throw new Error('파일이 정상적으로 삭제되지 않았습니다.')
+            }
             return [result === answer, result, answer, argStr] as Result
           } catch (e) {
             return [false, e, '', argStr] as Result
