@@ -1,7 +1,6 @@
 import React from 'react'
 import { practice1, practice2, practice3 } from '../../data/SubgoalTutorialExamples'
 import { CheckBoxAvailability, SubgoalNode } from '../../pages/Label'
-import { CODE_LINE_HEIGHT } from '../../shared/Constants'
 import { getString } from '../../shared/Localization'
 import { InstructionTask } from '../../templates/InstructionTask'
 import { LinearLayout } from '../../templates/LinearLayout'
@@ -91,7 +90,7 @@ function TutorialContent(props: Props) {
                 }
                 task={
                   <LinearLayout ratios={['29px', '1fr']}>
-                    <HierarchyVisualizer subgoals={props.firstSubgoals} lineHeight={CODE_LINE_HEIGHT - 16} />
+                    <HierarchyVisualizer subgoals={props.firstSubgoals} />
                     <CodeGrouper
                       code={practice1}
                       checkBoxAvailability={props.firstCheckBoxAvailability}
@@ -141,7 +140,7 @@ function TutorialContent(props: Props) {
                 }
                 task={
                   <LinearLayout ratios={['29px', '1fr']}>
-                    <HierarchyVisualizer subgoals={props.secondSubgoals} lineHeight={CODE_LINE_HEIGHT - 16} />
+                    <HierarchyVisualizer subgoals={props.secondSubgoals} />
                     <CodeGrouper code={practice2} checkBoxAvailability={props.secondCheckBoxAvailability} />
                   </LinearLayout>
                 }
@@ -188,7 +187,7 @@ function TutorialContent(props: Props) {
                 }
                 task={
                   <LinearLayout ratios={['29px', '1fr']}>
-                    <HierarchyVisualizer subgoals={props.thirdSubgoals} lineHeight={CODE_LINE_HEIGHT - 16} />
+                    <HierarchyVisualizer subgoals={props.thirdSubgoals} />
                     <CodeGrouper
                       code={practice3}
                       checkBoxAvailability={props.thirdCheckBoxAvailability}

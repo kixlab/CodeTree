@@ -4,6 +4,7 @@ import { cpp } from '@codemirror/lang-cpp'
 import { javascript } from '@codemirror/lang-javascript'
 import { python } from '@codemirror/lang-python'
 import styled from '@emotion/styled'
+import { CODE_LINE_HEIGHT } from '../shared/Constants'
 
 interface Props {
   code: string
@@ -23,7 +24,14 @@ export function CodeMirror({ code, mode = 'python' }: Props) {
 
   return (
     <Container>
-      <CM autoFocus value={code} extensions={[...extensions]} indentWithTab readOnly />
+      <CM
+        autoFocus
+        value={code}
+        extensions={[...extensions]}
+        indentWithTab
+        readOnly
+        basicSetup={{ lineNumbers: false }}
+      />
     </Container>
   )
 }
@@ -31,10 +39,15 @@ export function CodeMirror({ code, mode = 'python' }: Props) {
 const Container = styled.div`
   & > div {
     height: 100%;
-    font-size: 22px;
+    font-size: ${CODE_LINE_HEIGHT - 8}px;
 
     .cm-editor {
       height: 100%;
     }
+  }
+
+  div {
+    background-color: transparent !important;
+    border: none !important;
   }
 `

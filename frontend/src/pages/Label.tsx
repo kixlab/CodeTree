@@ -1,6 +1,6 @@
+import styled from '@emotion/styled'
 import React, { useEffect } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import styled from '@emotion/styled'
 import { CodeGrouper } from '../components/CodeGrouper'
 import Header from '../components/Header/Header'
 import { HierarchyVisualizer } from '../components/HierarchyVisualizer'
@@ -10,13 +10,13 @@ import TaskContainer from '../components/TaskContainer/TaskContainer'
 import { useExplanation } from '../hooks/useExplanation'
 import { useGroupSubgoals } from '../hooks/useGroupSubgoals'
 import { useLabelSubmit } from '../hooks/useLabelSubmit'
+import { useMyCode } from '../hooks/useMyCode'
 import { useProblem } from '../hooks/useProblem'
+import { CODE_LINE_HEIGHT } from '../shared/Constants'
+import { getId, ID_NOT_FOUND } from '../shared/ExperimentHelper'
 import { getString } from '../shared/Localization'
-import { getExampleNumber } from '../shared/Utils'
 import { InstructionTask } from '../templates/InstructionTask'
 import { LinearLayout } from '../templates/LinearLayout'
-import { useMyCode } from '../hooks/useMyCode'
-import { getId, ID_NOT_FOUND } from '../shared/ExperimentHelper'
 
 interface MatchParams {
   lecture: string
@@ -70,6 +70,7 @@ function Label(props: RouteComponentProps<MatchParams>) {
   } = useGroupSubgoals(code.split('\n').length)
   useOnExitAlert()
   const { submit, isSubmitting } = useLabelSubmit(lecture, fileName, props.history)
+  const lineHeight = explanations.length === 0 ? CODE_LINE_HEIGHT : CODE_LINE_HEIGHT - 8
 
   return (
     <div>
@@ -79,7 +80,7 @@ function Label(props: RouteComponentProps<MatchParams>) {
           <TaskContainer
             instruction={
               <div>
-                <h1>{`${getString('label_title')} ${getExampleNumber()}`}</h1>
+                <h1>{getString('label_title')}</h1>
                 <div>{getString('label_instruction')}</div>
                 <br />
                 <Warning>{getString('label_warning')}</Warning>
@@ -110,12 +111,13 @@ function Label(props: RouteComponentProps<MatchParams>) {
         }
         task={
           <LinearLayout ratios={['41px', '1fr']}>
-            <HierarchyVisualizer subgoals={subgoals} />
+            <HierarchyVisualizer subgoals={subgoals} lineHeight={lineHeight} />
             <CodeGrouper
               code={code}
               explanations={explanations}
               checkBoxAvailability={checkBoxAvailability}
               selectable
+              lineHeight={lineHeight}
               onClickLine={clickCheckBox}
             />
           </LinearLayout>

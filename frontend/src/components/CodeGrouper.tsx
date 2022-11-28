@@ -11,20 +11,29 @@ interface Props {
   explanations?: string[]
   checkBoxAvailability?: CheckBoxAvailability[]
   selectable?: boolean
+  lineHeight?: number
   onClickLine?: (id: number, checked: boolean) => void
 }
 
-export function CodeGrouper({ code, explanations = [], checkBoxAvailability, selectable = false, onClickLine }: Props) {
+export function CodeGrouper({
+  code,
+  explanations = [],
+  checkBoxAvailability,
+  selectable = false,
+  lineHeight = CODE_LINE_HEIGHT,
+  onClickLine,
+}: Props) {
   return (
     <Container>
       {code.split('\n').map((line, i) => {
         const checked = checkBoxAvailability?.[i] === CheckBoxAvailability.CHECKED
+        const key = `${i},${line.slice(-5)}`
         return (
           <Line
-            key={line}
+            key={key}
             checkState={checkBoxAvailability?.[i]}
             selectable={selectable}
-            lineHeight={explanations[i] != null ? CODE_LINE_HEIGHT : CODE_LINE_HEIGHT - 16}
+            lineHeight={lineHeight}
             onClick={() => {
               if (checkBoxAvailability?.[i] !== CheckBoxAvailability.UNAVAILABLE) onClickLine?.(i, !checked)
             }}
