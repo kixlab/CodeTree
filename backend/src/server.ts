@@ -1,5 +1,8 @@
 import bodyParser from 'body-parser'
 import express from 'express'
+import fs from 'fs'
+import http from 'http'
+import https from 'https'
 import { GetAssessmentAnswersController } from './controller/getAssessmentAnswers'
 import { GetCodeGroupsController } from './controller/getCodeGroups'
 import { getDocumentationController } from './controller/getDocumentation'
@@ -32,8 +35,13 @@ import { cors } from './middleware/cors'
 import { requestLogger } from './middleware/requestLogger'
 import { getEnv } from './utils/getEnv'
 
-const { PORT } = getEnv()
+const { PORT, SSL_KEY, SSL_CERT } = getEnv()
 const app = express()
+
+const options = {
+  key: fs.readFileSync(SSL_KEY),
+  cert: fs.readFileSync(SSL_CERT),
+}
 
 app.use(bodyParser.json())
 app.use(requestLogger)
@@ -68,7 +76,12 @@ app.post('/postParticipantFinished', postParticipantFinishedController)
 app.post('/postPracticeRun', postPracticeRunController)
 app.post('/postPracticeAnswer', postPracticeAnswerController)
 
-// https.createServer(options, app).listen(PORT)
-app.listen(PORT, () => {
-  console.info(`App listening at ${PORT}`)
-})
+if (PORT === 80) {
+  http.createServer(app).listen(80);
+  https.createServer(options, app).listen(443);
+  console.info(`App listening at HTTPS`)
+} else {
+  app.listen(PORT, () => {
+    console.info(`App listening at ${PORT}`)
+  })
+}
