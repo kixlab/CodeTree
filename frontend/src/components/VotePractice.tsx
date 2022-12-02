@@ -12,7 +12,7 @@ import { CodeGrouper } from './CodeGrouper'
 import { HierarchyVisualizer } from './HierarchyVisualizer'
 import MultipleChoice from './MultipleChoice'
 import StageNavigator from './StageNavigator/StageNavigator'
-import TaskContainer from './TaskContainer/TaskContainer'
+import { TaskContainer } from './TaskContainer'
 
 interface Props {
   practiceNum: number

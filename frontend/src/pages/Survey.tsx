@@ -1,15 +1,11 @@
 import React from 'react'
-import { RouteComponentProps } from 'react-router-dom'
-import Header from '../components/Header/Header'
-import TestForm from '../components/TestFrom'
-import { useForm } from '../hooks/useForm'
-import { getGroup } from '../shared/ExperimentHelper'
+import { Page } from '../components/Page'
+import { TestForm } from '../components/TestForm'
+import { getGroup, getId } from '../shared/ExperimentHelper'
 
-interface MatchParams {}
-
-function useSurvey(history: RouteComponentProps['history']) {
-  const { participantID, onUrlChange } = useForm(history)
+function Survey() {
   const group = getGroup()
+  const participantID = getId()
 
   const url = (() => {
     switch (group) {
@@ -24,20 +20,10 @@ function useSurvey(history: RouteComponentProps['history']) {
     }
   })()
 
-  return {
-    url,
-    onUrlChange,
-  }
-}
-
-function Survey(props: RouteComponentProps<MatchParams>) {
-  const { onUrlChange, url } = useSurvey(props.history)
-
   return (
-    <div>
-      <Header />
-      <TestForm testUrl={url} urlChangeListener={onUrlChange} />
-    </div>
+    <Page>
+      <TestForm testUrl={url} />
+    </Page>
   )
 }
 

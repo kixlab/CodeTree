@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
-import Header from '../components/Header/Header'
+import { useNavigate } from 'react-router-dom'
+import { Page } from '../components/Page'
 import TutorialContent from '../components/TutorialContent/TutorialContent'
-import { SubgoalNode, CheckBoxAvailability } from './Label'
-import { nextStage } from '../shared/ExperimentHelper'
-import { getString } from '../shared/Localization'
 import { practice1Subgoals, practice2Subgoals, practice3Subgoals } from '../data/SubgoalTutorialExamples'
 import { useGroupSubgoals } from '../hooks/useGroupSubgoals'
+import { nextStage } from '../shared/ExperimentHelper'
+import { getString } from '../shared/Localization'
+import { CheckBoxAvailability, SubgoalNode } from './Label'
 
 function useCheckAnswer() {
   const [showAnswer, setShowAnswer] = React.useState(false)
@@ -27,7 +27,7 @@ function useCheckAnswer() {
   return { showAnswer, checkAnswer }
 }
 
-function LabelTutorial(props: RouteComponentProps) {
+function LabelTutorial() {
   const {
     selectSubgoal: selectSubgoal1,
     clickCheckBox: clickCheckBox1,
@@ -56,23 +56,23 @@ function LabelTutorial(props: RouteComponentProps) {
     clickCheckBox: clickCheckBox3,
   } = useGroupSubgoals(3, practice3Subgoals)
   const { showAnswer: showAnswer3, checkAnswer: checkAnswer3 } = useCheckAnswer()
+  const navigate = useNavigate()
 
   const onTaskStart = useCallback(() => {
     if (showAnswer1 && showAnswer2 && showAnswer3) {
       window.localStorage.setItem('fract-tutorial-done', 'true')
-      props.history.push(nextStage())
+      navigate(nextStage())
     } else {
       window.alert(getString('tutorial_alert_complete_practices'))
     }
-  }, [props.history, showAnswer1, showAnswer2, showAnswer3])
+  }, [navigate, showAnswer1, showAnswer2, showAnswer3])
 
   const skipTutorial = useCallback(() => {
-    props.history.push(nextStage())
-  }, [props.history])
+    navigate(nextStage())
+  }, [navigate])
 
   return (
-    <div>
-      <Header onTimeOut={() => window.alert(getString('tutorial_timeout_alert'))} />
+    <Page onTimeOut={() => window.alert(getString('tutorial_timeout_alert'))}>
       <TutorialContent
         firstSubgoals={subgoals1}
         firstSelectedSubgoal={selectedSubgoal1}
@@ -107,7 +107,7 @@ function LabelTutorial(props: RouteComponentProps) {
         skipTutorial={skipTutorial}
         onTaskStart={onTaskStart}
       />
-    </div>
+    </Page>
   )
 }
 

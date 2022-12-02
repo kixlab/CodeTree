@@ -1,26 +1,25 @@
 import React, { useCallback } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { CodeGrouper } from '../components/CodeGrouper'
-import Header from '../components/Header/Header'
 import { HierarchyVisualizer } from '../components/HierarchyVisualizer'
 import MultipleChoice from '../components/MultipleChoice'
+import { Page } from '../components/Page'
 import ProblemContainer from '../components/ProblemContainer'
 import StageNavigator from '../components/StageNavigator/StageNavigator'
-import TaskContainer from '../components/TaskContainer/TaskContainer'
-import { useExplanation } from '../hooks/useExplanation'
+import { TaskContainer } from '../components/TaskContainer'
 import { useHierarchyVisualier as useHierarchyVisualizer } from '../hooks/useHierarchyVisualizer'
 import { useMyCode } from '../hooks/useMyCode'
 import { useProblem } from '../hooks/useProblem'
 import { useVote } from '../hooks/useVote'
 import { useVoteSubmit } from '../hooks/useVoteSubmit'
 import { useVotingList } from '../hooks/useVotingList'
-import { getId, ID_NOT_FOUND, nextStage } from '../shared/ExperimentHelper'
+import { nextStage } from '../shared/ExperimentHelper'
 import { getString } from '../shared/Localization'
 import { getExampleNumber } from '../shared/Utils'
 import { InstructionTask } from '../templates/InstructionTask'
 import { LinearLayout } from '../templates/LinearLayout'
 
-interface MatchParams {
+type MatchParams = {
   lecture: string
   fileName: string
 }
@@ -31,12 +30,11 @@ export interface ChoiceState {
   newOption: string | null
 }
 
-export default function Vote(props: RouteComponentProps<MatchParams>) {
-  const { lecture, fileName } = props.match.params
-  const code = useMyCode(lecture, fileName, getId() ?? ID_NOT_FOUND)
+export default function Vote() {
+  const { lecture, fileName } = useParams<MatchParams>()
+  const code = useMyCode(lecture, fileName)
   const problem = useProblem(lecture, fileName)
   const { votingList } = useVotingList(lecture, fileName)
-  const { explanations } = useExplanation(lecture, fileName)
   const {
     canProceedToNext,
     maxStage,
@@ -51,20 +49,20 @@ export default function Vote(props: RouteComponentProps<MatchParams>) {
   } = useVote(code, votingList)
   const { isSubmitting, submit: submitVote } = useVoteSubmit(lecture, fileName)
   const { subgoalNodes, visualizerWidth } = useHierarchyVisualizer(votingList, currentStage)
+  const navigate = useNavigate()
 
   const submit = useCallback(async () => {
     if (!canProceedToNext()) {
       return
     }
     await submitVote(votingList, choiceList)
-    props.history.push(nextStage())
-  }, [canProceedToNext, choiceList, props.history, submitVote, votingList])
+    navigate(nextStage())
+  }, [canProceedToNext, choiceList, navigate, submitVote, votingList])
 
   const showActionButton = currentStage === maxStage && showAnswer
 
   return (
-    <div>
-      <Header />
+    <Page>
       <InstructionTask
         instruction={
           <TaskContainer
@@ -108,10 +106,10 @@ export default function Vote(props: RouteComponentProps<MatchParams>) {
         task={
           <LinearLayout ratios={[`${visualizerWidth}px`, '1fr']}>
             <HierarchyVisualizer subgoals={subgoalNodes} />
-            <CodeGrouper code={code} checkBoxAvailability={checkBoxAvailability} explanations={explanations} />
+            <CodeGrouper code={code} checkBoxAvailability={checkBoxAvailability} />
           </LinearLayout>
         }
       />
-    </div>
+    </Page>
   )
 }

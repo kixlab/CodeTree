@@ -29,10 +29,6 @@ const Localiztion: Dictionary = {
     ko: 'ID: ',
     en: 'ID: ',
   },
-  header_python_tutorial: {
-    ko: 'Python 튜토리얼 보기',
-    en: 'Python Tutorial',
-  },
   progress_bar_prefix: {
     ko: '진행 상황: ',
     en: 'Progress: ',
@@ -585,7 +581,7 @@ const Localiztion: Dictionary = {
     en: 'Run',
   },
   practice_submit: {
-    ko: '채점하기',
+    ko: '코드 채점',
     en: 'Submit',
   },
   practice_terminal_output: {
@@ -605,8 +601,8 @@ const Localiztion: Dictionary = {
     en: 'Incorrect',
   },
   practice_action_button: {
-    ko: '다음 단계로 이동',
-    en: 'Move On',
+    ko: '하위 목표 학습',
+    en: 'Next',
   },
   practice_alert_back: {
     ko: '페이지를 벗어나면 작성하신 내용이 저장되지 않습니다. 내용을 유지하려면 먼저 따로 저장해두세요.',

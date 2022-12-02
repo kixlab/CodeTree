@@ -14,6 +14,7 @@ const Container = styled.div`
   background: ${Color.Gray85};
   white-space: pre-line;
   overflow-x: auto;
+  min-height: 200px;
 `
 
 function OutputTerminal(props: Props) {

@@ -1,22 +1,20 @@
 import React, { useCallback } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
 import FormatContainer from '../components/FormatContainer/FormatContainer'
-import Header from '../components/Header/Header'
-import TestForm from '../components/TestFrom'
-import { useGoogleForm } from '../hooks/useGoogleForm'
+import { Page } from '../components/Page'
+import { TestForm } from '../components/TestForm'
+import { getId } from '../shared/ExperimentHelper'
 import { getString } from '../shared/Localization'
 import { InstructionTask } from '../templates/InstructionTask'
 
-function VerbalAnalogy(props: RouteComponentProps) {
-  const { participantID, onUrlChange } = useGoogleForm(props.history.push)
+function VerbalAnalogy() {
+  const participantID = getId()
 
   const onTimeOut = useCallback(() => {
     window.alert(getString('verbal_analogy_timeout_alert'))
   }, [])
 
   return (
-    <div>
-      <Header onTimeOut={onTimeOut} />
+    <Page onTimeOut={onTimeOut}>
       <InstructionTask
         instruction={
           <FormatContainer>
@@ -95,11 +93,10 @@ function VerbalAnalogy(props: RouteComponentProps) {
         task={
           <TestForm
             testUrl={`https://docs.google.com/forms/d/e/1FAIpQLSf0QXPsxc_tcc1B8Rr80JoZ3yBquO8rWgMp0UYt0gdKQGMMXg/viewform?usp=pp_url&entry.1707229012=${participantID}`}
-            urlChangeListener={onUrlChange}
           />
         }
       />
-    </div>
+    </Page>
   )
 }
 

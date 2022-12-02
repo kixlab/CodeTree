@@ -1,36 +1,33 @@
 import React, { useCallback } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { CodeGrouper } from '../components/CodeGrouper'
-import Header from '../components/Header/Header'
+import { Page } from '../components/Page'
 import ProblemContainer from '../components/ProblemContainer'
-import TaskContainer from '../components/TaskContainer/TaskContainer'
+import { TaskContainer } from '../components/TaskContainer'
 import { useCode } from '../hooks/useCode'
-import { useExplanation } from '../hooks/useExplanation'
 import { useProblem } from '../hooks/useProblem'
 import { nextStage } from '../shared/ExperimentHelper'
 import { getString } from '../shared/Localization'
 import { getExampleNumber } from '../shared/Utils'
 import { InstructionTask } from '../templates/InstructionTask'
 
-interface MatchParams {
+type MatchParams = {
   lecture: string
   fileName: string
 }
 
-function WorkedExample(props: RouteComponentProps<MatchParams>) {
-  const { lecture, fileName } = props.match.params
-
+function WorkedExample() {
+  const { lecture, fileName } = useParams<MatchParams>()
   const problem = useProblem(lecture, fileName)
   const code = useCode(lecture, fileName)
-  const { explanations } = useExplanation(lecture, fileName)
+  const navigate = useNavigate()
 
   const submit = useCallback(() => {
-    props.history.push(nextStage())
-  }, [props.history])
+    navigate(nextStage())
+  }, [navigate])
 
   return (
-    <div>
-      <Header />
+    <Page>
       <InstructionTask
         instruction={
           <TaskContainer
@@ -49,9 +46,9 @@ function WorkedExample(props: RouteComponentProps<MatchParams>) {
             }
           />
         }
-        task={<CodeGrouper code={code} explanations={explanations} />}
+        task={<CodeGrouper code={code} />}
       />
-    </div>
+    </Page>
   )
 }
 

@@ -1,44 +1,37 @@
 import React, { useCallback, useState } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
-import Header from '../components/Header/Header'
+import { useParams } from 'react-router-dom'
+import { CodeGrouper } from '../components/CodeGrouper'
+import { Page } from '../components/Page'
 import ProblemContainer from '../components/ProblemContainer'
-import TaskContainer from '../components/TaskContainer/TaskContainer'
 import { TreePresenter } from '../components/SubgoalTreePresenter/TreePresenter'
+import { TaskContainer } from '../components/TaskContainer'
 import { useCode } from '../hooks/useCode'
+import { useHighlightCodeSegment } from '../hooks/useHighlightCodeSegment'
 import { useProblem } from '../hooks/useProblem'
 import { useSubgoalTree } from '../hooks/useSubgoalTree'
 import { getString } from '../shared/Localization'
 import { getExampleNumber } from '../shared/Utils'
 import { InstructionTask } from '../templates/InstructionTask'
-import { useHighlightCodeSegment } from '../hooks/useHighlightCodeSegment'
-import { CodeGrouper } from '../components/CodeGrouper'
 
-interface MatchParams {
+type MatchParams = {
   lecture: string
   fileName: string
 }
 
-function useSubmit() {
+export default function Present() {
+  const { lecture, fileName } = useParams<MatchParams>()
+  const code = useCode(lecture, fileName)
+  const problem = useProblem(lecture, fileName)
+  const subgoalTree = useSubgoalTree(lecture, fileName)
+  const { highlightedLines, onClickGoal, checkBoxAvailability } = useHighlightCodeSegment(subgoalTree.group.length)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const submit = useCallback(() => {
     setIsSubmitting(true)
   }, [])
 
-  return { submit, isSubmitting }
-}
-
-export default function Present(props: RouteComponentProps<MatchParams>) {
-  const { lecture, fileName } = props.match.params
-  const code = useCode(lecture, fileName)
-  const problem = useProblem(lecture, fileName)
-  const subgoalTree = useSubgoalTree(lecture, fileName)
-  const { submit, isSubmitting } = useSubmit()
-  const { highlightedLines, onClickGoal, checkBoxAvailability } = useHighlightCodeSegment(subgoalTree.group.length)
-
   return (
-    <>
-      <Header />
+    <Page>
       <InstructionTask
         instruction={
           <TaskContainer
@@ -65,6 +58,6 @@ export default function Present(props: RouteComponentProps<MatchParams>) {
         }
         task={<CodeGrouper code={code} checkBoxAvailability={checkBoxAvailability} />}
       />
-    </>
+    </Page>
   )
 }
