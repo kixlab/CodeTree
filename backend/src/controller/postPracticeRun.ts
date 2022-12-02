@@ -1,6 +1,6 @@
 import { JavascriptSolutionTemplate, PythonSolutionTemplate } from '../constants/codeTemplates'
 import { CodeSubmissionData } from '../database/DataBaseDataTypes'
-import { SetData2 } from '../database/DataBaseRef'
+import { SetData } from '../database/DataBaseRef'
 import { Post } from '../HttpResponse'
 import { PostPracticeRunParams, PostPracticeRunResults } from '../protocol/PostPracticeRun'
 import { shellRunService } from '../service/shellRun'
@@ -8,7 +8,7 @@ import { storageService } from '../service/storage'
 
 export const postPracticeRunController = Post<PostPracticeRunParams, PostPracticeRunResults>(
   async ({ code, problemId, codeType, category, participantId }) => {
-    await SetData2<CodeSubmissionData>(
+    await SetData<CodeSubmissionData>(
       `/result/${category}/${problemId}/${participantId}/${Date.now()}`,
       { code }
     )

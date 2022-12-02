@@ -1,7 +1,7 @@
 import difference from 'lodash/difference'
 import maxBy from 'lodash/maxBy'
 import { SubgoalTreeData } from '../database/DataBaseDataTypes'
-import { GetData2 } from '../database/DataBaseRef'
+import { GetData } from '../database/DataBaseRef'
 import { Subgoal } from '../dataType/subgoal'
 import { Get } from '../HttpResponse'
 import { GetSubgoalTreeParams, GetSubgoalTreeResults } from '../protocol/GetSubgoalTree'
@@ -9,7 +9,7 @@ import { GetSubgoalTreeParams, GetSubgoalTreeResults } from '../protocol/GetSubg
 type SubgoalNode = GetSubgoalTreeResults['tree']['children'][number]
 
 export const getSubgoalTreeController = Get<GetSubgoalTreeParams, GetSubgoalTreeResults>(async (params) => {
-  const snapshot = await GetData2<SubgoalTreeData>(`/cs101_sample_code/${params.lectureName}/${params.fileName.split('.')[0]}/subgoalTree`)
+  const snapshot = await GetData<SubgoalTreeData>(`/cs101_sample_code/${params.lectureName}/${params.fileName.split('.')[0]}/subgoalTree`)
   const tree: SubgoalNode = {
     label: '',
     group: snapshot.subgoalNodes.reduce((g, n) => [...new Set([...g, ...n.group])], [] as number[]),

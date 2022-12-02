@@ -1,14 +1,14 @@
 import { ExampleData, SubgoalTreeData } from '../database/DataBaseDataTypes'
-import { GetData2, SetData2, UpdateData2 } from '../database/DataBaseRef'
+import { GetData, SetData, UpdateData } from '../database/DataBaseRef'
 import { Get } from '../HttpResponse'
 import { GetVotingListParams, GetVotingListResults } from '../protocol/GetVotingList'
 import { labelSelectService } from '../service/labelSelect'
 
 export const getVotingListController = Get<GetVotingListParams, GetVotingListResults>(async (params) => {
-  const snapshot = await GetData2<SubgoalTreeData>(
+  const snapshot = await GetData<SubgoalTreeData>(
     `/cs101_sample_code/${params.lectureName}/${params.fileName.split('.')[0]}/subgoalTree`
   )
-  const items = await GetData2<ExampleData['votingItems']>(
+  const items = await GetData<ExampleData['votingItems']>(
     `/cs101_sample_code/${params.lectureName}/${params.fileName.split('.')[0]}/votingItems/${params.participantId}`
   )
   if (items != null) {
@@ -28,12 +28,12 @@ export const getVotingListController = Get<GetVotingListParams, GetVotingListRes
       }
     })
 
-    await UpdateData2<SubgoalTreeData>(
+    await UpdateData<SubgoalTreeData>(
       `/cs101_sample_code/${params.lectureName}/${params.fileName.split('.')[0]}/subgoalTree`,
       snapshot
     )
 
-    await SetData2<ExampleData['votingItems']>(
+    await SetData<ExampleData['votingItems']>(
       `/cs101_sample_code/${params.lectureName}/${params.fileName.split('.')[0]}/votingItems/${params.participantId}`,
       votingItems
     )

@@ -1,6 +1,6 @@
 import { PythonSolutionTemplate, JavascriptSolutionTemplate } from '../constants/codeTemplates'
 import { CodeSubmissionData } from '../database/DataBaseDataTypes'
-import { SetData2 } from '../database/DataBaseRef'
+import { SetData } from '../database/DataBaseRef'
 import { Post } from '../HttpResponse'
 import { PostPracticeAnswerParams, PostPracticeAnswerResults } from '../protocol/PostPracticeAnswer'
 import { shellRunService } from '../service/shellRun'
@@ -10,7 +10,7 @@ type Result = [boolean, string, string, string]
 
 export const postPracticeAnswerController = Post<PostPracticeAnswerParams, PostPracticeAnswerResults>(
   async ({ code, problemId, codeType, category, participantId }) => {
-    await SetData2<CodeSubmissionData>(`/result/${category}/${problemId}/${participantId}/${Date.now()}`, { code })
+    await SetData<CodeSubmissionData>(`/result/${category}/${problemId}/${participantId}/${Date.now()}`, { code })
 
     const inFiles = await storageService.getFiles(`${category}/${problemId}/in/`)
     const outFiles = await storageService.getFiles(`${category}/${problemId}/out/`)

@@ -1,5 +1,5 @@
 import { ExperimentData } from '../database/DataBaseDataTypes'
-import { GetData2 } from '../database/DataBaseRef'
+import { GetData } from '../database/DataBaseRef'
 import { Get } from '../HttpResponse'
 import {
   GetParticipationAvailabilityParams,
@@ -10,7 +10,7 @@ export const getParticipationAvailabilityController = Get<
   GetParticipationAvailabilityParams,
   GetParticipationAvailabilityResults
 >(async () => {
-  const snapshot = await GetData2<ExperimentData>(`/experiment`)
+  const snapshot = await GetData<ExperimentData>(`/experiment`)
 
   const maxParticipantNum: number = snapshot.group.maxParticipantNum ?? 40
   const participants = snapshot.participants ?? []
