@@ -12,10 +12,9 @@ cd frontend
 yarn install
 
 # setup dependencies of backend project
-# make sure you use npm instead of yarn
 cd ..
 cd backend
-npm install
+yarn install
 
 # add environemnts and secrets files
 cd environments
@@ -47,7 +46,7 @@ Backend
 ```sh
 cd backend
 # for staging server, run
-npm start:staging
+yarn start:staging
 # for production server, run
-npm start
+yarn start
 ```
