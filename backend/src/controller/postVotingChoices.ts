@@ -1,21 +1,17 @@
 import { SubgoalTreeData } from '../database/DataBaseDataTypes'
-import { GetData2, SetData2, UpdateData2 } from '../database/DataBaseRef'
+import { GetData, SetData, UpdateData } from '../database/DataBaseRef'
 import { Post } from '../HttpResponse'
 import { PostVotingChoicesParams, PostVotingChoicesResults, VotingChoice } from '../protocol/PostVotingChoices'
 
 export const postVotingChoicesController = Post<PostVotingChoicesParams, PostVotingChoicesResults>(
   async (params) => {
-    await SetData2<VotingChoice[]>(
+    await SetData<VotingChoice[]>(
       `/cs101_sample_code/${params.lectureName}/${params.fileName.split('.')[0]}/choiceList/${params.participantId}`,
       params.votingChoices
     )
-    const snapshot = await GetData2<SubgoalTreeData>(
+    const snapshot = await GetData<SubgoalTreeData>(
       `/cs101_sample_code/${params.lectureName}/${params.fileName.split('.')[0]}/subgoalTree`
     )
-
-    if (snapshot === null) {
-      throw new Error('No snapshot')
-    }
 
     const updatedHierarchy = snapshot
     params.votingChoices.forEach(choice => {
@@ -38,7 +34,7 @@ export const postVotingChoicesController = Post<PostVotingChoicesParams, PostVot
     })
     updatedHierarchy.voteCnt += 1
 
-    await UpdateData2<SubgoalTreeData>(
+    await UpdateData<SubgoalTreeData>(
       `/cs101_sample_code/${params.lectureName}/${params.fileName.split('.')[0]}/subgoalTree`,
       updatedHierarchy
     )

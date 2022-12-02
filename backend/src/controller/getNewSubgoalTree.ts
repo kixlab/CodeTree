@@ -1,5 +1,5 @@
 import { SubgoalNodeData, SubgoalsData, SubgoalTreeData } from '../database/DataBaseDataTypes'
-import { GetData2, SetData2 } from '../database/DataBaseRef'
+import { GetData, SetData } from '../database/DataBaseRef'
 import { Subgoal } from '../dataType/subgoal'
 import { Get } from '../HttpResponse'
 import { GetNewSubgoalTreeParams, GetNewSubgoalTreeResults } from '../protocol/GetNewSubgoalTree'
@@ -9,7 +9,7 @@ import { collapseDuplicateSubgoals, filterGoalsAboveThreshold } from '../service
 
 export const getNewSubgoalTreeController = Get<GetNewSubgoalTreeParams, GetNewSubgoalTreeResults>(
   async (params) => {
-      const snapshot = await GetData2<SubgoalsData>(
+      const snapshot = await GetData<SubgoalsData>(
         `/cs101_sample_code/${params.lectureName}/${params.fileName.split('.')[0]}/subgoals`
       )
       const subgoals: Subgoal[] = []
@@ -38,7 +38,7 @@ export const getNewSubgoalTreeController = Get<GetNewSubgoalTreeParams, GetNewSu
         group: Array.from(subgoal.steps).sort((a, b) => a - b),
       }))
 
-      await SetData2<SubgoalTreeData>(
+      await SetData<SubgoalTreeData>(
         `/cs101_sample_code/${params.lectureName}/${params.fileName.split('.')[0]}/subgoalTree`,
         {
           subgoalNodes,
