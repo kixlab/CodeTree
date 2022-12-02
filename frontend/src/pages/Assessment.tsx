@@ -1,175 +1,82 @@
-import React from 'react'
-import { RouteComponentProps } from 'react-router-dom'
+import React, { useCallback } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import CodeEditor from '../components/CodeEditor'
-import Header from '../components/Header/Header'
+import { Page } from '../components/Page'
 import ProblemContainer from '../components/ProblemContainer'
-import TaskContainer from '../components/TaskContainer/TaskContainer'
+import { TaskContainer } from '../components/TaskContainer'
 import { SERVER_ADDRESS } from '../environments/Configuration'
-import { GetProblemMarkDownParams, GetProblemMarkDownResults } from '../protocol/GetProblemMarkDown'
+import { useConfirmBeforeLeave } from '../hooks/useConfirmBeforeLeave'
+import { useProblem } from '../hooks/useProblem'
 import { PostAssessmentCodeParams, PostAssessmentCodeResults } from '../protocol/PostAssessmentCode'
-import { getId, ID_NOT_FOUND, nextStage, shouldMoveStage } from '../shared/ExperimentHelper'
-import { Get, Post } from '../shared/HttpRequest'
+import { getId, ID_NOT_FOUND, nextStage } from '../shared/ExperimentHelper'
+import { Post2 } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 import { getProblemNumber } from '../shared/Utils'
 import { InstructionTask } from '../templates/InstructionTask'
 
-interface MatchParams {
+type MatchParams = {
   lecture: string
   fileName: string
 }
 
-interface State {
-  problem: string
-  code: string
-  isSubmitting: boolean
-}
+export function Assessment() {
+  const { lecture, fileName } = useParams<MatchParams>()
+  const problem = useProblem(lecture, fileName)
+  const [isSubmitting, setIsSubmitting] = React.useState(false)
+  const [code, setCode] = React.useState('')
+  const navigate = useNavigate()
 
-class Assessment extends React.Component<RouteComponentProps<MatchParams>, State> {
-  constructor(props: RouteComponentProps<MatchParams>) {
-    super(props)
-    this.state = {
-      problem: '',
-      code: '',
-      isSubmitting: false,
-    }
-  }
+  useConfirmBeforeLeave()
 
-  componentDidMount() {
-    this.getProblem()
-    if (shouldMoveStage()) {
-      this.props.history.push(nextStage())
-    }
-
-    window.addEventListener('beforeunload', onBeforeUnload)
-  }
-
-  componentDidUpdate(prevProps: RouteComponentProps<MatchParams>) {
-    if (
-      prevProps.match.params.fileName !== this.props.match.params.fileName ||
-      prevProps.match.params.lecture !== this.props.match.params.lecture
-    ) {
-      this.getProblem()
-      if (shouldMoveStage()) {
-        this.props.history.push(nextStage())
-      }
-    }
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('beforeunload', onBeforeUnload)
-  }
-
-  onCodeChange = (code: string) => {
-    this.setState({
-      code,
-    })
-  }
-
-  moveOnToNextProblem = () => {
-    if (window.confirm(getString('assessment_confirm_submit'))) {
-      this.submit()
-    }
-  }
-
-  submit = () => {
-    if (this.state.isSubmitting) {
+  const submit = useCallback(async () => {
+    if (isSubmitting || !lecture || !fileName) {
       return
     }
-    this.setState({
-      isSubmitting: true,
+    setIsSubmitting(true)
+    await Post2<PostAssessmentCodeParams, PostAssessmentCodeResults>(`${SERVER_ADDRESS}/postAssessmentCode`, {
+      participantId: getId() ?? ID_NOT_FOUND,
+      lectureName: lecture,
+      fileName,
+      code,
     })
-    Post<PostAssessmentCodeParams, PostAssessmentCodeResults>(
-      `${SERVER_ADDRESS}/postAssessmentCode`,
-      {
-        participantId: getId() ?? ID_NOT_FOUND,
-        lectureName: this.props.match.params.lecture,
-        fileName: this.props.match.params.fileName,
-        code: this.state.code,
-      },
-      () => {
-        this.setState(
-          {
-            isSubmitting: false,
-            code: '',
-          },
-          () => this.props.history.push(nextStage())
-        )
-      },
-      error => {
-        this.setState(
-          {
-            isSubmitting: false,
-          },
-          () => window.alert(error.message)
-        )
-      }
-    )
-  }
+    setIsSubmitting(false)
+    setCode('')
+    navigate(nextStage())
+  }, [code, fileName, isSubmitting, lecture, navigate])
 
-  getProblem = () => {
-    Get<GetProblemMarkDownParams, GetProblemMarkDownResults>(
-      `${SERVER_ADDRESS}/getProblemMarkDown`,
-      {
-        lectureName: this.props.match.params.lecture,
-        fileName: this.props.match.params.fileName,
-      },
-      result => {
-        this.setState({
-          problem: result.problem,
-        })
-      },
-      error => window.alert(error.message)
-    )
-  }
+  const moveOnToNextProblem = useCallback(() => {
+    if (window.confirm(getString('assessment_confirm_submit'))) {
+      submit()
+    }
+  }, [submit])
 
-  onTimeout = () => {
+  const onTimeout = useCallback(() => {
     window.alert(getString('assessment_alert_time_up'))
-    this.submit()
-  }
+    submit()
+  }, [submit])
 
-  render() {
-    return (
-      <div>
-        <Header timerKey={this.props.match.params.fileName} onTimeOut={this.onTimeout} />
-        <InstructionTask
-          instruction={
-            <TaskContainer
-              instruction={
-                <div>
-                  <h1>{`${getString('assessment_title')} ${getProblemNumber()}`}</h1>
-                  <div>{getString('assessment_instruction')}</div>
-                  <ProblemContainer problem={this.state.problem} />
-                </div>
-              }
-              task={<div />}
-              footer={
-                <button
-                  className="submit"
-                  type="submit"
-                  onClick={this.moveOnToNextProblem}
-                  disabled={this.state.isSubmitting}
-                >
-                  {getString('assessment_action_button')}
-                </button>
-              }
-            />
-          }
-          task={
-            <CodeEditor
-              code={this.state.code}
-              editorKey={this.props.match.params.fileName}
-              onCodeChange={this.onCodeChange}
-            />
-          }
-        />
-      </div>
-    )
-  }
+  return (
+    <Page onTimeOut={onTimeout}>
+      <InstructionTask
+        instruction={
+          <TaskContainer
+            instruction={
+              <div>
+                <h1>{`${getString('assessment_title')} ${getProblemNumber()}`}</h1>
+                <div>{getString('assessment_instruction')}</div>
+                <ProblemContainer problem={problem} />
+              </div>
+            }
+            task={<div />}
+            footer={
+              <button className="submit" type="submit" onClick={moveOnToNextProblem} disabled={isSubmitting}>
+                {getString('assessment_action_button')}
+              </button>
+            }
+          />
+        }
+        task={<CodeEditor code={code} editorKey={fileName} onCodeChange={setCode} />}
+      />
+    </Page>
+  )
 }
-
-function onBeforeUnload(event: BeforeUnloadEvent) {
-  event.returnValue = getString('assessment_alert_back')
-  return getString('assessment_alert_back')
-}
-
-export default Assessment

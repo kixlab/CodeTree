@@ -63,7 +63,7 @@ const Container = styled.div`
   vertical-align: top;
 
   & > div {
-    height: 100%;
+    height: calc(100% - 25px);
     font-size: 22px;
 
     .cm-editor {

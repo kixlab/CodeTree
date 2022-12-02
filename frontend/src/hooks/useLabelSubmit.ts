@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { CheckBoxAvailability, SubgoalNode } from '../pages/Label'
 import { PostSubgoalsParams, PostSubgoalsResults, Subgoal as SubgoalWithoutId } from '../protocol/PostSubgoals'
@@ -8,8 +8,9 @@ import { Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 import { saveSubgoals } from '../shared/Utils'
 
-export function useLabelSubmit(lecture: string, fileName: string, history: RouteComponentProps['history']) {
+export function useLabelSubmit(lecture: string | undefined, fileName: string | undefined) {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const navigate = useNavigate()
 
   const submit = useCallback(
     (checkBoxAvailability: CheckBoxAvailability[], subgoals: SubgoalNode[]) => () => {
@@ -26,35 +27,37 @@ export function useLabelSubmit(lecture: string, fileName: string, history: Route
         return
       }
 
-      setIsSubmitting(true)
+      if (fileName && lecture) {
+        setIsSubmitting(true)
 
-      saveSubgoals(subgoals, fileName)
+        saveSubgoals(subgoals, fileName)
 
-      Post<PostSubgoalsParams, PostSubgoalsResults>(
-        `${SERVER_ADDRESS}/postSubgoals`,
-        {
-          participantId: getId() ?? ID_NOT_FOUND,
-          lectureName: lecture,
-          fileName,
-          subgoals: subgoals.map(
-            subgoal =>
-              ({
-                label: subgoal.label,
-                group: subgoal.group,
-              } as SubgoalWithoutId)
-          ),
-        },
-        () => {
-          setIsSubmitting(false)
-          history.push(nextStage())
-        },
-        error => {
-          setIsSubmitting(false)
-          window.alert(error.message)
-        }
-      )
+        Post<PostSubgoalsParams, PostSubgoalsResults>(
+          `${SERVER_ADDRESS}/postSubgoals`,
+          {
+            participantId: getId() ?? ID_NOT_FOUND,
+            lectureName: lecture,
+            fileName,
+            subgoals: subgoals.map(
+              subgoal =>
+                ({
+                  label: subgoal.label,
+                  group: subgoal.group,
+                } as SubgoalWithoutId)
+            ),
+          },
+          () => {
+            setIsSubmitting(false)
+            navigate(nextStage())
+          },
+          error => {
+            setIsSubmitting(false)
+            window.alert(error.message)
+          }
+        )
+      }
     },
-    [fileName, history, lecture]
+    [fileName, lecture, navigate]
   )
 
   return { isSubmitting, submit }

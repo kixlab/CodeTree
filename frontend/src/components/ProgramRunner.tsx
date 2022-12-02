@@ -48,7 +48,7 @@ const ButtonStyle = css`
 
 const RunButton = styled.button`
   ${ButtonStyle};
-  background: ${Color.Gray60};
+  background: ${Color.Gray75};
   border-right: 1px solid ${Color.Gray30};
 
   &:hover {

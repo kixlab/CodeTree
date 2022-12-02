@@ -11,49 +11,65 @@ interface Props {
   explanations?: string[]
   checkBoxAvailability?: CheckBoxAvailability[]
   selectable?: boolean
+  lineHeight?: number
   onClickLine?: (id: number, checked: boolean) => void
 }
 
-export function CodeGrouper({ code, explanations = [], checkBoxAvailability, selectable = false, onClickLine }: Props) {
+export function CodeGrouper({
+  code,
+  explanations = [],
+  checkBoxAvailability,
+  selectable = false,
+  lineHeight = CODE_LINE_HEIGHT,
+  onClickLine,
+}: Props) {
   return (
     <Container>
-      {code.split('\n').map((line, i) => {
-        const checked = checkBoxAvailability?.[i] === CheckBoxAvailability.CHECKED
-        return (
-          <Line
-            key={line}
-            checkState={checkBoxAvailability?.[i]}
-            selectable={selectable}
-            lineHeight={explanations[i] != null ? CODE_LINE_HEIGHT : CODE_LINE_HEIGHT - 16}
-            onClick={() => {
-              if (checkBoxAvailability?.[i] !== CheckBoxAvailability.UNAVAILABLE) onClickLine?.(i, !checked)
-            }}
-          >
-            <Text>
-              {explanations[i] && <Explanation indent={line.split('\t').length - 1}>{explanations[i]}</Explanation>}
-              <CodeMirror code={line} />
-            </Text>
-          </Line>
-        )
-      })}
+      <Scrollable>
+        {code.split('\n').map((line, i) => {
+          const checked = checkBoxAvailability?.[i] === CheckBoxAvailability.CHECKED
+          const key = `${i},${line.slice(-5)}`
+          return (
+            <Line
+              key={key}
+              checkState={checkBoxAvailability?.[i]}
+              selectable={selectable}
+              lineHeight={lineHeight}
+              onClick={() => {
+                if (checkBoxAvailability?.[i] !== CheckBoxAvailability.UNAVAILABLE) onClickLine?.(i, !checked)
+              }}
+            >
+              <Text>
+                {explanations[i] && <Explanation indent={line.split('\t').length - 1}>{explanations[i]}</Explanation>}
+                <CodeMirror code={line} />
+              </Text>
+            </Line>
+          )
+        })}
+      </Scrollable>
     </Container>
   )
 }
 
 const Container = styled.div`
+  overflow: auto;
+`
+
+const Scrollable = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  width: max-content;
+  min-width: 100%;
 `
 
 const Line = styled.button<{ checkState?: CheckBoxAvailability; selectable: boolean; lineHeight: number }>`
   ${({ checkState, selectable, lineHeight }) => css`
     padding: 6px;
     cursor: ${selectable ? (checkState !== CheckBoxAvailability.UNAVAILABLE ? 'pointer' : 'not-allowed') : 'text'};
-    border: 1px solid ${Color.Gray15};
+    border: none;
+    border-bottom: 1px solid ${Color.Gray15};
     background: ${checkState === CheckBoxAvailability.CHECKED ? Color.OrangeLight : 'none'};
-    width: 100%;
+    justify-self: stretch;
     height: ${lineHeight}px;
     text-align: left;
     display: flex;

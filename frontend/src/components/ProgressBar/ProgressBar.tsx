@@ -1,6 +1,6 @@
 import React from 'react'
 import './ProgressBar.scss'
-import { getString } from '../../../shared/Localization'
+import { getString } from '../../shared/Localization'
 
 interface Props {
   currentIndex: number

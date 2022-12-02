@@ -1,25 +1,22 @@
 import { useEffect, useState } from 'react'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { GetMyProgramCodeParams, GetMyProgramCodeResults } from '../protocol/GetMyProgramCode'
+import { getId, ID_NOT_FOUND } from '../shared/ExperimentHelper'
 import { Get } from '../shared/HttpRequest'
 
-export function useMyCode(category: string, problemId: string, participantId: string) {
+export function useMyCode(lectureName: string | undefined, problemId: string | undefined) {
   const [code, setCode] = useState('')
+  const participantId = getId() ?? ID_NOT_FOUND
 
   useEffect(() => {
-    Get<GetMyProgramCodeParams, GetMyProgramCodeResults>(
-      `${SERVER_ADDRESS}/getMyProgramCode`,
-      {
-        category,
+    if (lectureName && problemId) {
+      Get<GetMyProgramCodeParams, GetMyProgramCodeResults>(`${SERVER_ADDRESS}/getMyProgramCode`, {
+        category: lectureName,
         problemId,
         participantId,
-      },
-      result => {
-        setCode(result.code)
-      },
-      error => window.alert(error.message)
-    )
-  }, [problemId, category, participantId])
+      }).then(result => setCode(result.code))
+    }
+  }, [problemId, lectureName, participantId])
 
   return code
 }

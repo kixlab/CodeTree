@@ -1,14 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import FormatContainer from '../components/FormatContainer/FormatContainer'
-import Header from '../components/Header/Header'
+import { Page } from '../components/Page'
 import { getGroup, getId, nextStage } from '../shared/ExperimentHelper'
 import { getString } from '../shared/Localization'
 
 export default function Contact() {
   return (
-    <div>
-      <Header />
+    <Page>
       <FormatContainer>
         <h1>{getString('contact_title')}</h1>
         {!getId() && (
@@ -49,6 +48,6 @@ export default function Contact() {
           </div>
         )}
       </FormatContainer>
-    </div>
+    </Page>
   )
 }

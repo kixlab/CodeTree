@@ -1,71 +1,54 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import React, { useCallback, useEffect, useState } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import CodeEditor from '../components/CodeEditor'
-import Header from '../components/Header/Header'
-import OutputTerminal from '../components/OutputTerminal'
+import { OutputTerminal } from '../components/OutputTerminal'
+import { Page } from '../components/Page'
 import ProblemContainer from '../components/ProblemContainer'
 import { ProgramRunner } from '../components/ProgramRunner'
-import TaskContainer from '../components/TaskContainer/TaskContainer'
+import { TaskContainer } from '../components/TaskContainer'
 import { SERVER_ADDRESS } from '../environments/Configuration'
-import { GetProblemMarkDownParams, GetProblemMarkDownResults } from '../protocol/GetProblemMarkDown'
-import { GetProblemSkeletonParams, GetProblemSkeletonResults } from '../protocol/GetProblemSkeleton'
+import { useConfirmBeforeLeave } from '../hooks/useConfirmBeforeLeave'
+import { useProblem } from '../hooks/useProblem'
+import { useSkeletonCode } from '../hooks/useSkeletonCode'
 import { PostPracticeAnswerParams, PostPracticeAnswerResults } from '../protocol/PostPracticeAnswer'
 import { PostPracticeCodeParams, PostPracticeCodeResults } from '../protocol/PostPracticeCode'
 import { Color } from '../shared/Common'
 import { getId, ID_NOT_FOUND, nextStage } from '../shared/ExperimentHelper'
-import { Get, Post } from '../shared/HttpRequest'
+import { Post, Post2 } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 import { InstructionTask } from '../templates/InstructionTask'
 
-interface MatchParams {
+type MatchParams = {
   category: string
   problemId: string
 }
 
-function Practice(props: RouteComponentProps<MatchParams>) {
-  const [problem, setProblem] = useState('')
+export function Practice() {
+  const { category, problemId } = useParams<MatchParams>()
+  const problem = useProblem(category, problemId)
   const [code, setCode] = useState('')
-  const [programOutput, setProgramOutput] = useState(getString('practice_terminal_output'))
+  const [programOutput, setProgramOutput] = useState<null | PostPracticeAnswerResults['output']>(null)
   const [outputCorrect, setOutputCorrect] = useState<boolean | null>(null)
   const [isRunning, setIsRunning] = useState(false)
   const [isJudging, setIsJudging] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [mode, setMode] = useState<'python' | 'javascript' | 'cpp'>('python')
+  const { skeletonCode } = useSkeletonCode(category, problemId, mode)
+  const navigate = useNavigate()
 
-  const { category, problemId } = props.match.params
+  useConfirmBeforeLeave()
 
-  useEffect(() => {
-    Get<GetProblemMarkDownParams, GetProblemMarkDownResults>(
-      `${SERVER_ADDRESS}/getProblemMarkDown`,
-      {
-        lectureName: category,
-        fileName: problemId,
-      },
-      result => {
-        setProblem(result.problem)
-      },
-      error => window.alert(error.message)
-    )
-
-    window.addEventListener('beforeunload', onBeforeUnload)
-
-    return () => {
-      window.removeEventListener('beforeunload', onBeforeUnload)
-    }
-  }, [category, problemId])
-
-  const run = useCallback(() => {
-    if (code.trim().length <= 0) {
+  const run = useCallback(async () => {
+    if (code.trim().length <= 0 || !category || !problemId) {
       return
     }
 
     setIsRunning(true)
-    setProgramOutput(getString('practice_terminal_running'))
     setOutputCorrect(null)
 
-    Post<PostPracticeAnswerParams, PostPracticeAnswerResults>(
+    const { output, correctCases, testcases } = await Post2<PostPracticeAnswerParams, PostPracticeAnswerResults>(
       `${SERVER_ADDRESS}/postPracticeRun`,
       {
         code,
@@ -73,31 +56,22 @@ function Practice(props: RouteComponentProps<MatchParams>) {
         problemId,
         codeType: mode,
         participantId: getId() ?? ID_NOT_FOUND,
-      },
-      result => {
-        setIsRunning(false)
-        setProgramOutput(result.output)
-        setOutputCorrect(result.correct)
-      },
-      error => {
-        console.error(error)
-        setIsRunning(false)
-        setProgramOutput('program crashed.')
-        setOutputCorrect(false)
       }
     )
+    setIsRunning(false)
+    setProgramOutput(output)
+    setOutputCorrect(correctCases === testcases)
   }, [category, code, mode, problemId])
 
-  const judge = useCallback(() => {
-    if (code.trim().length <= 0) {
+  const judge = useCallback(async () => {
+    if (code.trim().length <= 0 || !category || !problemId) {
       return
     }
 
     setIsJudging(true)
-    setProgramOutput(getString('practice_terminal_running'))
     setOutputCorrect(null)
 
-    Post<PostPracticeAnswerParams, PostPracticeAnswerResults>(
+    const { output, correctCases, testcases } = await Post2<PostPracticeAnswerParams, PostPracticeAnswerResults>(
       `${SERVER_ADDRESS}/postPracticeAnswer`,
       {
         code,
@@ -105,22 +79,18 @@ function Practice(props: RouteComponentProps<MatchParams>) {
         problemId,
         codeType: mode,
         participantId: getId() ?? ID_NOT_FOUND,
-      },
-      result => {
-        setIsJudging(false)
-        setProgramOutput(result.output)
-        setOutputCorrect(result.correct)
-      },
-      error => {
-        console.error(error)
-        setIsJudging(false)
-        setProgramOutput('program crashed.')
-        setOutputCorrect(false)
       }
     )
+    setIsJudging(false)
+    setProgramOutput(output)
+    setOutputCorrect(correctCases === testcases)
   }, [category, code, mode, problemId])
 
   const submit = useCallback(() => {
+    if (code.trim().length <= 0 || !category || !problemId) {
+      return
+    }
+
     setIsSubmitting(true)
     Post<PostPracticeCodeParams, PostPracticeCodeResults>(
       `${SERVER_ADDRESS}/postPracticeCode`,
@@ -132,42 +102,32 @@ function Practice(props: RouteComponentProps<MatchParams>) {
       },
       () => {
         setIsSubmitting(false)
-        props.history.push(nextStage())
+        navigate(nextStage())
       },
       error => {
         window.alert(error.message)
         setIsSubmitting(false)
       }
     )
-  }, [category, code, problemId, props.history])
+  }, [category, code, navigate, problemId])
 
   useEffect(() => {
-    if (mode === 'cpp') {
-      setCode('')
-      return
-    }
-
-    Get<GetProblemSkeletonParams, GetProblemSkeletonResults>(
-      `${SERVER_ADDRESS}/getProblemSkeleton`,
-      {
-        category,
-        problemId,
-        codeType: mode,
-      },
-      result => {
-        setCode(result.code)
-      },
-      error => window.alert(error.message)
-    )
-  }, [category, mode, problemId])
+    setCode(skeletonCode)
+  }, [skeletonCode])
 
   return (
-    <>
-      <Header />
+    <Page>
       <InstructionTask
         instruction={
           <TaskContainer
-            instruction={<ProblemContainer problem={problem} />}
+            instruction={
+              <>
+                <Title>{getString('practice_title')}</Title>
+                {getString('practice_instruction')}
+                <br />
+                <ProblemContainer problem={problem} />
+              </>
+            }
             task={
               <TaskWrapper>
                 {outputCorrect !== null ? (
@@ -175,7 +135,21 @@ function Practice(props: RouteComponentProps<MatchParams>) {
                     {outputCorrect ? getString('practice_result_correct') : getString('practice_result_incorrect')}
                   </Result>
                 ) : null}
-                <OutputTerminal output={programOutput} />
+                <OutputTerminal>
+                  {isRunning
+                    ? getString('practice_terminal_running')
+                    : programOutput === null
+                    ? getString('practice_terminal_output')
+                    : programOutput.map(({ input, output, expected }, i) => {
+                        return (
+                          <div key={i}>
+                            <span>{input}</span>
+                            <span>{output}</span>
+                            <span>{expected}</span>
+                          </div>
+                        )
+                      })}
+                </OutputTerminal>
               </TaskWrapper>
             }
             footer={
@@ -192,7 +166,7 @@ function Practice(props: RouteComponentProps<MatchParams>) {
         }
         task={<CodeEditor code={code} onCodeChange={setCode} mode={mode} onChangeMode={setMode} />}
       />
-    </>
+    </Page>
   )
 }
 
@@ -209,9 +183,9 @@ const Result = styled.div<{ correct: boolean }>`
   `}
 `
 
-function onBeforeUnload(event: BeforeUnloadEvent) {
-  event.returnValue = getString('practice_alert_back')
-  return getString('practice_alert_back')
-}
-
-export default Practice
+const Title = styled.div`
+  font-size: 24px;
+  color: ${Color.Gray75};
+  font-weight: bold;
+  margin-bottom: 12px;
+`

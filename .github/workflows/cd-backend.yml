@@ -43,7 +43,7 @@ jobs:
 
       - name: Install Dependencies
         working-directory: ./backend
-        run: npm install
+        run: yarn install
 
       - name: zip create
         working-directory: ./backend

@@ -6,35 +6,37 @@ import { PostVotingChoicesParams, PostVotingChoicesResults } from '../protocol/P
 import { getId, ID_NOT_FOUND } from '../shared/ExperimentHelper'
 import { Post } from '../shared/HttpRequest'
 
-export function useVoteSubmit(lectureName: string, fileName: string) {
+export function useVoteSubmit(lectureName: string | undefined, fileName: string | undefined) {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const submit = useCallback(
     async (votingList: VotingItem[], choiceList: ChoiceState[]) => {
-      setIsSubmitting(true)
-      await Post<PostVotingChoicesParams, PostVotingChoicesResults>(
-        `${SERVER_ADDRESS}/postVotingChoices`,
-        {
-          lectureName,
-          fileName,
-          votingChoices: choiceList.map((choice, index) => {
-            const labels = votingList[index]?.labels?.filter?.((_, i) => choice.choice.includes(i)) ?? []
-            if (choice.choice.includes(-1)) {
-              labels.push(choice.newOption ?? '')
-            }
-            return {
-              id: choice.id,
-              labels,
-            }
-          }),
-          participantId: getId() ?? ID_NOT_FOUND,
-        },
-        () => {},
-        error => {
-          window.alert(error.message)
-        }
-      )
-      setIsSubmitting(false)
+      if (lectureName && fileName) {
+        setIsSubmitting(true)
+        await Post<PostVotingChoicesParams, PostVotingChoicesResults>(
+          `${SERVER_ADDRESS}/postVotingChoices`,
+          {
+            lectureName,
+            fileName,
+            votingChoices: choiceList.map((choice, index) => {
+              const labels = votingList[index]?.labels?.filter?.((_, i) => choice.choice.includes(i)) ?? []
+              if (choice.choice.includes(-1)) {
+                labels.push(choice.newOption ?? '')
+              }
+              return {
+                id: choice.id,
+                labels,
+              }
+            }),
+            participantId: getId() ?? ID_NOT_FOUND,
+          },
+          () => {},
+          error => {
+            window.alert(error.message)
+          }
+        )
+        setIsSubmitting(false)
+      }
     },
     [fileName, lectureName]
   )

@@ -1,23 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { GetProblemMarkDownParams, GetProblemMarkDownResults } from '../protocol/GetProblemMarkDown'
 import { Get } from '../shared/HttpRequest'
 
-export function useProblem(lectureName: string, fileName: string) {
+export function useProblem(lectureName: string | undefined, fileName: string | undefined) {
   const [problem, setProblem] = useState('')
 
   useEffect(() => {
-    Get<GetProblemMarkDownParams, GetProblemMarkDownResults>(
-      `${SERVER_ADDRESS}/getProblemMarkDown`,
-      {
+    if (lectureName && fileName) {
+      Get<GetProblemMarkDownParams, GetProblemMarkDownResults>(`${SERVER_ADDRESS}/getProblemMarkDown`, {
         lectureName,
         fileName,
-      },
-      result => {
-        setProblem(result.problem)
-      },
-      error => window.alert(error.message)
-    )
+      }).then(result => setProblem(result.problem))
+    }
   }, [fileName, lectureName])
 
   return problem

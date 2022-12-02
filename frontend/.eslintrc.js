@@ -54,6 +54,7 @@ module.exports = {
     'no-restricted-properties': 'off',
     'class-methods-use-this': 'off',
     'no-nested-ternary': 'off',
+    'react/no-unused-prop-types': 1,
   },
   settings: {
     react: {

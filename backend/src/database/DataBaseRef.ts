@@ -10,7 +10,7 @@ export async function GetData<T>(path: string, handler: (snapshot: T) => void, o
     .catch(onError || (err => console.log(err)))
 }
 
-export async function GetData2<T>(path: string): Promise<T | null> {
+export async function GetData2<T>(path: string): Promise<T> {
   const snapshot = await firebaseAdmin
     .database()
     .ref(path)
@@ -18,8 +18,9 @@ export async function GetData2<T>(path: string): Promise<T | null> {
     .then(snapshot => snapshot.val() as T)
   if (snapshot) {
     return snapshot
+  } else {
+    throw new Error(`데이터베이스에서 ${path}를 찾을 수 없습니다.`)
   }
-  return null
 }
 
 export async function UpdateData<T>(

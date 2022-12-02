@@ -1,22 +1,19 @@
-import { useEffectOnce } from 'react-use'
-import { useState } from 'react'
-import { GetVotingListParams, GetVotingListResults, VotingItem } from '../protocol/GetVotingList'
+import { useEffect, useState } from 'react'
 import { SERVER_ADDRESS } from '../environments/Configuration'
-import { Get } from '../shared/HttpRequest'
+import { GetVotingListParams, GetVotingListResults, VotingItem } from '../protocol/GetVotingList'
 import { getId, ID_NOT_FOUND } from '../shared/ExperimentHelper'
+import { Get } from '../shared/HttpRequest'
 
-export function useVotingList(lectureName: string, fileName: string) {
+export function useVotingList(lectureName: string | undefined, fileName: string | undefined) {
   const [votingList, setVotingList] = useState<VotingItem[]>([])
 
-  useEffectOnce(() => {
-    Get<GetVotingListParams, GetVotingListResults>(
-      `${SERVER_ADDRESS}/getVotingList`,
-      {
+  useEffect(() => {
+    if (lectureName && fileName) {
+      Get<GetVotingListParams, GetVotingListResults>(`${SERVER_ADDRESS}/getVotingList`, {
         lectureName,
         fileName,
         participantId: getId() ?? ID_NOT_FOUND,
-      },
-      result => {
+      }).then(result => {
         setVotingList(
           result.votingItems.map(item => {
             return {
@@ -27,10 +24,9 @@ export function useVotingList(lectureName: string, fileName: string) {
             }
           })
         )
-      },
-      error => window.alert(error.message)
-    )
-  })
+      })
+    }
+  }, [fileName, lectureName])
 
   return { votingList }
 }

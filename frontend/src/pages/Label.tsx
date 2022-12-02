@@ -1,24 +1,20 @@
-import React, { useEffect } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
 import styled from '@emotion/styled'
+import React, { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { ActionButton } from '../components/ActionButton'
 import { CodeGrouper } from '../components/CodeGrouper'
-import Header from '../components/Header/Header'
 import { HierarchyVisualizer } from '../components/HierarchyVisualizer'
-import ProblemContainer from '../components/ProblemContainer'
+import { Page } from '../components/Page'
 import { SubgoalContainer } from '../components/SubgoalContainer'
-import TaskContainer from '../components/TaskContainer/TaskContainer'
-import { useExplanation } from '../hooks/useExplanation'
+import { TaskContainer } from '../components/TaskContainer'
 import { useGroupSubgoals } from '../hooks/useGroupSubgoals'
 import { useLabelSubmit } from '../hooks/useLabelSubmit'
-import { useProblem } from '../hooks/useProblem'
+import { useMyCode } from '../hooks/useMyCode'
 import { getString } from '../shared/Localization'
-import { getExampleNumber } from '../shared/Utils'
 import { InstructionTask } from '../templates/InstructionTask'
 import { LinearLayout } from '../templates/LinearLayout'
-import { useMyCode } from '../hooks/useMyCode'
-import { getId, ID_NOT_FOUND } from '../shared/ExperimentHelper'
 
-interface MatchParams {
+type MatchParams = {
   lecture: string
   fileName: string
 }
@@ -53,11 +49,9 @@ function useOnExitAlert() {
   }, [])
 }
 
-function Label(props: RouteComponentProps<MatchParams>) {
-  const { lecture, fileName } = props.match.params
-  const problem = useProblem(lecture, fileName)
-  const code = useMyCode(lecture, fileName, getId() ?? ID_NOT_FOUND)
-  const { explanations } = useExplanation(lecture, fileName)
+function Label() {
+  const { lecture, fileName } = useParams<MatchParams>()
+  const code = useMyCode(lecture, fileName)
   const {
     addSubgoal,
     removeSubgoal,
@@ -69,21 +63,19 @@ function Label(props: RouteComponentProps<MatchParams>) {
     checkBoxAvailability,
   } = useGroupSubgoals(code.split('\n').length)
   useOnExitAlert()
-  const { submit, isSubmitting } = useLabelSubmit(lecture, fileName, props.history)
+  const { submit, isSubmitting } = useLabelSubmit(lecture, fileName)
 
   return (
-    <div>
-      <Header />
+    <Page>
       <InstructionTask
         instruction={
           <TaskContainer
             instruction={
               <div>
-                <h1>{`${getString('label_title')} ${getExampleNumber()}`}</h1>
+                <h1>{getString('label_title')}</h1>
                 <div>{getString('label_instruction')}</div>
                 <br />
                 <Warning>{getString('label_warning')}</Warning>
-                <ProblemContainer problem={problem} />
               </div>
             }
             task={
@@ -97,14 +89,9 @@ function Label(props: RouteComponentProps<MatchParams>) {
               />
             }
             footer={
-              <button
-                type="submit"
-                className="submit"
-                onClick={submit(checkBoxAvailability, subgoals)}
-                disabled={isSubmitting}
-              >
+              <ActionButton onClick={submit(checkBoxAvailability, subgoals)} disabled={isSubmitting}>
                 {getString('label_action_button')}
-              </button>
+              </ActionButton>
             }
           />
         }
@@ -113,7 +100,6 @@ function Label(props: RouteComponentProps<MatchParams>) {
             <HierarchyVisualizer subgoals={subgoals} />
             <CodeGrouper
               code={code}
-              explanations={explanations}
               checkBoxAvailability={checkBoxAvailability}
               selectable
               onClickLine={clickCheckBox}
@@ -121,7 +107,7 @@ function Label(props: RouteComponentProps<MatchParams>) {
           </LinearLayout>
         }
       />
-    </div>
+    </Page>
   )
 }
 

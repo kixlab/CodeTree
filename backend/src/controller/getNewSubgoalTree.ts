@@ -8,14 +8,10 @@ import { subgoalTreeGenService } from '../service/subgoalTreeGen'
 import { collapseDuplicateSubgoals, filterGoalsAboveThreshold } from '../service/subgoalTreeGen/utils'
 
 export const getNewSubgoalTreeController = Get<GetNewSubgoalTreeParams, GetNewSubgoalTreeResults>(
-  async (params, send) => {
-    try {
+  async (params) => {
       const snapshot = await GetData2<SubgoalsData>(
         `/cs101_sample_code/${params.lectureName}/${params.fileName.split('.')[0]}/subgoals`
       )
-      if (snapshot === null) {
-        throw new Error('No subgoals data found')
-      }
       const subgoals: Subgoal[] = []
       for (const key of Object.keys(snapshot)) {
         const userSubgoals = snapshot[key]
@@ -49,12 +45,6 @@ export const getNewSubgoalTreeController = Get<GetNewSubgoalTreeParams, GetNewSu
           voteCnt: 0,
         }
       )
-      send(200, { tree: tree.toString() })
-    } catch (e) {
-      send(500, {
-        message: '하위 목표를 불러오는 데에 실패하였습니다. 다시 시도해주세요.',
-        error: e,
-      })
-    }
+      return { tree: tree.toString() }
   }
 )

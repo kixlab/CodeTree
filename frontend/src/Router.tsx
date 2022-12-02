@@ -1,61 +1,50 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
-import loadable from '@loadable/component'
+import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom'
+import { Assessment } from './pages/Assessment'
+import Cognitive from './pages/Cognitive'
+import Consent from './pages/Consent'
+import Contact from './pages/Contact'
+import Demographic from './pages/Demographic'
+import { Instruction } from './pages/Instruction'
+import Label from './pages/Label'
+import LabelTutorial from './pages/LabelTutorial'
+import { Parsons } from './pages/Parsons'
+import { PersonalizedPresent } from './pages/PersonalizedPresent'
+import { PostTest } from './pages/PostTest'
+import { Practice } from './pages/Practice'
+import { PreTest } from './pages/PreTest'
+import PythonTutorial from './pages/PythonTutorial'
+import Survey from './pages/Survey'
+import VerbalAnalogy from './pages/VerbalAnalogy'
+import Vote from './pages/Vote'
+import { VoteTutorial } from './pages/VoteTutorial'
+import WorkedExample from './pages/WorkedExample'
+import WrapUp from './pages/WrapUp'
 
-const Contact = loadable(() => import('./pages/Contact'))
-const Instruction = loadable<any>(() => import('./pages/Instruction'))
-const PythonTutorial = loadable(() => import('./pages/PythonTutorial'))
-const Consent = loadable(() => import('./pages/Consent'))
-const Demographic = loadable(() => import('./pages/Demographic'))
-const PreTest = loadable<any>(() => import('./pages/PreTest'))
-const VerbalAnalogy = loadable(() => import('./pages/VerbalAnalogy'))
-const LabelTutorial = loadable(() => import('./pages/LabelTutorial'))
-const VoteTutorial = loadable(() => import('./pages/VoteTutorial'))
-const WorkedExample = loadable(() => import('./pages/WorkedExample'))
-const Label = loadable(() => import('./pages/Label'))
-const Vote = loadable(() => import('./pages/Vote'))
-const Practice = loadable(() => import('./pages/Practice'))
-const Assessment = loadable<any>(() => import('./pages/Assessment'))
-const Parsons = loadable<any>(() => import('./pages/Parsons'))
-const Cognitive = loadable<any>(() => import('./pages/Cognitive'))
-const PostTest = loadable<any>(() => import('./pages/PostTest'))
-const Survey = loadable(() => import('./pages/Survey'))
-const WrapUp = loadable(() => import('./pages/WrapUp'))
-const Present = loadable(() => import('./pages/Present'))
-const PersonalizedPresent = loadable(() => import('./pages/PersonalizedPresent'))
-function RedirectComponent() {
-  return <Redirect to="/" />
-}
-
-function Router() {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Contact} />
-        <Route exact path="/instruction" component={Instruction} />
-        <Route exact path="/python-tutorial" component={PythonTutorial} />
-        <Route exact path="/consent/" component={Consent} />
-        <Route exact path="/demographic" component={Demographic} />
-        <Route exact path="/pretest" component={PreTest} />
-        <Route exact path="/verbal-analogy" component={VerbalAnalogy} />
-        <Route exact path="/label-tutorial" component={LabelTutorial} />
-        <Route exact path="/vote-tutorial" component={VoteTutorial} />
-        <Route exact path="/worked-example/:lecture/:fileName" component={WorkedExample} />
-        <Route exact path="/label/:lecture/:fileName" component={Label} />
-        <Route exact path="/vote/:lecture/:fileName" component={Vote} />
-        <Route exact path="/practice/:category/:problemId" component={Practice} />
-        <Route exact path="/assessment/:lecture/:fileName" component={Assessment} />
-        <Route exact path="/parsons/:lecture/:fileName" component={Parsons} />
-        <Route exact path="/personalized-present/:lecture/:fileName" component={PersonalizedPresent} />
-        <Route exact path="/present/:lecture/:fileName" component={Present} />
-        <Route exact path="/cognitive" component={Cognitive} />
-        <Route exact path="/posttest" component={PostTest} />
-        <Route exact path="/survey" component={Survey} />
-        <Route exact path="/wrapup" component={WrapUp} />
-        <Route component={RedirectComponent} />
-      </Switch>
-    </BrowserRouter>
+export const Router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route path="instruction" element={<Instruction />} />
+      <Route path="python-tutorial" element={<PythonTutorial />} />
+      <Route path="consent/" element={<Consent />} />
+      <Route path="demographic" element={<Demographic />} />
+      <Route path="pretest" element={<PreTest />} />
+      <Route path="verbal-analogy" element={<VerbalAnalogy />} />
+      <Route path="label-tutorial" element={<LabelTutorial />} />
+      <Route path="vote-tutorial" element={<VoteTutorial />} />
+      <Route path="worked-example/:lecture/:fileName" element={<WorkedExample />} />
+      <Route path="label/:lecture/:fileName" element={<Label />} />
+      <Route path="vote/:lecture/:fileName" element={<Vote />} />
+      <Route path="practice/:category/:problemId" element={<Practice />} />
+      <Route path="assessment/:lecture/:fileName" element={<Assessment />} />
+      <Route path="parsons/:lecture/:fileName" element={<Parsons />} />
+      <Route path="personalized-present/:lecture/:fileName" element={<PersonalizedPresent />} />
+      <Route path="present/:lecture/:fileName" element={<PersonalizedPresent />} />
+      <Route path="cognitive" element={<Cognitive />} />
+      <Route path="posttest" element={<PostTest />} />
+      <Route path="survey" element={<Survey />} />
+      <Route path="wrapup" element={<WrapUp />} />
+      <Route element={<Contact />} />
+    </>
   )
-}
-
-export default Router
+)

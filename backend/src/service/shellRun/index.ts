@@ -71,7 +71,7 @@ class ShellRunService {
     }
   }
 
-  async runJave(code: string): Promise<string> {
+  async runJava(code: string): Promise<string> {
     return this.run(code, java)
   }
 

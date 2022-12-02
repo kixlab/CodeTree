@@ -29,10 +29,6 @@ const Localiztion: Dictionary = {
     ko: 'ID: ',
     en: 'ID: ',
   },
-  header_python_tutorial: {
-    ko: 'Python 튜토리얼 보기',
-    en: 'Python Tutorial',
-  },
   progress_bar_prefix: {
     ko: '진행 상황: ',
     en: 'Progress: ',
@@ -58,11 +54,11 @@ const Localiztion: Dictionary = {
     en: 'Traning',
   },
   progress_bar_stage_worked_example: {
-    ko: '예시 문제 풀이',
+    ko: '하위 목표 학습',
     en: 'Worked Example',
   },
   progress_bar_stage_practice: {
-    ko: '연습 문제',
+    ko: '문제 풀이',
     en: 'Practice Problem',
   },
   progress_bar_stage_cognitive: {
@@ -407,7 +403,7 @@ const Localiztion: Dictionary = {
     en: 'Problem',
   },
   example_title: {
-    ko: '예시 문제 풀이',
+    ko: '하위 목표 학습',
     en: 'Worked Example',
   },
   example_instruction: {
@@ -415,11 +411,11 @@ const Localiztion: Dictionary = {
     en: '',
   },
   example_action_button: {
-    ko: '연습 문제 풀기',
+    ko: '다음',
     en: 'Solve Practice Problem',
   },
   label_title: {
-    ko: '예시 문제 풀이',
+    ko: '하위 목표 학습',
     en: 'Worked Example',
   },
   label_instruction: {
@@ -450,8 +446,8 @@ const Localiztion: Dictionary = {
     en: 'Please remove text input boxes without any lines clicked.',
   },
   label_action_button: {
-    ko: '연습 문제 풀기',
-    en: 'Solve Practice Problem',
+    ko: '다음',
+    en: 'Next',
   },
   label_alert_back: {
     ko: '페이지를 벗어나면 작성하신 내용이 저장되지 않습니다.',
@@ -466,11 +462,11 @@ const Localiztion: Dictionary = {
     en: '└ Add a subgoal below this goal',
   },
   vote_title: {
-    ko: '예시 문제 풀이',
+    ko: '문제 풀이',
     en: 'Worked Example',
   },
   vote_instruction: {
-    ko: `예시 문제 풀이를 보며 while 문의 사용법을 확인해보세요. 코드의 각 부분에 가장 적절한 하위 목표를
+    ko: `문제 풀이를 보며 while 문의 사용법을 확인해보세요. 코드의 각 부분에 가장 적절한 하위 목표를
             보기에서 고르거나 직접 작성해보며 코드를 구성하는 하위 목표들을 찾아보세요. 다음 단계에서 연관된 연습
             문제를 풀며 직접 익혀봅니다.`,
     en: `The program code on the right solves the following problem. In this task, you
@@ -558,7 +554,7 @@ const Localiztion: Dictionary = {
     en: 'Check Answer',
   },
   vote_action_button: {
-    ko: '연습 문제 풀기',
+    ko: '다음',
     en: 'Next',
   },
   vote_correct: {
@@ -570,22 +566,19 @@ const Localiztion: Dictionary = {
     en: '+ Add Subgoal',
   },
   practice_title: {
-    ko: '연습 문제',
+    ko: '문제 풀기',
     en: 'Practice Problem',
   },
   practice_instruction: {
-    ko: '앞서 공부한 예시 문제 풀이를 응용하여 아래의 문제를 while 문을 사용해 풀어보세요.',
-    en: `Now practice the usages of a while loop by writing
-            a problem that solves the following problem. Solving
-            the problem requires the steps and approach used in the
-            worked example you just studied.`,
+    ko: '아래 문제를 풀고, 다음 단계에서 자신의 코드에서 하위 목표를 찾아보며 풀이를 정리해보세요.',
+    en: ``,
   },
   practice_run: {
     ko: '코드 실행',
     en: 'Run',
   },
   practice_submit: {
-    ko: '채점하기',
+    ko: '코드 채점',
     en: 'Submit',
   },
   practice_terminal_output: {
@@ -605,8 +598,8 @@ const Localiztion: Dictionary = {
     en: 'Incorrect',
   },
   practice_action_button: {
-    ko: '다음 단계로 이동',
-    en: 'Move On',
+    ko: '하위 목표 학습',
+    en: 'Next',
   },
   practice_alert_back: {
     ko: '페이지를 벗어나면 작성하신 내용이 저장되지 않습니다. 내용을 유지하려면 먼저 따로 저장해두세요.',

@@ -1,9 +1,13 @@
-import React from 'react'
 import styled from '@emotion/styled'
+import React from 'react'
 import { Color } from '../shared/Common'
 
 interface Props {
-  output: string
+  children: React.ReactNode
+}
+
+export function OutputTerminal({ children }: Props) {
+  return <Container>{children}</Container>
 }
 
 const Container = styled.div`
@@ -14,10 +18,5 @@ const Container = styled.div`
   background: ${Color.Gray85};
   white-space: pre-line;
   overflow-x: auto;
+  min-height: 200px;
 `
-
-function OutputTerminal(props: Props) {
-  return <Container>{props.output}</Container>
-}
-
-export default OutputTerminal

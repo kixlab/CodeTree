@@ -1,23 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { GetSubgoalTreeParams, GetSubgoalTreeResults } from '../protocol/GetSubgoalTree'
 import { Get } from '../shared/HttpRequest'
 
-export function useSubgoalTree(lectureName: string, fileName: string) {
+export function useSubgoalTree(lectureName: string | undefined, fileName: string | undefined) {
   const [subgoalTree, setSubgoalTree] = useState<GetSubgoalTreeResults['tree']>({ label: '', group: [], children: [] })
 
   useEffect(() => {
-    Get<GetSubgoalTreeParams, GetSubgoalTreeResults>(
-      `${SERVER_ADDRESS}/getSubgoalTree`,
-      {
+    if (lectureName && fileName) {
+      Get<GetSubgoalTreeParams, GetSubgoalTreeResults>(`${SERVER_ADDRESS}/getSubgoalTree`, {
         lectureName,
         fileName,
-      },
-      result => {
-        setSubgoalTree(result.tree)
-      },
-      error => window.alert(error.message)
-    )
+      }).then(result => setSubgoalTree(result.tree))
+    }
   }, [fileName, lectureName])
 
   return subgoalTree
