@@ -566,15 +566,12 @@ const Localiztion: Dictionary = {
     en: '+ Add Subgoal',
   },
   practice_title: {
-    ko: '문제 풀이',
+    ko: '문제 풀기',
     en: 'Practice Problem',
   },
   practice_instruction: {
-    ko: '앞서 공부한 예시 문제 풀이를 응용하여 아래의 문제를 while 문을 사용해 풀어보세요.',
-    en: `Now practice the usages of a while loop by writing
-            a problem that solves the following problem. Solving
-            the problem requires the steps and approach used in the
-            worked example you just studied.`,
+    ko: '아래 문제를 풀고, 다음 단계에서 자신의 코드에서 하위 목표를 찾아보며 풀이를 정리해보세요.',
+    en: ``,
   },
   practice_run: {
     ko: '코드 실행',

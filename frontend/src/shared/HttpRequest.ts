@@ -4,15 +4,29 @@ export async function Get<P, R>(baseUrl: string, params: P): Promise<R> {
   const url = `${baseUrl}?${[...Object.entries(params as Record<string, unknown>)]
     .map(([key, value]) => `${key}=${value}`)
     .join('&')}`
-  return fetch(url).then(res => res.json())
+  const res = await fetch(url)
+
+  if (res.ok) {
+    return res.json()
+  }
+  const { message } = await res.json()
+  alert(message)
+  throw new Error(message)
 }
 
 export async function Post2<P, R>(url: string, params: P): Promise<R> {
-  return fetch(url, {
+  const res = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },
     method: 'POST',
     body: JSON.stringify(params),
-  }).then(res => res.json())
+  })
+
+  if (res.ok) {
+    return res.json()
+  }
+  const { message } = await res.json()
+  alert(message)
+  throw new Error(message)
 }
 
 export async function Post<P, R>(

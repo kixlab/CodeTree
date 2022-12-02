@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import CodeEditor from '../components/CodeEditor'
-import OutputTerminal from '../components/OutputTerminal'
+import { OutputTerminal } from '../components/OutputTerminal'
 import { Page } from '../components/Page'
 import ProblemContainer from '../components/ProblemContainer'
 import { ProgramRunner } from '../components/ProgramRunner'
@@ -16,7 +16,7 @@ import { PostPracticeAnswerParams, PostPracticeAnswerResults } from '../protocol
 import { PostPracticeCodeParams, PostPracticeCodeResults } from '../protocol/PostPracticeCode'
 import { Color } from '../shared/Common'
 import { getId, ID_NOT_FOUND, nextStage } from '../shared/ExperimentHelper'
-import { Post } from '../shared/HttpRequest'
+import { Post, Post2 } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 import { InstructionTask } from '../templates/InstructionTask'
 
@@ -29,7 +29,7 @@ export function Practice() {
   const { category, problemId } = useParams<MatchParams>()
   const problem = useProblem(category, problemId)
   const [code, setCode] = useState('')
-  const [programOutput, setProgramOutput] = useState(getString('practice_terminal_output'))
+  const [programOutput, setProgramOutput] = useState<null | PostPracticeAnswerResults['output']>(null)
   const [outputCorrect, setOutputCorrect] = useState<boolean | null>(null)
   const [isRunning, setIsRunning] = useState(false)
   const [isJudging, setIsJudging] = useState(false)
@@ -40,16 +40,15 @@ export function Practice() {
 
   useConfirmBeforeLeave()
 
-  const run = useCallback(() => {
+  const run = useCallback(async () => {
     if (code.trim().length <= 0 || !category || !problemId) {
       return
     }
 
     setIsRunning(true)
-    setProgramOutput(getString('practice_terminal_running'))
     setOutputCorrect(null)
 
-    Post<PostPracticeAnswerParams, PostPracticeAnswerResults>(
+    const { output, correctCases, testcases } = await Post2<PostPracticeAnswerParams, PostPracticeAnswerResults>(
       `${SERVER_ADDRESS}/postPracticeRun`,
       {
         code,
@@ -57,31 +56,22 @@ export function Practice() {
         problemId,
         codeType: mode,
         participantId: getId() ?? ID_NOT_FOUND,
-      },
-      result => {
-        setIsRunning(false)
-        setProgramOutput(result.output)
-        setOutputCorrect(result.correct)
-      },
-      error => {
-        console.error(error)
-        setIsRunning(false)
-        setProgramOutput('program crashed.')
-        setOutputCorrect(false)
       }
     )
+    setIsRunning(false)
+    setProgramOutput(output)
+    setOutputCorrect(correctCases === testcases)
   }, [category, code, mode, problemId])
 
-  const judge = useCallback(() => {
+  const judge = useCallback(async () => {
     if (code.trim().length <= 0 || !category || !problemId) {
       return
     }
 
     setIsJudging(true)
-    setProgramOutput(getString('practice_terminal_running'))
     setOutputCorrect(null)
 
-    Post<PostPracticeAnswerParams, PostPracticeAnswerResults>(
+    const { output, correctCases, testcases } = await Post2<PostPracticeAnswerParams, PostPracticeAnswerResults>(
       `${SERVER_ADDRESS}/postPracticeAnswer`,
       {
         code,
@@ -89,19 +79,11 @@ export function Practice() {
         problemId,
         codeType: mode,
         participantId: getId() ?? ID_NOT_FOUND,
-      },
-      result => {
-        setIsJudging(false)
-        setProgramOutput(result.output)
-        setOutputCorrect(result.correct)
-      },
-      error => {
-        console.error(error)
-        setIsJudging(false)
-        setProgramOutput('program crashed.')
-        setOutputCorrect(false)
       }
     )
+    setIsJudging(false)
+    setProgramOutput(output)
+    setOutputCorrect(correctCases === testcases)
   }, [category, code, mode, problemId])
 
   const submit = useCallback(() => {
@@ -139,12 +121,12 @@ export function Practice() {
         instruction={
           <TaskContainer
             instruction={
-              <div>
-                <h1>{getString('practice_title')}</h1>
-                <div>{getString('practice_instruction')}</div>
+              <>
+                <Title>{getString('practice_title')}</Title>
+                {getString('practice_instruction')}
                 <br />
                 <ProblemContainer problem={problem} />
-              </div>
+              </>
             }
             task={
               <TaskWrapper>
@@ -153,7 +135,21 @@ export function Practice() {
                     {outputCorrect ? getString('practice_result_correct') : getString('practice_result_incorrect')}
                   </Result>
                 ) : null}
-                <OutputTerminal output={programOutput} />
+                <OutputTerminal>
+                  {isRunning
+                    ? getString('practice_terminal_running')
+                    : programOutput === null
+                    ? getString('practice_terminal_output')
+                    : programOutput.map(({ input, output, expected }, i) => {
+                        return (
+                          <div key={i}>
+                            <span>{input}</span>
+                            <span>{output}</span>
+                            <span>{expected}</span>
+                          </div>
+                        )
+                      })}
+                </OutputTerminal>
               </TaskWrapper>
             }
             footer={
@@ -185,4 +181,11 @@ const Result = styled.div<{ correct: boolean }>`
     margin: 10px;
     font-size: 24px;
   `}
+`
+
+const Title = styled.div`
+  font-size: 24px;
+  color: ${Color.Gray75};
+  font-weight: bold;
+  margin-bottom: 12px;
 `

@@ -7,10 +7,11 @@ export interface PostPracticeAnswerParams {
 }
 
 export interface PostPracticeAnswerResults {
-  output: string
-  correct: boolean
-}
-
-export interface PracticeCode {
-  code: string
+  correctCases: number
+  testcases: number
+  output: {
+    input: string
+    output: string
+    expected: string
+  }[]
 }

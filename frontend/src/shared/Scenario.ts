@@ -49,7 +49,7 @@ export const SCENARIO: Stage[] = [
   },
   {
     name: `${getString('progress_bar_stage_practice')} 2`,
-    url: '/practice/pilot/p1',
+    url: '/practice/pilot/p2',
     timeLimit: 300,
   },
   {

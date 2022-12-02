@@ -3,9 +3,6 @@ import express from 'express'
 import fs from 'fs'
 import http from 'http'
 import https from 'https'
-import { GetAssessmentAnswersController } from './controller/getAssessmentAnswers'
-import { GetCodeGroupsController } from './controller/getCodeGroups'
-import { getDocumentationController } from './controller/getDocumentation'
 import { getHealthController } from './controller/getHealth'
 import { getIdAndGroupController } from './controller/getIdAndGroup'
 import { GetLabelsController } from './controller/getLabels'
@@ -13,7 +10,6 @@ import { getMyProgramCodeController } from './controller/getMyProgramCode'
 import { getNewSubgoalTreeController } from './controller/getNewSubgoalTree'
 import { getParsonsListController } from './controller/getParsonsList'
 import { getParticipationAvailabilityController } from './controller/getParticipationAvailability'
-import { getProblemController } from './controller/getProblem'
 import { getProblemMarkDownController } from './controller/getProblemMarkDown'
 import { getProblemSkeletonController } from './controller/getProblemSkeleton'
 import { getProgramCodeController } from './controller/getProgramCode'
@@ -28,7 +24,6 @@ import { postParticipantProgressController } from './controller/postParticipantP
 import { postPracticeAnswerController } from './controller/postPracticeAnswer'
 import { postPracticeCodeController } from './controller/postPracticeCode'
 import { postPracticeRunController } from './controller/postPracticeRun'
-import { postPythonCodeController } from './controller/postPythonCode'
 import { postSubgoalsController } from './controller/postSubgoals'
 import { postVotingChoicesController } from './controller/postVotingChoices'
 import { cors } from './middleware/cors'
@@ -51,7 +46,6 @@ app.get('/getHealth', getHealthController)
 app.get('/getIdAndGroup', getIdAndGroupController)
 app.get('/getMyProgramCode', getMyProgramCodeController)
 app.get('/getProgramCode', getProgramCodeController)
-app.get('/getProblem', getProblemController)
 app.get('/getProblemMarkDown', getProblemMarkDownController)
 app.get('/getParticipationAvailability', getParticipationAvailabilityController)
 app.get('/getVotingList', getVotingListController)
@@ -59,15 +53,11 @@ app.get('/getNewSubgoalTree', getNewSubgoalTreeController)
 app.get('/getSubgoalTree', getSubgoalTreeController)
 app.get('/getParsonsList', getParsonsListController)
 app.get('/getSkeletonCode', getSkeletonCodeController)
-app.get('/getDocumentation', getDocumentationController)
 app.get('/getProgramExplanation', getProgramExplanationController)
-app.get('/getAssessmentAnswers', GetAssessmentAnswersController)
-app.get('/getCodeGroups', GetCodeGroupsController)
 app.get('/getLabels', GetLabelsController)
 app.get('/getProblemSkeleton', getProblemSkeletonController)
 app.post('/postVotingChoices', postVotingChoicesController)
 app.post('/postSubgoals', postSubgoalsController)
-app.post('/postPythonCode', postPythonCodeController)
 app.post('/postPracticeCode', postPracticeCodeController)
 app.post('/postAssessmentCode', postAssessmentCodeController)
 app.post('/postParsonsAnswer', postParsonsAnswerController)

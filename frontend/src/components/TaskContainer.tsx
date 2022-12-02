@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import { Color, SUBMIT_BUTTON_HEIGHT } from '../shared/Common'
-import { HEADER_HEIGHT, TASK_CONTAINER_MAX_WIDTH } from '../shared/Constants'
+import { HEADER_HEIGHT } from '../shared/Constants'
 
 interface Props {
   instruction: JSX.Element
@@ -24,7 +24,6 @@ export function TaskContainer(props: Props) {
 const Container = styled.div`
   width: calc(100% - 1px);
   height: 100%;
-  max-width: ${TASK_CONTAINER_MAX_WIDTH}px;
   border-right: 1px solid ${Color.Gray15};
   max-height: calc(100vh - ${HEADER_HEIGHT}px);
 `
