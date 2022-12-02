@@ -5,7 +5,6 @@ import http from 'http'
 import https from 'https'
 import { getHealthController } from './controller/getHealth'
 import { getIdAndGroupController } from './controller/getIdAndGroup'
-import { GetLabelsController } from './controller/getLabels'
 import { getMyProgramCodeController } from './controller/getMyProgramCode'
 import { getNewSubgoalTreeController } from './controller/getNewSubgoalTree'
 import { getParsonsListController } from './controller/getParsonsList'
@@ -54,7 +53,6 @@ app.get('/getSubgoalTree', getSubgoalTreeController)
 app.get('/getParsonsList', getParsonsListController)
 app.get('/getSkeletonCode', getSkeletonCodeController)
 app.get('/getProgramExplanation', getProgramExplanationController)
-app.get('/getLabels', GetLabelsController)
 app.get('/getProblemSkeleton', getProblemSkeletonController)
 app.post('/postVotingChoices', postVotingChoicesController)
 app.post('/postSubgoals', postSubgoalsController)
