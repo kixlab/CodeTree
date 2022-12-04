@@ -1,4 +1,4 @@
-import { JavascriptSolutionTemplate, PythonSolutionTemplate } from '../constants/codeTemplates'
+import { CppSolutionTemplate, JavascriptSolutionTemplate, PythonSolutionTemplate } from '../constants/codeTemplates'
 import { CodeSubmissionData } from '../database/DataBaseDataTypes'
 import { SetData } from '../database/DataBaseRef'
 import { Post } from '../HttpResponse'
@@ -30,7 +30,7 @@ export const postPracticeRunController = Post<PostPracticeRunParams, PostPractic
         const nums = JSON.parse(sampleArgs[0])
         const stdin = `${sampleArgs[1]}\n${nums.length}\n${nums.join(" ")}`
 
-        output = await shellRunService.judgeCpp(code, stdin)
+        output = await shellRunService.judgeCpp(CppSolutionTemplate(code), stdin)
         output = `[${output.slice(0, -1)}]`
       }
       output = output.replace(/(\n| )/g, '')
