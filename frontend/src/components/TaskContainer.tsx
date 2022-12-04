@@ -9,7 +9,7 @@ interface Props {
   footer?: JSX.Element
 }
 
-export function TaskContainer(props: Props) {
+export function InstructionContainer(props: Props) {
   return (
     <Container>
       <ScollableArea>

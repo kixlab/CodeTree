@@ -6,13 +6,12 @@ import { CodeGrouper } from '../components/CodeGrouper'
 import { HierarchyVisualizer } from '../components/HierarchyVisualizer'
 import { Page } from '../components/Page'
 import { SubgoalContainer } from '../components/SubgoalContainer'
-import { TaskContainer } from '../components/TaskContainer'
+import { InstructionContainer } from '../components/TaskContainer'
 import { useGroupSubgoals } from '../hooks/useGroupSubgoals'
 import { useLabelSubmit } from '../hooks/useLabelSubmit'
 import { useMyCode } from '../hooks/useMyCode'
 import { getString } from '../shared/Localization'
 import { InstructionTask } from '../templates/InstructionTask'
-import { LinearLayout } from '../templates/LinearLayout'
 
 type MatchParams = {
   lecture: string
@@ -69,7 +68,7 @@ function Label() {
     <Page>
       <InstructionTask
         instruction={
-          <TaskContainer
+          <InstructionContainer
             instruction={
               <div>
                 <h1>{getString('label_title')}</h1>
@@ -96,7 +95,7 @@ function Label() {
           />
         }
         task={
-          <LinearLayout ratios={['41px', '1fr']}>
+          <TaskContainer>
             <HierarchyVisualizer subgoals={subgoals} />
             <CodeGrouper
               code={code}
@@ -104,7 +103,7 @@ function Label() {
               selectable
               onClickLine={clickCheckBox}
             />
-          </LinearLayout>
+          </TaskContainer>
         }
       />
     </Page>
@@ -113,6 +112,12 @@ function Label() {
 
 const Warning = styled.b`
   font-size: 12px;
+`
+
+const TaskContainer = styled.div`
+  display: grid;
+  height: 100%;
+  grid-template-columns: 41px 1fr;
 `
 
 export default Label

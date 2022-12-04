@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { CodeGrouper } from '../components/CodeGrouper'
 import { Page } from '../components/Page'
 import ProblemContainer from '../components/ProblemContainer'
-import { TaskContainer } from '../components/TaskContainer'
+import { InstructionContainer } from '../components/TaskContainer'
 import { useCode } from '../hooks/useCode'
 import { useProblem } from '../hooks/useProblem'
 import { nextStage } from '../shared/ExperimentHelper'
@@ -30,7 +30,7 @@ function WorkedExample() {
     <Page>
       <InstructionTask
         instruction={
-          <TaskContainer
+          <InstructionContainer
             instruction={
               <div>
                 <h1>{`${getString('example_title')} ${getExampleNumber()}`}</h1>

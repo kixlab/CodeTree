@@ -12,7 +12,7 @@ import { CodeGrouper } from './CodeGrouper'
 import { HierarchyVisualizer } from './HierarchyVisualizer'
 import MultipleChoice from './MultipleChoice'
 import StageNavigator from './StageNavigator/StageNavigator'
-import { TaskContainer } from './TaskContainer'
+import { InstructionContainer } from './TaskContainer'
 
 interface Props {
   practiceNum: number
@@ -54,7 +54,7 @@ export function VotePractice({ practiceNum, code, votingList, checkAnswer, tips 
       <Content>
         <InstructionTask
           instruction={
-            <TaskContainer
+            <InstructionContainer
               instruction={<div>{getString(`tutorial_vote_practice${practiceNum}_instruction`)}</div>}
               task={
                 <MultipleChoice

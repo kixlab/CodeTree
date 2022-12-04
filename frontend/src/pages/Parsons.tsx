@@ -5,7 +5,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import { useParams } from 'react-router-dom'
 import { Page } from '../components/Page'
 import ProblemContainer from '../components/ProblemContainer'
-import { TaskContainer } from '../components/TaskContainer'
+import { InstructionContainer } from '../components/TaskContainer'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { useProblem } from '../hooks/useProblem'
 import { PostParsonsAnswerParams, PostParsonsAnswerResults } from '../protocol/PostParsonsAnswer'
@@ -85,7 +85,7 @@ export function Parsons() {
     <Page onTimeOut={onTimeout}>
       <InstructionTask
         instruction={
-          <TaskContainer
+          <InstructionContainer
             instruction={
               <div>
                 <h1>{`${getString('parsons_title')} 5`}</h1>

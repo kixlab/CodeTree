@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import CodeEditor from '../components/CodeEditor'
 import { Page } from '../components/Page'
 import ProblemContainer from '../components/ProblemContainer'
-import { TaskContainer } from '../components/TaskContainer'
+import { InstructionContainer } from '../components/TaskContainer'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { useConfirmBeforeLeave } from '../hooks/useConfirmBeforeLeave'
 import { useProblem } from '../hooks/useProblem'
@@ -59,7 +59,7 @@ export function Assessment() {
     <Page onTimeOut={onTimeout}>
       <InstructionTask
         instruction={
-          <TaskContainer
+          <InstructionContainer
             instruction={
               <div>
                 <h1>{`${getString('assessment_title')} ${getProblemNumber()}`}</h1>

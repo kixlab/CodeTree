@@ -7,13 +7,14 @@ import { OutputTerminal } from '../components/OutputTerminal'
 import { Page } from '../components/Page'
 import ProblemContainer from '../components/ProblemContainer'
 import { ProgramRunner } from '../components/ProgramRunner'
-import { TaskContainer } from '../components/TaskContainer'
+import { InstructionContainer } from '../components/TaskContainer'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { useConfirmBeforeLeave } from '../hooks/useConfirmBeforeLeave'
 import { useProblem } from '../hooks/useProblem'
 import { useSkeletonCode } from '../hooks/useSkeletonCode'
 import { PostPracticeAnswerParams, PostPracticeAnswerResults } from '../protocol/PostPracticeAnswer'
 import { PostPracticeCodeParams, PostPracticeCodeResults } from '../protocol/PostPracticeCode'
+import { PostPracticeRunParams, PostPracticeRunResults } from '../protocol/PostPracticeRun'
 import { Color } from '../shared/Common'
 import { getId, ID_NOT_FOUND, nextStage } from '../shared/ExperimentHelper'
 import { Post, Post2 } from '../shared/HttpRequest'
@@ -48,7 +49,7 @@ export function Practice() {
     setIsRunning(true)
     setOutputCorrect(null)
 
-    const { output, correctCases, testcases } = await Post2<PostPracticeAnswerParams, PostPracticeAnswerResults>(
+    const { output, correctCases, testcases } = await Post2<PostPracticeRunParams, PostPracticeRunResults>(
       `${SERVER_ADDRESS}/postPracticeRun`,
       {
         code,
@@ -119,7 +120,7 @@ export function Practice() {
     <Page>
       <InstructionTask
         instruction={
-          <TaskContainer
+          <InstructionContainer
             instruction={
               <>
                 <Title>{getString('practice_title')}</Title>
@@ -142,11 +143,23 @@ export function Practice() {
                     ? getString('practice_terminal_output')
                     : programOutput.map(({ input, output, expected }, i) => {
                         return (
-                          <div key={i}>
-                            <span>{input}</span>
-                            <span>{output}</span>
-                            <span>{expected}</span>
-                          </div>
+                          <TestCase key={i}>
+                            <div>
+                              입력값:
+                              <br />
+                              {input}
+                            </div>
+                            <div>
+                              출력값:
+                              <br />
+                              {output}
+                            </div>
+                            <div>
+                              기대값:
+                              <br />
+                              {expected}
+                            </div>
+                          </TestCase>
                         )
                       })}
                 </OutputTerminal>
@@ -178,7 +191,7 @@ const TaskWrapper = styled.div`
 const Result = styled.div<{ correct: boolean }>`
   ${({ correct }) => css`
     color: ${correct ? Color.Green40 : Color.Error20};
-    margin: 10px;
+    margin: 8px;
     font-size: 24px;
   `}
 `
@@ -188,4 +201,11 @@ const Title = styled.div`
   color: ${Color.Gray75};
   font-weight: bold;
   margin-bottom: 12px;
+`
+
+const TestCase = styled.div`
+  border: 1px solid ${Color.Gray60};
+  padding: 4px;
+  width: fit-content;
+  margin: 4px;
 `
