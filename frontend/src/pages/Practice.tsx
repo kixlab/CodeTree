@@ -59,7 +59,7 @@ export function Practice() {
       }
     )
     setIsRunning(false)
-    setProgramOutput(output)
+    setProgramOutput([...output])
     setOutputCorrect(correctCases === testcases)
   }, [category, code, mode, problemId])
 
