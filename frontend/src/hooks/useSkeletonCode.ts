@@ -14,12 +14,6 @@ export function useSkeletonCode(
     if (!category || !problemId) {
       return
     }
-
-    if (mode === 'cpp') {
-      setSkeletonCode('')
-      return
-    }
-
     Get<GetProblemSkeletonParams, GetProblemSkeletonResults>(`${SERVER_ADDRESS}/getProblemSkeleton`, {
       category,
       problemId,
