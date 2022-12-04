@@ -5,19 +5,23 @@ print(solution(${args.join(',')}))
 `
 
 export const CppSolutionTemplate = (code: string, ...args: string[]) => `
-#include <iostream>
-#include <vector>
-#include <boost/assign/std/vector.hpp>
-using namespace boost::assign;
-using namespace std;
-
 ${code}
 
 int main()
 {
-  vector<int> args;
-  args += ${args.slice(1, -1)};
-  cout << solution(args) << "\n";
+  int k; cin >> k;
+  int cnt; cin >> cnt;
+  vector<int> nums;
+
+  for (int i=0; i<cnt; i++) {
+    int temp; cin >> temp;
+    nums.push_back(temp);
+  }
+
+  vector<int> result = solution(nums, k);
+  for (int i=0; i < result.size(); i++) {
+    cout << result[i] << ',';
+  }
   return 0;
 }
 `
