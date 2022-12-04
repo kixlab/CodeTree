@@ -11,8 +11,10 @@ export function useCode(lectureName: string | undefined, fileName: string | unde
       Get<GetProgramCodeParams, GetProgramCodeResults>(`${SERVER_ADDRESS}/getProgramCode`, {
         lectureName,
         fileName,
-      }).then(result => {
-        setCode(result.code)
+      }).then(res => {
+        if (res) {
+          setCode(res.code)
+        }
       })
     }
   }, [fileName, lectureName])

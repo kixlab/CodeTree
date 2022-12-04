@@ -11,7 +11,11 @@ export function useSubgoalTree(lectureName: string | undefined, fileName: string
       Get<GetSubgoalTreeParams, GetSubgoalTreeResults>(`${SERVER_ADDRESS}/getSubgoalTree`, {
         lectureName,
         fileName,
-      }).then(result => setSubgoalTree(result.tree))
+      }).then(res => {
+        if (res) {
+          setSubgoalTree(res.tree)
+        }
+      })
     }
   }, [fileName, lectureName])
 

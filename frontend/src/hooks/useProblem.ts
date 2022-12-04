@@ -11,7 +11,11 @@ export function useProblem(lectureName: string | undefined, fileName: string | u
       Get<GetProblemMarkDownParams, GetProblemMarkDownResults>(`${SERVER_ADDRESS}/getProblemMarkDown`, {
         lectureName,
         fileName,
-      }).then(result => setProblem(result.problem))
+      }).then(res => {
+        if (res) {
+          setProblem(res.problem)
+        }
+      })
     }
   }, [fileName, lectureName])
 

@@ -23,20 +23,18 @@ export function Instruction() {
     Get<GetParticipationAvailabilityParams, GetParticipationAvailabilityResults>(
       `${SERVER_ADDRESS}/getParticipationAvailability`,
       {}
-    ).then(({ availabiltiy }) => {
-      setCanParticipate(availabiltiy)
+    ).then(res => {
+      if (res) {
+        setCanParticipate(res.availabiltiy)
+      }
     })
   })
 
   const onStart = useCallback(async () => {
-    try {
-      const { id, group } = await Get<GetIdAndGroupParams, GetIdAndGroupResults>(`${SERVER_ADDRESS}/getIdAndGroup`, {})
-      initialize(id, group)
+    const res = await Get<GetIdAndGroupParams, GetIdAndGroupResults>(`${SERVER_ADDRESS}/getIdAndGroup`, {})
+    if (res) {
+      initialize(res.id, res.group)
       navigate(nextStage())
-    } catch (e) {
-      window.alert(
-        `데이터를 불러오는 데에 실패하였습니다. 작업하신 내용을 있다면 저장하시고, 페이지를 새로 고침해주세요. ${e}`
-      )
     }
   }, [navigate])
 
@@ -46,13 +44,13 @@ export function Instruction() {
         <h1>프로그래밍 학습 실험 참여</h1>
         <p>
           <b>대상:</b>
-          <span> while문까지 학습한 프로그래밍 초보자</span>
+          <span> 알고리즘 문제를 풀어본 경험이 있는 학습자</span>
           <br />
           <b>요건:</b>
           <span> 만 18세 이상</span>
           <br />
           <b>시간:</b>
-          <span> 약 1시간 ~ 1시간 30분</span>
+          <span> 약 1시간</span>
           <br />
           <b>보상:</b>
           <span> 2만원</span>

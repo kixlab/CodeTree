@@ -49,19 +49,18 @@ export function Practice() {
     setIsRunning(true)
     setOutputCorrect(null)
 
-    const { output, correctCases, testcases } = await Post2<PostPracticeRunParams, PostPracticeRunResults>(
-      `${SERVER_ADDRESS}/postPracticeRun`,
-      {
-        code,
-        category,
-        problemId,
-        codeType: mode,
-        participantId: getId() ?? ID_NOT_FOUND,
-      }
-    )
+    const res = await Post2<PostPracticeRunParams, PostPracticeRunResults>(`${SERVER_ADDRESS}/postPracticeRun`, {
+      code,
+      category,
+      problemId,
+      codeType: mode,
+      participantId: getId() ?? ID_NOT_FOUND,
+    })
+    if (res) {
+      setProgramOutput([...res.output])
+      setOutputCorrect(res.correctCases === res.testcases)
+    }
     setIsRunning(false)
-    setProgramOutput([...output])
-    setOutputCorrect(correctCases === testcases)
   }, [category, code, mode, problemId])
 
   const judge = useCallback(async () => {
@@ -72,7 +71,7 @@ export function Practice() {
     setIsJudging(true)
     setOutputCorrect(null)
 
-    const { output, correctCases, testcases } = await Post2<PostPracticeAnswerParams, PostPracticeAnswerResults>(
+    const res = await Post2<PostPracticeAnswerParams, PostPracticeAnswerResults>(
       `${SERVER_ADDRESS}/postPracticeAnswer`,
       {
         code,
@@ -82,9 +81,11 @@ export function Practice() {
         participantId: getId() ?? ID_NOT_FOUND,
       }
     )
+    if (res) {
+      setProgramOutput(res.output)
+      setOutputCorrect(res.correctCases === res.testcases)
+    }
     setIsJudging(false)
-    setProgramOutput(output)
-    setOutputCorrect(correctCases === testcases)
   }, [category, code, mode, problemId])
 
   const submit = useCallback(() => {

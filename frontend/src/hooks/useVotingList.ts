@@ -13,17 +13,19 @@ export function useVotingList(lectureName: string | undefined, fileName: string 
         lectureName,
         fileName,
         participantId: getId() ?? ID_NOT_FOUND,
-      }).then(result => {
-        setVotingList(
-          result.votingItems.map(item => {
-            return {
-              id: item.id,
-              group: item.group,
-              labels: item.labels,
-              answers: item.answers,
-            }
-          })
-        )
+      }).then(res => {
+        if (res) {
+          setVotingList(
+            res.votingItems.map(item => {
+              return {
+                id: item.id,
+                group: item.group,
+                labels: item.labels,
+                answers: item.answers,
+              }
+            })
+          )
+        }
       })
     }
   }, [fileName, lectureName])
