@@ -1,5 +1,5 @@
 import React from 'react'
-import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom'
+import { createBrowserRouter, createRoutesFromElements, Navigate, Route } from 'react-router-dom'
 import { Assessment } from './pages/Assessment'
 import Cognitive from './pages/Cognitive'
 import Consent from './pages/Consent'
@@ -13,7 +13,6 @@ import { PersonalizedPresent } from './pages/PersonalizedPresent'
 import { PostTest } from './pages/PostTest'
 import { Practice } from './pages/Practice'
 import { PreTest } from './pages/PreTest'
-import PythonTutorial from './pages/PythonTutorial'
 import Survey from './pages/Survey'
 import VerbalAnalogy from './pages/VerbalAnalogy'
 import Vote from './pages/Vote'
@@ -25,7 +24,6 @@ export const Router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="instruction" element={<Instruction />} />
-      <Route path="python-tutorial" element={<PythonTutorial />} />
       <Route path="consent/" element={<Consent />} />
       <Route path="demographic" element={<Demographic />} />
       <Route path="pretest" element={<PreTest />} />
@@ -44,7 +42,8 @@ export const Router = createBrowserRouter(
       <Route path="posttest" element={<PostTest />} />
       <Route path="survey" element={<Survey />} />
       <Route path="wrapup" element={<WrapUp />} />
-      <Route element={<Contact />} />
+      <Route path="contact" element={<Contact />} />
+      <Route path="*" element={<Navigate to="/contact" replace />} />
     </>
   )
 )
