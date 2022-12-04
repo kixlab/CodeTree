@@ -1,22 +1,18 @@
-# Sliding Window Maximum
+# 최대값 구하기
 
-You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position.
+정수 배열 `nums`와 정수 `k`가 있습니다. 배열에서 연속된 `k`개의 정수를 왼쪽에서 오른쪽 방향으로 한 칸씩 옮기며 차례로 선택할 때, 선택된 `k`개의 정수들 중 최대값들을 구해보세요.
 
-Return the max sliding window.
+## 예시 1
 
-## Example 1
+입력값: nums = [1,3,-1,-3,5,3,6,7], k = 3
+기대값: [3,3,5,5,6,7]
 
-Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
+## 예시 2
 
-Output: [3,3,5,5,6,7]
+입력값: nums = [1], k = 1
+기대값: [1]
 
-## Example 2
-
-Input: nums = [1], k = 1
-
-Output: [1]
-
-## Constraints
+## 제한 조건
 
 - 1 <= nums.length <= 10^5
 - 10^4 <= nums[i] <= 10^4
