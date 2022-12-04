@@ -14,7 +14,11 @@ export function useMyCode(lectureName: string | undefined, problemId: string | u
         category: lectureName,
         problemId,
         participantId,
-      }).then(result => setCode(result.code))
+      }).then(res => {
+        if (res) {
+          setCode(res.code)
+        }
+      })
     }
   }, [problemId, lectureName, participantId])
 

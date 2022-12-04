@@ -1,24 +1,21 @@
-# Sliding Window Median
+# 중앙값 구하기
 
-The median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value. So the median is the mean of the two middle values.
+중앙값이란 정렬된 정수 배열에서 가운데 값을 말합니다. 만약 배열의 길이가 짝수라면, 중앙값은 가운데 두 값의 평균으로 계산합니다.
+예를 들어 배열 [2,3,4]의 중앙값은 3이며, 배열 [1,2,3,4]의 중앙값은 (2 + 3) / 2 = 2.5입니다.
 
-For examples, if arr = [2,3,4], the median is 3.
-For examples, if arr = [1,2,3,4], the median is (2 + 3) / 2 = 2.5.
-You are given an integer array nums and an integer k. There is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position.
+정수 배열 `nums`와 정수 `k`가 주어지고 배열에서 연속된 `k`개의 정수를 왼쪽에서 오른쪽 방향으로 한 칸씩 옮기며 차례로 선택할 때, 선택된 `k`개의 정수들의 중앙값들을 구해보세요.
 
-Return the median array for each window in the original array. Answers within 10-5 of the actual value will be accepted.
+## 예시 1
 
-## Example 1
+입력값: nums = [1,3,-1,-3,5,3,6,7], k = 3
+기대값: [1.00000,-1.00000,-1.00000,3.00000,5.00000,6.00000]
 
-Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
-Output: [1.00000,-1.00000,-1.00000,3.00000,5.00000,6.00000]
+## 예시 2
 
-## Example 2
+입력값: nums = [1,2,3,4,2,3,1,4,2], k = 3
+기대값: [2.00000,3.00000,3.00000,3.00000,2.00000,3.00000,2.00000]
 
-Input: nums = [1,2,3,4,2,3,1,4,2], k = 3
-Output: [2.00000,3.00000,3.00000,3.00000,2.00000,3.00000,2.00000]
-
-## Constraints
+## 제한 조건
 
 - 1 <= k <= nums.length <= 10^5
 - -2^31 <= nums[i] <= 2^31 - 1

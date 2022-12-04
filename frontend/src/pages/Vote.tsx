@@ -6,7 +6,7 @@ import MultipleChoice from '../components/MultipleChoice'
 import { Page } from '../components/Page'
 import ProblemContainer from '../components/ProblemContainer'
 import StageNavigator from '../components/StageNavigator/StageNavigator'
-import { TaskContainer } from '../components/TaskContainer'
+import { InstructionContainer } from '../components/TaskContainer'
 import { useHierarchyVisualier as useHierarchyVisualizer } from '../hooks/useHierarchyVisualizer'
 import { useMyCode } from '../hooks/useMyCode'
 import { useProblem } from '../hooks/useProblem'
@@ -65,7 +65,7 @@ export default function Vote() {
     <Page>
       <InstructionTask
         instruction={
-          <TaskContainer
+          <InstructionContainer
             instruction={
               <div>
                 <h1>{`${getString('vote_title')} ${getExampleNumber()}`}</h1>

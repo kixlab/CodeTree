@@ -4,7 +4,7 @@ import { CodeGrouper } from '../components/CodeGrouper'
 import { Page } from '../components/Page'
 import ProblemContainer from '../components/ProblemContainer'
 import { TreePresenter } from '../components/SubgoalTreePresenter/TreePresenter'
-import { TaskContainer } from '../components/TaskContainer'
+import { InstructionContainer } from '../components/TaskContainer'
 import { useCode } from '../hooks/useCode'
 import { useHighlightCodeSegment } from '../hooks/useHighlightCodeSegment'
 import { useProblem } from '../hooks/useProblem'
@@ -34,7 +34,7 @@ export default function Present() {
     <Page>
       <InstructionTask
         instruction={
-          <TaskContainer
+          <InstructionContainer
             instruction={
               <div>
                 <h1>{`${getString('vote_title')} ${getExampleNumber()}`}</h1>

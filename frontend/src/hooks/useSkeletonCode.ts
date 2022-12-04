@@ -18,8 +18,10 @@ export function useSkeletonCode(
       category,
       problemId,
       codeType: mode,
-    }).then(result => {
-      setSkeletonCode(result.code)
+    }).then(res => {
+      if (res) {
+        setSkeletonCode(res.code)
+      }
     })
   }, [category, mode, problemId])
 

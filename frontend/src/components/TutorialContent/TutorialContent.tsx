@@ -5,11 +5,10 @@ import { CheckBoxAvailability, SubgoalNode } from '../../pages/Label'
 import { Color, SUBMIT_BUTTON_HEIGHT } from '../../shared/Common'
 import { getString } from '../../shared/Localization'
 import { InstructionTask } from '../../templates/InstructionTask'
-import { LinearLayout } from '../../templates/LinearLayout'
 import { CodeGrouper } from '../CodeGrouper'
 import { HierarchyVisualizer } from '../HierarchyVisualizer'
 import { SubgoalContainer } from '../SubgoalContainer'
-import { TaskContainer } from '../TaskContainer'
+import { InstructionContainer } from '../TaskContainer'
 import './TutorialContent.scss'
 
 interface Props {
@@ -47,16 +46,15 @@ function TutorialContent(props: Props) {
       <div className="tutorial-container">
         <div className="row">
           <div className="text-container">
-            <h1 className="tutorial-title">{getString('tutorial_title')}</h1>
+            <Title>{getString('tutorial_title')}</Title>
             <p className="tutorial-text">{getString('tutorial_introduction')}</p>
           </div>
         </div>
         <div className="row">
           <div className="text-container">
-            <h1 className="tutorial-title">{getString('tutorial_learn_subgoal')}</h1>
+            <Title>{getString('tutorial_learn_subgoal')}</Title>
             <p className="tutorial-text">{getString('tutorial_subgoal_explanation1')}</p>
             <p className="tutorial-text">{getString('tutorial_subgoal_explanation2')}</p>
-            <p className="tutorial-text">{getString('tutorial_subgoal_explanation3')}</p>
           </div>
           <div className="figure-container">
             <div className="figure">
@@ -65,13 +63,11 @@ function TutorialContent(props: Props) {
           </div>
         </div>
         <div className="row">
-          <h1 className="tutorial-title">
-            {`${getString('tutorial_practice_title')} 1${getString('tutorial_practice1_goal')}`}
-          </h1>
+          <Title>{`${getString('tutorial_practice_title')} 1${getString('tutorial_practice1_goal')}`}</Title>
           <PracticeContainer>
             <InstructionTask
               instruction={
-                <TaskContainer
+                <InstructionContainer
                   instruction={<div>{getString('tutorial_practice1_instruction')}</div>}
                   task={
                     <SubgoalContainer
@@ -90,7 +86,7 @@ function TutorialContent(props: Props) {
                 />
               }
               task={
-                <LinearLayout ratios={['29px', '1fr']}>
+                <TaskContainer>
                   <HierarchyVisualizer subgoals={props.firstSubgoals} />
                   <CodeGrouper
                     code={practice1}
@@ -98,7 +94,7 @@ function TutorialContent(props: Props) {
                     onClickLine={props.firstClickCheckBox}
                     selectable
                   />
-                </LinearLayout>
+                </TaskContainer>
               }
               heightAuto
             />
@@ -112,13 +108,11 @@ function TutorialContent(props: Props) {
           </PracticeContainer>
         </div>
         <div className="row">
-          <h1 className="tutorial-title">
-            {`${getString('tutorial_practice_title')} 2${getString('tutorial_practice2_goal')}`}
-          </h1>
+          <Title>{`${getString('tutorial_practice_title')} 2${getString('tutorial_practice2_goal')}`}</Title>
           <PracticeContainer>
             <InstructionTask
               instruction={
-                <TaskContainer
+                <InstructionContainer
                   instruction={<div>{getString('tutorial_practice2_instruction')}</div>}
                   task={
                     <SubgoalContainer
@@ -137,10 +131,10 @@ function TutorialContent(props: Props) {
                 />
               }
               task={
-                <LinearLayout ratios={['29px', '1fr']}>
+                <TaskContainer>
                   <HierarchyVisualizer subgoals={props.secondSubgoals} />
                   <CodeGrouper code={practice2} checkBoxAvailability={props.secondCheckBoxAvailability} />
-                </LinearLayout>
+                </TaskContainer>
               }
               heightAuto
             />
@@ -154,13 +148,11 @@ function TutorialContent(props: Props) {
           </PracticeContainer>
         </div>
         <div className="row">
-          <h1 className="tutorial-title">
-            {`${getString('tutorial_practice_title')} 3${getString('tutorial_practice3_goal')}`}
-          </h1>
+          <Title>{`${getString('tutorial_practice_title')} 3${getString('tutorial_practice3_goal')}`}</Title>
           <PracticeContainer>
             <InstructionTask
               instruction={
-                <TaskContainer
+                <InstructionContainer
                   instruction={<div>{getString('tutorial_practice3_instruction')}</div>}
                   task={
                     <SubgoalContainer
@@ -181,7 +173,7 @@ function TutorialContent(props: Props) {
                 />
               }
               task={
-                <LinearLayout ratios={['29px', '1fr']}>
+                <TaskContainer>
                   <HierarchyVisualizer subgoals={props.thirdSubgoals} />
                   <CodeGrouper
                     code={practice3}
@@ -189,7 +181,7 @@ function TutorialContent(props: Props) {
                     onClickLine={props.clickCheckBox3}
                     selectable
                   />
-                </LinearLayout>
+                </TaskContainer>
               }
               heightAuto
             />
@@ -204,7 +196,7 @@ function TutorialContent(props: Props) {
         </div>
         <div className="row">
           <div className="text-container">
-            <h1 className="tutorial-title">{getString('tutorial_start_title')}</h1>
+            <Title>{getString('tutorial_start_title')}</Title>
             <p className="tutorial-text">{getString('tutorial_start_instruction')}</p>
             <button type="button" className="start-button" onClick={props.onTaskStart}>
               {getString('tutorial_start')}
@@ -247,6 +239,20 @@ const Answer = styled.div`
 
 const AnswerImage = styled.img`
   width: 100%;
+`
+
+const Title = styled.div`
+  padding: 0;
+  font-size: 24px;
+  color: ${Color.Gray85};
+  margin: 15px 0 10px 0;
+`
+
+const TaskContainer = styled.div`
+  display: grid;
+  height: 100%;
+  font-weight: bold;
+  grid-template-columns: 29px 1fr;
 `
 
 export default TutorialContent

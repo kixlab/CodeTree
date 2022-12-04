@@ -2,8 +2,9 @@ import styled from '@emotion/styled'
 import React, { useEffect, useState } from 'react'
 import { Color } from '../shared/Common'
 import { HEADER_HEIGHT } from '../shared/Constants'
-import { getCurrentStage, getId, getStageList, getTimeRemaining, hasTimeLimit } from '../shared/ExperimentHelper'
+import { getCurrentStage, getId, getTimeRemaining } from '../shared/ExperimentHelper'
 import { getString } from '../shared/Localization'
+import { SCENARIO } from '../shared/Scenario'
 import ProgressBar from './ProgressBar/ProgressBar'
 
 interface Props {
@@ -42,9 +43,9 @@ export function Header({ onTimeOut }: Props) {
     <Container>
       <Logo>CodeTree</Logo>
       <Supplement>
-        <ProgressBar currentIndex={getCurrentStage()} stageList={getStageList()} />
+        <ProgressBar currentIndex={getCurrentStage()} stageList={SCENARIO.map(stage => stage.name)} />
         <Timer data-prefix={getString('header_timer_prefix')}>
-          {hasTimeLimit()
+          {SCENARIO[getCurrentStage()]?.timeLimit !== 0
             ? `${Math.floor(remainingTime / 60)}:${String(remainingTime % 60).padStart(2, '0')}`
             : getString('header_no_time_limit')}
         </Timer>

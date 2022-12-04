@@ -4,7 +4,7 @@ import { CodeGrouper } from '../components/CodeGrouper'
 import { Page } from '../components/Page'
 import { PersonalizedSubgoalTreePresenter } from '../components/PersonalizedSubgoalTreePresenter'
 import ProblemContainer from '../components/ProblemContainer'
-import { TaskContainer } from '../components/TaskContainer'
+import { InstructionContainer } from '../components/TaskContainer'
 import { useCode } from '../hooks/useCode'
 import { useHighlightCodeSegment } from '../hooks/useHighlightCodeSegment'
 import { useProblem } from '../hooks/useProblem'
@@ -40,7 +40,7 @@ export function PersonalizedPresent() {
     <Page>
       <InstructionTask
         instruction={
-          <TaskContainer
+          <InstructionContainer
             instruction={
               <div>
                 <h1>{`${getString('vote_title')} ${getExampleNumber()}`}</h1>

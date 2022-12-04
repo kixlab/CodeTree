@@ -2,7 +2,6 @@ import styled from '@emotion/styled'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import { Color } from '../shared/Common'
-import { WrapLoading } from '../wrappers/WrapLoading/WrapLoading'
 
 interface Props {
   problem: string
@@ -39,11 +38,9 @@ const Container = styled.div`
 
 function ProblemContainer(props: Props) {
   return (
-    <WrapLoading loaded={props.problem.length > 0}>
-      <Container>
-        <ReactMarkdown>{props.problem}</ReactMarkdown>
-      </Container>
-    </WrapLoading>
+    <Container>
+      <ReactMarkdown>{props.problem}</ReactMarkdown>
+    </Container>
   )
 }
 

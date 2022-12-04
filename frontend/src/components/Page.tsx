@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { nextStage, shouldMoveStage } from '../shared/ExperimentHelper'
 import { Header } from './Header'
 
@@ -11,12 +11,13 @@ interface Props {
 
 export function Page({ children, onTimeOut }: Props) {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
 
   useEffect(() => {
     if (shouldMoveStage()) {
       navigate(nextStage())
     }
-  }, [navigate])
+  }, [navigate, pathname])
 
   return (
     <Container>

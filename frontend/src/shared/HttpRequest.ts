@@ -1,6 +1,6 @@
 import { ErrorResult } from '../protocol/Error'
 
-export async function Get<P, R>(baseUrl: string, params: P): Promise<R> {
+export async function Get<P, R>(baseUrl: string, params: P): Promise<R | null> {
   const url = `${baseUrl}?${[...Object.entries(params as Record<string, unknown>)]
     .map(([key, value]) => `${key}=${value}`)
     .join('&')}`
@@ -11,10 +11,10 @@ export async function Get<P, R>(baseUrl: string, params: P): Promise<R> {
   }
   const { message } = await res.json()
   alert(message)
-  throw new Error(message)
+  return null
 }
 
-export async function Post2<P, R>(url: string, params: P): Promise<R> {
+export async function Post2<P, R>(url: string, params: P): Promise<R | null> {
   const res = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },
     method: 'POST',
@@ -26,7 +26,7 @@ export async function Post2<P, R>(url: string, params: P): Promise<R> {
   }
   const { message } = await res.json()
   alert(message)
-  throw new Error(message)
+  return null
 }
 
 export async function Post<P, R>(

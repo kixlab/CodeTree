@@ -17,7 +17,7 @@ export const SCENARIO: Stage[] = [
   {
     name: getString('progress_bar_stage_instruction'),
     url: '/instruction',
-    timeLimit: 300,
+    timeLimit: 0,
   },
   {
     name: getString('progress_bar_stage_consent'),
@@ -50,6 +50,7 @@ export const SCENARIO: Stage[] = [
   {
     name: `${getString('progress_bar_stage_practice')} 2`,
     url: '/practice/pilot/p2',
+    canRevisit: true,
     timeLimit: 300,
   },
   {
