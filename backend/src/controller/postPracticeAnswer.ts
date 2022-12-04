@@ -24,11 +24,16 @@ export const postPracticeAnswerController = Post<PostPracticeAnswerParams, PostP
             result = await shellRunService.runPython(participantId, problemId, i, PythonSolutionTemplate(code, ...args))
             shellRunService.clearPython(participantId, problemId, i)
           } else if (codeType === 'javascript') {
-            result = await shellRunService.runJavascript(participantId, problemId, i, JavascriptSolutionTemplate(code, ...args))
+            result = await shellRunService.runJavascript(
+              participantId,
+              problemId,
+              i,
+              JavascriptSolutionTemplate(code, ...args)
+            )
             shellRunService.clearJavascript(participantId, problemId, i)
           } else if (codeType === 'cpp') {
             const nums = JSON.parse(args[0])
-            const stdin = `${args[1]}\n${nums.length}\n${nums.join(" ")}`
+            const stdin = `${args[1]}\n${nums.length}\n${nums.join(' ')}`
 
             result = await shellRunService.judgeCpp(CppSolutionTemplate(code), stdin)
             result = `[${result.slice(0, -1)}]`
@@ -38,14 +43,14 @@ export const postPracticeAnswerController = Post<PostPracticeAnswerParams, PostP
 
           return [result === answer, result, answer, argStr] as Result
         } catch (e) {
-          return [false, e, '', argStr] as Result
+          return [false, `${e}`, '', argStr] as Result
         }
       }) ?? []
     )
 
     const score = results.reduce((prev, cur) => (cur[0] ? prev + 1 : prev), 0)
 
-    return{
+    return {
       correctCases: score,
       testcases: results.length,
       output: results
