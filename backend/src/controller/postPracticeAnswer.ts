@@ -23,18 +23,22 @@ export const postPracticeAnswerController = Post<PostPracticeAnswerParams, PostP
           try {
             let result = ''
             const args = argStr.split('\n')
+
             if (codeType === 'python') {
               result = await shellRunService.runPython(participantId, problemId, i, PythonSolutionTemplate(code, ...args))
+              shellRunService.clearPython(participantId, problemId, i)
             } else if (codeType === 'javascript') {
-              result = await shellRunService.runJavascript(JavascriptSolutionTemplate(code, ...args))
+              result = await shellRunService.runJavascript(participantId, problemId, i, JavascriptSolutionTemplate(code, ...args))
+              shellRunService.clearJavascript(participantId, problemId, i)
             } else if (codeType === 'cpp') {
-              result = await shellRunService.judgeCpp(code, '1234') // TODO: update input type for cpp
+              const nums = JSON.parse(args[0])
+              const stdin = `${args[1]}\n${nums.length}\n${nums.join(" ")}`
+
+              result = await shellRunService.judgeCpp(code, stdin)
+              result = `[${result.slice(0, -1)}]`
             }
             result = result.replace(/(\n| )/g, '')
             const answer = outFiles[i].replace(/(\n| )/g, '')
-
-            const isClear = shellRunService.clearPython(participantId, problemId, i)
-            if (!isClear) throw new Error('파일이 정상적으로 삭제되지 않았습니다.')
 
             return [result === answer, result, answer, argStr] as Result
           } catch (e) {

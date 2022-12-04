@@ -142,11 +142,6 @@ function Practice(props: RouteComponentProps<MatchParams>) {
   }, [category, code, problemId, props.history])
 
   useEffect(() => {
-    if (mode === 'cpp') {
-      setCode('')
-      return
-    }
-
     Get<GetProblemSkeletonParams, GetProblemSkeletonResults>(
       `${SERVER_ADDRESS}/getProblemSkeleton`,
       {

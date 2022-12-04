@@ -87,8 +87,27 @@ class ShellRunService {
     return output.stdout.toString()
   }
 
-  async runJavascript(code: string): Promise<string> {
-    return this.run(code, node)
+  async runJavascript(participantId: string, problemId: string, testNumber: number, code: string): Promise<string> {
+    const name = `p${participantId}-${problemId}-${testNumber}`
+
+    await fs.writeFile(`${name}.js`, code)
+    await this.execPromise(`node ${name}.js > ${name}.out`)
+
+    const resp = (await fs.readFile(`${name}.out`)).toString()
+    return resp
+  }
+
+  async clearJavascript(participantId: string, problemId: string, testNumber: number) {
+    try {
+      const name = `p${participantId}-${problemId}-${testNumber}`
+
+      await fs.unlink(`${name}.js`)
+      await fs.unlink(`${name}.out`)
+
+      return true
+    } catch (error) {
+      return false
+    }
   }
 }
 

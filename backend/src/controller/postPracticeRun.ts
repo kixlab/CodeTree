@@ -30,10 +30,16 @@ export const postPracticeRunController = Post<PostPracticeAnswerParams, PostPrac
       try {
         if (codeType === 'python') {
           output = await shellRunService.runPython(participantId, problemId, 1, PythonSolutionTemplate(code, ...sampleArgs))
+          shellRunService.clearPython(participantId, problemId, 1)
         } else if (codeType === 'javascript') {
-          output = await shellRunService.runJavascript(JavascriptSolutionTemplate(code, ...sampleArgs))
+          output = await shellRunService.runJavascript(participantId, problemId, 1, JavascriptSolutionTemplate(code, ...sampleArgs))
+          shellRunService.clearJavascript(participantId, problemId, 1)
         } else if (codeType === 'cpp') {
-          output = await shellRunService.runCpp(code) // TODO: update input type for cpp
+          const nums = JSON.parse(sampleArgs[0])
+          const stdin = `${sampleArgs[1]}\n${nums.length}\n${nums.join(" ")}`
+
+          output = await shellRunService.judgeCpp(code, stdin)
+          output = `[${output.slice(0, -1)}]`
         }
         output = output.replace(/(\n| )/g, '')
       } catch (error) {
@@ -42,8 +48,6 @@ export const postPracticeRunController = Post<PostPracticeAnswerParams, PostPrac
       }
 
       const answerResult = outFile.replace(/(\n| )/g, '')
-      const isClear = shellRunService.clearPython(participantId, problemId, 1)
-      if (!isClear) throw new Error('파일이 정상적으로 삭제되지 않았습니다.')
 
       send(200, {
         output: `입력: ${sampleArgs}\n출력: ${output}\n기대출력: ${answerResult}\n`,
