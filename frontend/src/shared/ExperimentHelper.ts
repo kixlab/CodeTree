@@ -1,8 +1,8 @@
-import { SCENARIO, GroupUrl, Stage } from './Scenario'
-import { getString } from './Localization'
-import { Post } from './HttpRequest'
+import { PRODUCTION, SERVER_ADDRESS } from '../environments/Configuration'
 import { PostParticipantProgressParams, PostParticipantProgressResult } from '../protocol/PostParticipantProgress'
-import { SERVER_ADDRESS, PRODUCTION } from '../environments/Configuration'
+import { Post } from './HttpRequest'
+import { getString } from './Localization'
+import { GroupUrl, SCENARIO, Stage } from './Scenario'
 
 const PARTICIPANT_ID_KEY = 'PARTICIPANT_ID_KEY'
 const PARTICIPANT_GROUP_KEY = 'PARTICIPANT_GROUP_KEY'
@@ -35,7 +35,7 @@ export function initialize(id: string, group: string) {
   localStorage.setItem(TIME_STAMP, new Date().getTime().toString())
 }
 
-export function nextStage(jump = 1): string {
+export function nextStage(jump = 0): string {
   const id = getId()
   const group = getGroup()
   if (id === null || group === null) {
@@ -88,14 +88,6 @@ export function getTimeRemaining(): number {
   const timeLimit = SCENARIO[currentStage]?.timeLimit || 0
   const timeStamp = localStorage.getItem(TIME_STAMP) || new Date().getTime().toString()
   return timeLimit - Math.floor((new Date().getTime() - parseInt(timeStamp, 10)) / 1000)
-}
-
-export function hasTimeLimit(): boolean {
-  return SCENARIO[getCurrentStage()]?.timeLimit !== 0
-}
-
-export function getStageList(): string[] {
-  return SCENARIO.map(stage => stage.name)
 }
 
 export function getCurrentStage(): number {
