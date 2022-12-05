@@ -5,7 +5,7 @@ import { HEADER_HEIGHT } from '../shared/Constants'
 import { getCurrentStage, getId, getTimeRemaining } from '../shared/ExperimentHelper'
 import { getString } from '../shared/Localization'
 import { SCENARIO } from '../shared/Scenario'
-import ProgressBar from './ProgressBar/ProgressBar'
+import { ProgressBar } from './ProgressBar'
 
 interface Props {
   onTimeOut?: () => void

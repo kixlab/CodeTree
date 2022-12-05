@@ -4,6 +4,7 @@ import { python } from '@codemirror/lang-python'
 import styled from '@emotion/styled'
 import CodeMirror from '@uiw/react-codemirror'
 import React, { ChangeEvent, useMemo } from 'react'
+import { Color } from '../shared/Common'
 
 interface Props {
   code: string
@@ -61,6 +62,7 @@ const Container = styled.div`
   overflow-y: scroll;
   display: inline-block;
   vertical-align: top;
+  color: ${Color.Gray85};
 
   & > div {
     height: calc(100% - 25px);

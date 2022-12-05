@@ -4,11 +4,11 @@ import { Color, SUBMIT_BUTTON_HEIGHT } from '../shared/Common'
 
 interface Props {
   onClick: () => void
-  disabled: boolean
+  disabled?: boolean
   children: React.ReactNode
 }
 
-export function ActionButton({ onClick, children, disabled }: Props) {
+export function ActionButton({ onClick, children, disabled = false }: Props) {
   return (
     <Button onClick={onClick} disabled={disabled}>
       {children}
@@ -23,6 +23,7 @@ const Button = styled.button`
   border: none;
   color: ${Color.Gray00};
   font-size: 18px;
+  cursor: pointer;
 
   &:hover {
     background: ${Color.Blue20};

@@ -15,7 +15,7 @@ interface Props {
   onClickLine?: (id: number, checked: boolean) => void
 }
 
-export function CodeGrouper({
+function Component({
   code,
   explanations = [],
   checkBoxAvailability,
@@ -50,6 +50,8 @@ export function CodeGrouper({
     </Container>
   )
 }
+
+export const CodeGrouper = React.memo(Component)
 
 const Container = styled.div`
   overflow: auto;

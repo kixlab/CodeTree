@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react'
-import CM from '@uiw/react-codemirror'
 import { cpp } from '@codemirror/lang-cpp'
 import { javascript } from '@codemirror/lang-javascript'
 import { python } from '@codemirror/lang-python'
 import styled from '@emotion/styled'
+import CM from '@uiw/react-codemirror'
+import React, { useMemo } from 'react'
 import { CODE_LINE_HEIGHT } from '../shared/Constants'
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
   mode?: 'python' | 'javascript' | 'cpp'
 }
 
-export function CodeMirror({ code, mode = 'python' }: Props) {
+function Component({ code, mode = 'python' }: Props) {
   const extensions = useMemo(() => {
     if (mode === 'python') {
       return [python()]
@@ -35,6 +35,8 @@ export function CodeMirror({ code, mode = 'python' }: Props) {
     </Container>
   )
 }
+
+export const CodeMirror = React.memo(Component)
 
 const Container = styled.div`
   & > div {

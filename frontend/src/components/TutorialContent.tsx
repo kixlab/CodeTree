@@ -1,15 +1,16 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import { practice1, practice2, practice3 } from '../../data/SubgoalTutorialExamples'
-import { CheckBoxAvailability, SubgoalNode } from '../../pages/Label'
-import { Color, SUBMIT_BUTTON_HEIGHT } from '../../shared/Common'
-import { getString } from '../../shared/Localization'
-import { InstructionTask } from '../../templates/InstructionTask'
-import { CodeGrouper } from '../CodeGrouper'
-import { HierarchyVisualizer } from '../HierarchyVisualizer'
-import { SubgoalContainer } from '../SubgoalContainer'
-import { InstructionContainer } from '../TaskContainer'
-import './TutorialContent.scss'
+import { PRACTICE_EXAMPLE1, PRACTICE_EXAMPLE2, PRACTICE_EXAMPLE3 } from '../data/SubgoalTutorialExamples'
+import { CheckBoxAvailability, SubgoalNode } from '../pages/Label'
+import { Color } from '../shared/Common'
+import { getString } from '../shared/Localization'
+import { InstructionTask } from '../templates/InstructionTask'
+import { ActionButton } from './ActionButton'
+import { CodeGrouper } from './CodeGrouper'
+import { HierarchyVisualizer } from './HierarchyVisualizer'
+import { SkipButton } from './SkipButton'
+import { SubgoalContainer } from './SubgoalContainer'
+import { InstructionContainer } from './TaskContainer'
 
 interface Props {
   firstSubgoals: SubgoalNode[]
@@ -40,29 +41,24 @@ interface Props {
   onTaskStart: () => void
 }
 
-function TutorialContent(props: Props) {
+export function TutorialContent(props: Props) {
   return (
     <div>
       <div className="tutorial-container">
-        <div className="row">
-          <div className="text-container">
-            <Title>{getString('tutorial_title')}</Title>
-            <p className="tutorial-text">{getString('tutorial_introduction')}</p>
-          </div>
-        </div>
-        <div className="row">
-          <div className="text-container">
-            <Title>{getString('tutorial_learn_subgoal')}</Title>
-            <p className="tutorial-text">{getString('tutorial_subgoal_explanation1')}</p>
-            <p className="tutorial-text">{getString('tutorial_subgoal_explanation2')}</p>
-          </div>
-          <div className="figure-container">
-            <div className="figure">
-              <img src="/assets/tutorial-figure (ko).png" alt="An examplary subgoal labels for a math solution." />
+        <Row>
+          <IntroContainer>
+            <div>
+              <Title>{getString('tutorial_learn_subgoal')}</Title>
+              <p className="tutorial-text">{getString('tutorial_subgoal_explanation1')}</p>
+              <p className="tutorial-text">{getString('tutorial_subgoal_explanation2')}</p>
+              <p className="tutorial-text">{getString('tutorial_subgoal_explanation3')}</p>
             </div>
-          </div>
-        </div>
-        <div className="row">
+            <FigureContainer>
+              <img src="/assets/tutorial-figure (ko).png" alt="An examplary subgoal labels for a math solution." />
+            </FigureContainer>
+          </IntroContainer>
+        </Row>
+        <Row>
           <Title>{`${getString('tutorial_practice_title')} 1${getString('tutorial_practice1_goal')}`}</Title>
           <PracticeContainer>
             <InstructionTask
@@ -79,9 +75,7 @@ function TutorialContent(props: Props) {
                     />
                   }
                   footer={
-                    <CheckAnswer type="submit" className="submit" onClick={props.firstCheckAnswer}>
-                      {getString('tutorial_check_answer')}
-                    </CheckAnswer>
+                    <ActionButton onClick={props.firstCheckAnswer}>{getString('tutorial_check_answer')}</ActionButton>
                   }
                 />
               }
@@ -89,7 +83,7 @@ function TutorialContent(props: Props) {
                 <TaskContainer>
                   <HierarchyVisualizer subgoals={props.firstSubgoals} />
                   <CodeGrouper
-                    code={practice1}
+                    code={PRACTICE_EXAMPLE1}
                     checkBoxAvailability={props.firstCheckBoxAvailability}
                     onClickLine={props.firstClickCheckBox}
                     selectable
@@ -106,8 +100,8 @@ function TutorialContent(props: Props) {
               )}
             </Answer>
           </PracticeContainer>
-        </div>
-        <div className="row">
+        </Row>
+        <Row>
           <Title>{`${getString('tutorial_practice_title')} 2${getString('tutorial_practice2_goal')}`}</Title>
           <PracticeContainer>
             <InstructionTask
@@ -124,16 +118,14 @@ function TutorialContent(props: Props) {
                     />
                   }
                   footer={
-                    <CheckAnswer type="submit" className="submit" onClick={props.secondCheckAnswer}>
-                      {getString('tutorial_check_answer')}
-                    </CheckAnswer>
+                    <ActionButton onClick={props.secondCheckAnswer}>{getString('tutorial_check_answer')}</ActionButton>
                   }
                 />
               }
               task={
                 <TaskContainer>
                   <HierarchyVisualizer subgoals={props.secondSubgoals} />
-                  <CodeGrouper code={practice2} checkBoxAvailability={props.secondCheckBoxAvailability} />
+                  <CodeGrouper code={PRACTICE_EXAMPLE2} checkBoxAvailability={props.secondCheckBoxAvailability} />
                 </TaskContainer>
               }
               heightAuto
@@ -146,8 +138,8 @@ function TutorialContent(props: Props) {
               )}
             </Answer>
           </PracticeContainer>
-        </div>
-        <div className="row">
+        </Row>
+        <Row>
           <Title>{`${getString('tutorial_practice_title')} 3${getString('tutorial_practice3_goal')}`}</Title>
           <PracticeContainer>
             <InstructionTask
@@ -166,9 +158,7 @@ function TutorialContent(props: Props) {
                     />
                   }
                   footer={
-                    <CheckAnswer type="submit" className="submit" onClick={props.thirdCheckAnswer}>
-                      {getString('tutorial_check_answer')}
-                    </CheckAnswer>
+                    <ActionButton onClick={props.thirdCheckAnswer}>{getString('tutorial_check_answer')}</ActionButton>
                   }
                 />
               }
@@ -176,7 +166,7 @@ function TutorialContent(props: Props) {
                 <TaskContainer>
                   <HierarchyVisualizer subgoals={props.thirdSubgoals} />
                   <CodeGrouper
-                    code={practice3}
+                    code={PRACTICE_EXAMPLE3}
                     checkBoxAvailability={props.thirdCheckBoxAvailability}
                     onClickLine={props.clickCheckBox3}
                     selectable
@@ -193,33 +183,39 @@ function TutorialContent(props: Props) {
               )}
             </Answer>
           </PracticeContainer>
-        </div>
-        <div className="row">
-          <div className="text-container">
-            <Title>{getString('tutorial_start_title')}</Title>
-            <p className="tutorial-text">{getString('tutorial_start_instruction')}</p>
-            <button type="button" className="start-button" onClick={props.onTaskStart}>
-              {getString('tutorial_start')}
-            </button>
-          </div>
-        </div>
+        </Row>
+        <Row>
+          <Title>{getString('tutorial_start_title')}</Title>
+          <p>{getString('tutorial_start_instruction')}</p>
+          <ActionButton onClick={props.onTaskStart}>{getString('tutorial_start')}</ActionButton>
+        </Row>
       </div>
-      {props.couldSkipTutorial && (
-        <button type="button" className="tutorial-skip" onClick={props.skipTutorial}>
-          {getString('tutorial_skip')}
-        </button>
-      )}
+      {props.couldSkipTutorial && <SkipButton onClick={props.skipTutorial}>{getString('tutorial_skip')}</SkipButton>}
     </div>
   )
 }
 
-const CheckAnswer = styled.button`
+const Row = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-items: stretch;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  &:first-of-type {
+    padding-top: 25px;
+  }
+
+  &:last-of-type {
+    padding-bottom: 60px;
+  }
+`
+
+const IntroContainer = styled.div`
   width: 100%;
-  height: ${SUBMIT_BUTTON_HEIGHT}px;
-  background: ${Color.Blue};
-  border: none;
-  color: ${Color.Gray00};
-  font-size: 18px;
+  display: grid;
+  grid-template-columns: 0.6fr 0.4fr;
 `
 
 const PracticeContainer = styled.div`
@@ -255,4 +251,18 @@ const TaskContainer = styled.div`
   grid-template-columns: 29px 1fr;
 `
 
-export default TutorialContent
+const FigureContainer = styled.div`
+  max-width: 500px;
+  flex: 1;
+  padding-top: 25px;
+  display: flex;
+  align-self: center;
+  border: 1px solid ${Color.Gray15};
+  margin: 10px;
+  user-select: none;
+
+  & > img {
+    width: 100%;
+    -webkit-user-drag: none;
+  }
+`

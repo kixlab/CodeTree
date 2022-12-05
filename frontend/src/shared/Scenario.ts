@@ -37,13 +37,13 @@ export const SCENARIO: Stage[] = [
   },
   {
     name: `${getString('progress_bar_stage_practice')} 1`,
-    url: '/practice/pilot/p1',
+    url: '/practice/pilot/p3',
     canRevisit: true,
     timeLimit: 300,
   },
   {
     name: `${getString('progress_bar_stage_worked_example')} 1`,
-    url: '/label/pilot/p1',
+    url: '/label/pilot/p3',
     canRevisit: true,
     timeLimit: 0,
   },

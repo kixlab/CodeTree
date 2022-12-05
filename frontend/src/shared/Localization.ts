@@ -81,10 +81,6 @@ const Localiztion: Dictionary = {
     ko: '마무리',
     en: 'Wrap Up',
   },
-  instruction_title: {
-    ko: '',
-    en: '',
-  },
   instruction_background: {
     ko: '실험 배경',
     en: 'Background',
@@ -106,45 +102,34 @@ const Localiztion: Dictionary = {
     en: 'Training',
   },
   tutorial_introduction: {
-    ko: `참가자는 "하위 목표 학습법"을 통해 Python의 while 문을 익히게 됩니다.
-            현재의 페이지에선 앞으로 진행하실 하위 목표 학습법에 대한 소개와, 간단한 수학 예시 문제를 통해 하위 목표 학습법과 사용되는 인터페이스를 직접 체험할 수 있는 연습 활동 2개가 준비되어 있습니다.
-            이 페이지 이후, 체험하신 학습법과 인터페이스를 이용해 while 문을 사용한 3개의 프로그램 예시를 하위 목표 학습법으로 익히고 이어서 연관된 연습 문제 풀이로 while 문의 사용법을 더 깊이 익히게 됩니다.`,
-    en: `You are going to learn while loops in Python by studying on three worked examples and
-            solving three practice problems. In this stage, we explain how you should approach
-            them while learning. For your easier understanding, we use simple math problems as examples
-            for the explanation.`,
+    ko: `아래 3가지 연습 활동을 통해 하위 목표 학습법과 인터페이스를 익혀보세요.`,
+    en: ``,
   },
   tutorial_learn_subgoal: {
     ko: '하위 목표 학습법',
     en: 'Learn Subgoals',
   },
   tutorial_subgoal_explanation1: {
-    ko: `수학 문제나 프로그래밍 문제를 풀 때 예제의 풀이를 꼼꼼히 이해하지 않고 그대로 가져다 쓴 경험이 모두 한 번쯤은 있을 겁니다.
-            하지만 이렇게 문제를 풀 경우, 문제 풀이가 잘 기억나지 않을 뿐더러 비슷한 유형의 다른 문제를 맞닥뜨렸을 때 풀이를 문제에 맞게 어떻게 고쳐야 하는지 몰라 새로운 문제들을 못 푸는 경우가 많습니다.
-            선행 연구에 따르면, 예제를 공부할 때 예제의 각 풀이 과정이 어떤 목적을 가지는지, 또 전체 풀이 과정에서 어떠한 역할을 하는지 이해함으로써 새로운 문제를 풀 때 기존의 풀이를 알맞게 고쳐 풀 수 있게 되고,
-            나아가 새로운 문제로의 "전이"가 더 잘 일어납니다. 하위 목표란 이렇듯 학습자가 학습의 전이를 위해 배워야 할 예제의 담긴 각 풀이 과정의 목표를 의미합니다.
-      `,
+    ko: `어려운 알고리즘 문제를 맞닥뜨렸을 때 어떻게 손을 댈 지 막막한 경험이 모두 한 번쯤은 있습니다. 
+      이런 상황에서는 먼저 문제를 직관적이고 정확하게 풀 수 있는 brute-force 풀이를 생각한 뒤, 이를 최적화해 나가야 합니다.
+      최적화 과정 역시 쉽지 않지만, 풀이를 작은 기능 단위로 나눠보고 각각을 최적화할 방법을 생각하는 것이 도움될 수 있습니다.`,
     en: ``,
   },
   tutorial_subgoal_explanation2: {
-    ko: `예를 들어 오른쪽 그림과 같이 방정식 2x + 4 = 6x + 10을 푼다고 할 때, 그림과 같이 변수와 수를 이항하는 여러 단계를 밟습니다.
-            여기서 각 단계들을 "변수를 같은 변으로 모으기", "양변 정리하기", "변수의 계수를 1로 만들기"와 같은 목표들로 묶어,
-            문제 풀이 과정을 크게 세 부분으로 나눌 수 있습니다. 하위 목표를 기준으로 문제 풀이를 이해하면, 복잡한 문제 풀이의 구조도 쉽게 이해할 수 있고,
-            또 연관된 문제를 풀 때도 풀이의 어느 부분을 고쳐야 하는지 더 쉽게 파악할 수 있습니다. 하위 목표 학습법은 이렇듯 수학 또는 프로그래밍 예제를 공부할 때
-            학습자가 예제의 각 과정이 가지는 하위 목표를 스스로 설명해보는 활동을 통해 예제가 가지는 하위 목표 구조를 이해하고 다른 문제로 더 쉽게 전이할 수 있도록 돕는 학습법입니다.`,
+    ko: `예를 들어 오른쪽의 두 코드는 주어진 nums 리스트에서 합이 target이 되는 두 인덱스를 찾는 알고리즘입니다.
+      두 풀이는 시간 복잡도도 다르고 언뜻보면 다르지만 사실 같은 기능 단위를 가지고 있고, 첫 번째 풀이에서 두 번째로 최적화해 나갈 수 있습니다.
+      첫 번째 풀이는 1) 리스트의 각 요소를 순회하면서, 2) 현재 요소와 더했을 때 target이 되는 요소가 있는지 확인합니다 (주황 부분).
+      두 번째 풀이는 이 두 기능 단위를 가지면서 2번 기능을 해시 테이블을 이용해 최적화했습니다.
+      이처럼 기능으로 코드를 나눠 분석하면 최적화 요소를 좀 더 쉽게 찾을 수 있습니다.`,
     en: ``,
   },
   tutorial_subgoal_explanation3: {
-    ko: `앞으로의 실험에서 참가자는 예시 코드에 존재하는 하위 목표들을 설명해보는 활동을 통해 찾는 활동을 통해 while 문을 사용법을 익히게 됩니다.
-            이 과정에서 참가자는 주어진 예시 코드에서 하위 목표를 가장 올바른 문구를 보기에서 고르거나 직접 작성합니다.
-            올바른 하위 목표 문구는 "~를 ~하기"와 같은 형태로 문제 해결 과정을 단계별로 묶어 설명해야 합니다.
-            아래 3가지 연습 활동을 통해 하위 목표 학습법을 간단히 경험해보고 올바른 하위 목표가 어떤 것인지 익혀보세요.`,
-    en: `While you are learning by looking at code samples, you will be asked
-            to provide your own subgoal labels for the examples that you receive.
-            To do this, you will be asked to identify the purpose of groups of steps
-            in the examples (label the subgoals). Good subgoal labels are action-based
-            phrases (i.e. similarly to imperative sentences like "Close the door,"
-            or "Press the button"); they tell the problem solver what to do next.`,
+    ko: `이렇게 코드를 나눌 수 있는 기능 단위를 "하위 목표"라고 합니다.
+            하나의 알고리즘은 여러 하위 목표로 이루어져 있으며, 이 하위 목표를 어떻게 구현하느냐에 따라 알고리즘의 성능이 달라집니다.
+            따라서 알고리즘 문제를 풀 때는, 먼저 간단한 풀이에서 시작해 하위 목표를 찾아보고 각각의 하위 목표 구현을 최적화해 나가며 정답을 찾아가는 것이 좋습니다.
+            오늘 참여하신 활동에서는 저희가 개발한 인터페이스를 이용해 알고리즘 문제 하나를 brute-force로 풀어보고 하위 목표를 분석하여 풀이를 발전시켜보는 활동을 하게 됩니다.
+            우선, 아래 3가지 연습 활동을 통해 하위 목표 학습법과 사용할 인터페이스를 정확히 익혀보세요.`,
+    en: ``,
   },
   tutorial_subgoal_explanation3_vote: {
     ko: `앞으로의 실험에서 참가자는 예시 코드에 존재하는 하위 목표들을 설명해보는 활동을 통해 찾는 활동을 통해 while 문을 사용법을 익히게 됩니다.
@@ -218,22 +203,8 @@ const Localiztion: Dictionary = {
     en: 'Start subgoal learning',
   },
   tutorial_start_instruction: {
-    ko: `간단한 수학 풀이에서 하위 목표에 따라 풀이 단계를 분류하고 하위 목표를 직접 작성해 봤으니,
-            이제 조금 더 복잡한 프로그램 코드에서 하위 목표를 찾으며 while 문을 배워보는 활동을 시작합니다.
-            이 활동에서 주어지는 코드들은 모두 같은 하위 목표를 가지고 있지만, 모두 같은 문구로 설명되지는 않을
-            수 있습니다. 주어진 문제와 코드에 맞게 문구를 작성해보세요. 또한, 이 활동에서는 방금 전 위에서 사용한
-            인터페이스와 비슷한 인터페이스를 이용해 하위 목표를 찾습니다. 새 인터페이스에서는 참가자가 하위 목표를
-            더 자유롭게 정의할 수 있도록 하위 목표를 더 추가하거나 제거할 수 있는 기능이 추가됩니다.
-            이 페이지에서 소개한 하위 목표를 충분히 이해했다면, "학습 시작"을 눌러주세요.`,
-    en: `Now that you have some practice applying and creating subgoal labels,
-            it is time to make subgoal labels for solving problems using a loop.
-            The examples that you will be given all have the same subgoals, but
-            this does not mean that you have to stick to the subgoal labels that
-            you create in the first example. Please feel free to update your subgoal
-            labels as you learn more about using loops. For this task, you will use an
-            interface that is similar to the one you used above but with more functionalities,
-            such as adding/deleting subgoals. If you are ready to start a real task,
-            press "Start Task".`,
+    ko: `이제 조금 더 복잡한 문제를 풀어보고, 위의 인터페이스를 사용해 자신의 풀이에서 하위 목표를 찾는 활동을 시작합니다. 하위 목표 학습을 충분히 이해했다면, "학습 시작"을 눌러주세요.`,
+    en: ``,
   },
   tutorial_vote_start_instruction: {
     ko: `이제 조금 더 복잡한 Python 코드 예제에서 하위 목표를 찾으며 while 문의 사용법을 배워봅니다.
@@ -249,10 +220,6 @@ const Localiztion: Dictionary = {
   tutorial_alert_select_subgoal_first: {
     ko: '왼쪽의 하위 목표를 먼저 선택해주세요.',
     en: 'Please choose one of subgoals first.',
-  },
-  tutorial_alert_assign_all_lines: {
-    ko: '풀이 과정의 각 줄을 클릭해 모두 적절한 하위 목표로 분류해주세요.',
-    en: 'Please assign all lines to subgoals.',
   },
   tutorial_alert_fill_all_boxes: {
     ko: '모든 하위 목표 입력창을 채워주세요.',
@@ -419,11 +386,8 @@ const Localiztion: Dictionary = {
     en: 'Worked Example',
   },
   label_instruction: {
-    ko: `예시 문제 풀이를 보며 while 문의 사용법을 확인해보세요. 풀이에 존재하는 하위 목표들을 찾아보며 코드가 어떠한 하위 목표로 구성되어 있는지 설명해보세요.
-            다음 단계에서 연관된 연습 문제를 풀어 사용법을 직접 익혀봅니다.`,
-    en: `The program code on the right solves the following problem. In this task,
-            you will self-explain the code by identifying subgoals. Click
-            a group of code lines that go together and write a subgoal label on the text input on the left.`,
+    ko: `풀이에 존재하는 하위 목표들을 찾아보며 코드가 어떠한 하위 목표로 구성되어 있는지 설명해보세요.`,
+    en: ``,
   },
   label_warning: {
     ko: '작성하신 하위 목표는 다른 학습자들에게 공유되니 학습에 도움이 되는 내용으로 작성해주세요!',
@@ -432,10 +396,6 @@ const Localiztion: Dictionary = {
   label_alert_select_subgoal_first: {
     ko: '왼쪽의 하위 목표를 먼저 선택해주세요.',
     en: 'Please choose one of subgoals first.',
-  },
-  label_alert_assign_all_lines: {
-    ko: '남는 줄이 없도록 모든 줄에 적절한 하위 목표를 작성해주세요.',
-    en: 'Please make subgoals for all lines.',
   },
   label_alert_fill_all_boxes: {
     ko: '모든 하위 목표 입력창을 채워주세요.',
@@ -570,7 +530,12 @@ const Localiztion: Dictionary = {
     en: 'Practice Problem',
   },
   practice_instruction: {
-    ko: '아래 문제를 풀고, 다음 단계에서 자신의 코드에서 하위 목표를 찾아보며 풀이를 정리해보세요.',
+    ko: '이번엔 아래 문제를 O(n^2) 보다 효울적으로 풀어보세요. 앞선 단계에서 찾은 하위 목표를 더 효율적으로 구현할 방법을 생각해보세요.',
+    en: ``,
+  },
+  practice_instruction_easy: {
+    ko: `아래 문제를 brute-force O(n^2)으로 우선 풀어보세요. 
+      "코드 실행" 버튼을 누르면 5개의 테스트 케이스에 대한 자세한 결과를, "코드 채점" 버튼을 누르면 전체 30개의 테스트 결과를 확인할 수 있습니다.`,
     en: ``,
   },
   practice_run: {
@@ -589,13 +554,9 @@ const Localiztion: Dictionary = {
     ko: '코드 실행 중...',
     en: 'Running...',
   },
-  practice_result_correct: {
-    ko: '정답입니다!',
-    en: 'Correct',
-  },
-  practice_result_incorrect: {
-    ko: '오답입니다',
-    en: 'Incorrect',
+  practice_result: {
+    ko: '개 통과',
+    en: 'testcases passed.',
   },
   practice_action_button: {
     ko: '하위 목표 학습',
