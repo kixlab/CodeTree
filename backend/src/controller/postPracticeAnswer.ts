@@ -16,7 +16,7 @@ export const postPracticeAnswerController = Post<PostPracticeAnswerParams, PostP
       inFiles.map(async (input, i) => {
         const key = `p${participantId}-${problemId}-${i}`
         return await judgeService.test(key, input, outFiles[i], code, codeType)
-      }) ?? []
+      })
     )
 
     const score = results.reduce((prev, cur) => (cur[0] ? prev + 1 : prev), 0)
