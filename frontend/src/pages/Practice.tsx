@@ -17,7 +17,7 @@ import { PostPracticeCodeParams, PostPracticeCodeResults } from '../protocol/Pos
 import { PostPracticeRunParams, PostPracticeRunResults } from '../protocol/PostPracticeRun'
 import { Color } from '../shared/Common'
 import { getId, ID_NOT_FOUND, nextStage } from '../shared/ExperimentHelper'
-import { Post, Post2 } from '../shared/HttpRequest'
+import { Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 import { InstructionTask } from '../templates/InstructionTask'
 
@@ -30,7 +30,7 @@ export function Practice() {
   const { category, problemId } = useParams<MatchParams>()
   const problem = useProblem(category, problemId)
   const [code, setCode] = useState('')
-  const [programOutput, setProgramOutput] = useState<null | PostPracticeAnswerResults['output']>(null)
+  const [programOutput, setProgramOutput] = useState<null | PostPracticeRunResults['output']>(null)
   const [outputCorrect, setOutputCorrect] = useState<boolean | null>(null)
   const [isRunning, setIsRunning] = useState(false)
   const [isJudging, setIsJudging] = useState(false)
@@ -49,7 +49,7 @@ export function Practice() {
     setIsRunning(true)
     setOutputCorrect(null)
 
-    const res = await Post2<PostPracticeRunParams, PostPracticeRunResults>(`${SERVER_ADDRESS}/postPracticeRun`, {
+    const res = await Post<PostPracticeRunParams, PostPracticeRunResults>(`${SERVER_ADDRESS}/postPracticeRun`, {
       code,
       category,
       problemId,
@@ -71,7 +71,7 @@ export function Practice() {
     setIsJudging(true)
     setOutputCorrect(null)
 
-    const res = await Post2<PostPracticeAnswerParams, PostPracticeAnswerResults>(
+    const res = await Post<PostPracticeAnswerParams, PostPracticeAnswerResults>(
       `${SERVER_ADDRESS}/postPracticeAnswer`,
       {
         code,
@@ -82,35 +82,28 @@ export function Practice() {
       }
     )
     if (res) {
-      setProgramOutput(res.output)
+      setProgramOutput([])
       setOutputCorrect(res.correctCases === res.testcases)
     }
     setIsJudging(false)
   }, [category, code, mode, problemId])
 
-  const submit = useCallback(() => {
+  const submit = useCallback(async () => {
     if (code.trim().length <= 0 || !category || !problemId) {
       return
     }
 
     setIsSubmitting(true)
-    Post<PostPracticeCodeParams, PostPracticeCodeResults>(
-      `${SERVER_ADDRESS}/postPracticeCode`,
-      {
-        participantId: getId() ?? ID_NOT_FOUND,
-        lectureName: category,
-        fileName: problemId,
-        code,
-      },
-      () => {
-        setIsSubmitting(false)
-        navigate(nextStage())
-      },
-      error => {
-        window.alert(error.message)
-        setIsSubmitting(false)
-      }
-    )
+    const res = await Post<PostPracticeCodeParams, PostPracticeCodeResults>(`${SERVER_ADDRESS}/postPracticeCode`, {
+      participantId: getId() ?? ID_NOT_FOUND,
+      lectureName: category,
+      fileName: problemId,
+      code,
+    })
+    setIsSubmitting(false)
+    if (res) {
+      navigate(nextStage())
+    }
   }, [category, code, navigate, problemId])
 
   useEffect(() => {

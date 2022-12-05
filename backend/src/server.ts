@@ -8,6 +8,7 @@ import { getIdAndGroupController } from './controller/getIdAndGroup'
 import { getMyProgramCodeController } from './controller/getMyProgramCode'
 import { getNewSubgoalTreeController } from './controller/getNewSubgoalTree'
 import { getParsonsListController } from './controller/getParsonsList'
+import { getParticipantStatusController } from './controller/getParticipantStatus'
 import { getParticipationAvailabilityController } from './controller/getParticipationAvailability'
 import { getProblemMarkDownController } from './controller/getProblemMarkDown'
 import { getProblemSkeletonController } from './controller/getProblemSkeleton'
@@ -47,6 +48,7 @@ app.get('/getMyProgramCode', getMyProgramCodeController)
 app.get('/getProgramCode', getProgramCodeController)
 app.get('/getProblemMarkDown', getProblemMarkDownController)
 app.get('/getParticipationAvailability', getParticipationAvailabilityController)
+app.get('/getParticipantStatus', getParticipantStatusController)
 app.get('/getVotingList', getVotingListController)
 app.get('/getNewSubgoalTree', getNewSubgoalTreeController)
 app.get('/getSubgoalTree', getSubgoalTreeController)
@@ -65,8 +67,8 @@ app.post('/postPracticeRun', postPracticeRunController)
 app.post('/postPracticeAnswer', postPracticeAnswerController)
 
 if (PORT === 80) {
-  http.createServer(app).listen(80);
-  https.createServer(options, app).listen(443);
+  http.createServer(app).listen(80)
+  https.createServer(options, app).listen(443)
   console.info(`App listening at HTTPS`)
 } else {
   app.listen(PORT, () => {

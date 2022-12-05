@@ -88,7 +88,7 @@ function Label() {
               />
             }
             footer={
-              <ActionButton onClick={submit(checkBoxAvailability, subgoals)} disabled={isSubmitting}>
+              <ActionButton onClick={submit(subgoals)} disabled={isSubmitting}>
                 {getString('label_action_button')}
               </ActionButton>
             }

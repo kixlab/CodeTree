@@ -9,7 +9,7 @@ import { useConfirmBeforeLeave } from '../hooks/useConfirmBeforeLeave'
 import { useProblem } from '../hooks/useProblem'
 import { PostAssessmentCodeParams, PostAssessmentCodeResults } from '../protocol/PostAssessmentCode'
 import { getId, ID_NOT_FOUND, nextStage } from '../shared/ExperimentHelper'
-import { Post2 } from '../shared/HttpRequest'
+import { Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 import { getProblemNumber } from '../shared/Utils'
 import { InstructionTask } from '../templates/InstructionTask'
@@ -33,7 +33,7 @@ export function Assessment() {
       return
     }
     setIsSubmitting(true)
-    await Post2<PostAssessmentCodeParams, PostAssessmentCodeResults>(`${SERVER_ADDRESS}/postAssessmentCode`, {
+    await Post<PostAssessmentCodeParams, PostAssessmentCodeResults>(`${SERVER_ADDRESS}/postAssessmentCode`, {
       participantId: getId() ?? ID_NOT_FOUND,
       lectureName: lecture,
       fileName,

@@ -26,7 +26,7 @@ class StorageService {
     })
   }
 
-  async getFiles(path: string) {
+  async getFiles(path: string, sortingOptions = { numeric: true, sensitivity: 'base' }) {
     const [files] = await this.bucket.getFiles({
       prefix: path,
     })
@@ -34,6 +34,7 @@ class StorageService {
     return Promise.all(
       files
         .filter(file => file.name !== path)
+        .sort((a, b) => a.name.localeCompare(b.name, undefined, sortingOptions))
         .map(async file => {
           const [content] = await file.download()
           return content.toString('utf8')

@@ -91,6 +91,7 @@ export interface GroupData {
 export interface ParticipantData {
   group: GroupType
   time: string
+  lastTimestamp?: EpochTimeStamp
   progress?: {
     [key: string]: ProgressData
   }

@@ -4,7 +4,7 @@ import { ChoiceState } from '../pages/Vote'
 import { VotingItem } from '../protocol/GetVotingList'
 import { PostVotingChoicesParams, PostVotingChoicesResults } from '../protocol/PostVotingChoices'
 import { getId, ID_NOT_FOUND } from '../shared/ExperimentHelper'
-import { Post2 } from '../shared/HttpRequest'
+import { Post } from '../shared/HttpRequest'
 
 export function useVoteSubmit(lectureName: string | undefined, fileName: string | undefined) {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -13,7 +13,7 @@ export function useVoteSubmit(lectureName: string | undefined, fileName: string 
     async (votingList: VotingItem[], choiceList: ChoiceState[]) => {
       if (lectureName && fileName) {
         setIsSubmitting(true)
-        await Post2<PostVotingChoicesParams, PostVotingChoicesResults>(`${SERVER_ADDRESS}/postVotingChoices`, {
+        await Post<PostVotingChoicesParams, PostVotingChoicesResults>(`${SERVER_ADDRESS}/postVotingChoices`, {
           lectureName,
           fileName,
           votingChoices: choiceList.map((choice, index) => {

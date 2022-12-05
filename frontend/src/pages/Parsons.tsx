@@ -11,7 +11,7 @@ import { useProblem } from '../hooks/useProblem'
 import { PostParsonsAnswerParams, PostParsonsAnswerResults } from '../protocol/PostParsonsAnswer'
 import { Color } from '../shared/Common'
 import { getId, ID_NOT_FOUND } from '../shared/ExperimentHelper'
-import { Post2 } from '../shared/HttpRequest'
+import { Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 import { InstructionTask } from '../templates/InstructionTask'
 
@@ -44,7 +44,7 @@ export function Parsons() {
     }
     if (lecture && fileName) {
       setIsSubmitting(true)
-      await Post2<PostParsonsAnswerParams, PostParsonsAnswerResults>(`${SERVER_ADDRESS}/postParsonsAnswer`, {
+      await Post<PostParsonsAnswerParams, PostParsonsAnswerResults>(`${SERVER_ADDRESS}/postParsonsAnswer`, {
         participantId: getId() ?? ID_NOT_FOUND,
         lectureName: lecture,
         fileName,

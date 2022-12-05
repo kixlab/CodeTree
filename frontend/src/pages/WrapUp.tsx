@@ -13,15 +13,10 @@ function WrapUp() {
     const id = getId()
     const group = getGroup()
     if (id && group) {
-      Post<PostParticipantFinishedParams, PostParticipantFinishedResult>(
-        `${SERVER_ADDRESS}/postParticipantFinished`,
-        {
-          participantId: id,
-          group,
-        },
-        () => {},
-        error => window.alert(error.message)
-      )
+      Post<PostParticipantFinishedParams, PostParticipantFinishedResult>(`${SERVER_ADDRESS}/postParticipantFinished`, {
+        participantId: id,
+        group,
+      })
     }
   })
 

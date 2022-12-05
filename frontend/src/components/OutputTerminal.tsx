@@ -11,7 +11,7 @@ export function OutputTerminal({ children }: Props) {
 }
 
 const Container = styled.div`
-  padding: 20px;
+  padding: 8px;
   color: ${Color.Gray00};
   font-family: monospace;
   font-size: 14px;
