@@ -11,7 +11,7 @@ interface Props {
   mode?: 'python' | 'javascript' | 'cpp'
 }
 
-export function CodeMirror({ code, mode = 'python' }: Props) {
+function Component({ code, mode = 'python' }: Props) {
   const extensions = useMemo(() => {
     if (mode === 'python') {
       return [python()]
@@ -35,6 +35,8 @@ export function CodeMirror({ code, mode = 'python' }: Props) {
     </Container>
   )
 }
+
+export const CodeMirror = React.memo(Component)
 
 const Container = styled.div`
   & > div {
