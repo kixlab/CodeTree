@@ -1,8 +1,15 @@
 import React, { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Page } from '../components/Page'
-import TutorialContent from '../components/TutorialContent/TutorialContent'
-import { practice1Subgoals, practice2Subgoals, practice3Subgoals } from '../data/SubgoalTutorialExamples'
+import { TutorialContent } from '../components/TutorialContent'
+import {
+  PRACTICE_EXAMPLE1,
+  practice1Subgoals,
+  practice2Subgoals,
+  practice3Subgoals,
+  PRACTICE_EXAMPLE2,
+  PRACTICE_EXAMPLE3,
+} from '../data/SubgoalTutorialExamples'
 import { useGroupSubgoals } from '../hooks/useGroupSubgoals'
 import { nextStage } from '../shared/ExperimentHelper'
 import { getString } from '../shared/Localization'
@@ -12,10 +19,6 @@ function useCheckAnswer() {
   const [showAnswer, setShowAnswer] = React.useState(false)
 
   const checkAnswer = useCallback((checkBoxAvailability: CheckBoxAvailability[], subgoals: SubgoalNode[]) => {
-    if (checkBoxAvailability.some(a => a === CheckBoxAvailability.AVAILABLE)) {
-      window.alert(getString('tutorial_alert_assign_all_lines'))
-      return
-    }
     if (subgoals.some(s => s.label.length === 0)) {
       window.alert(getString('tutorial_alert_fill_all_boxes'))
       return
@@ -34,7 +37,7 @@ function LabelTutorial() {
     selectedSubgoal: selectedSubgoal1,
     subgoals: subgoals1,
     checkBoxAvailability: checkBoxAvailability1,
-  } = useGroupSubgoals(7, practice1Subgoals)
+  } = useGroupSubgoals(PRACTICE_EXAMPLE1.split('\n').length, practice1Subgoals)
 
   const { showAnswer: showAnswer1, checkAnswer: checkAnswer1 } = useCheckAnswer()
   const {
@@ -43,7 +46,7 @@ function LabelTutorial() {
     selectedSubgoal: selectedSubgoal2,
     subgoals: subgoals2,
     checkBoxAvailability: checkBoxAvailability2,
-  } = useGroupSubgoals(5, practice2Subgoals)
+  } = useGroupSubgoals(PRACTICE_EXAMPLE2.split('\n').length, practice2Subgoals)
   const { showAnswer: showAnswer2, checkAnswer: checkAnswer2 } = useCheckAnswer()
 
   const {
@@ -54,7 +57,7 @@ function LabelTutorial() {
     checkBoxAvailability: checkBoxAvailability3,
     addSubgoal: addSubgoal3,
     clickCheckBox: clickCheckBox3,
-  } = useGroupSubgoals(3, practice3Subgoals)
+  } = useGroupSubgoals(PRACTICE_EXAMPLE3.split('\n').length, practice3Subgoals)
   const { showAnswer: showAnswer3, checkAnswer: checkAnswer3 } = useCheckAnswer()
   const navigate = useNavigate()
 

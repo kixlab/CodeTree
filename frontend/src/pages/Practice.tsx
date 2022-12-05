@@ -16,7 +16,7 @@ import { PostPracticeAnswerParams, PostPracticeAnswerResults } from '../protocol
 import { PostPracticeCodeParams, PostPracticeCodeResults } from '../protocol/PostPracticeCode'
 import { PostPracticeRunParams, PostPracticeRunResults } from '../protocol/PostPracticeRun'
 import { Color } from '../shared/Common'
-import { getId, ID_NOT_FOUND, nextStage } from '../shared/ExperimentHelper'
+import { getCurrentStage, getId, ID_NOT_FOUND, nextStage } from '../shared/ExperimentHelper'
 import { Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 import { InstructionTask } from '../templates/InstructionTask'
@@ -33,8 +33,7 @@ export function Practice() {
   const [programOutput, setProgramOutput] = useState<null | PostPracticeRunResults['output']>(null)
   const [outputCorrect, setOutputCorrect] = useState<boolean | null>(null)
   const [isRunning, setIsRunning] = useState(false)
-  const [isJudging, setIsJudging] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [judgeResult, setJudgeResult] = useState<string>('')
   const [mode, setMode] = useState<'python' | 'javascript' | 'cpp'>('python')
   const { skeletonCode } = useSkeletonCode(category, problemId, mode)
   const navigate = useNavigate()
@@ -59,6 +58,7 @@ export function Practice() {
     if (res) {
       setProgramOutput([...res.output])
       setOutputCorrect(res.correctCases === res.testcases)
+      setJudgeResult(`${res.correctCases} / ${res.testcases} ${getString('practice_result')}`)
     }
     setIsRunning(false)
   }, [category, code, mode, problemId])
@@ -68,7 +68,7 @@ export function Practice() {
       return
     }
 
-    setIsJudging(true)
+    setIsRunning(true)
     setOutputCorrect(null)
 
     const res = await Post<PostPracticeAnswerParams, PostPracticeAnswerResults>(
@@ -84,8 +84,9 @@ export function Practice() {
     if (res) {
       setProgramOutput([])
       setOutputCorrect(res.correctCases === res.testcases)
+      setJudgeResult(`${res.correctCases} / ${res.testcases} ${getString('practice_result')}`)
     }
-    setIsJudging(false)
+    setIsRunning(false)
   }, [category, code, mode, problemId])
 
   const submit = useCallback(async () => {
@@ -93,14 +94,14 @@ export function Practice() {
       return
     }
 
-    setIsSubmitting(true)
+    setIsRunning(true)
     const res = await Post<PostPracticeCodeParams, PostPracticeCodeResults>(`${SERVER_ADDRESS}/postPracticeCode`, {
       participantId: getId() ?? ID_NOT_FOUND,
       lectureName: category,
       fileName: problemId,
       code,
     })
-    setIsSubmitting(false)
+    setIsRunning(false)
     if (res) {
       navigate(nextStage())
     }
@@ -118,18 +119,14 @@ export function Practice() {
             instruction={
               <>
                 <Title>{getString('practice_title')}</Title>
-                {getString('practice_instruction')}
+                {getCurrentStage() === 4 ? getString('practice_instruction_easy') : getString('practice_instruction')}
                 <br />
                 <ProblemContainer problem={problem} />
               </>
             }
             task={
               <TaskWrapper>
-                {outputCorrect !== null ? (
-                  <Result correct={outputCorrect}>
-                    {outputCorrect ? getString('practice_result_correct') : getString('practice_result_incorrect')}
-                  </Result>
-                ) : null}
+                {outputCorrect !== null && <Result correct={outputCorrect}>{judgeResult}</Result>}
                 <OutputTerminal>
                   {isRunning
                     ? getString('practice_terminal_running')
@@ -165,8 +162,8 @@ export function Practice() {
                 onJudging={judge}
                 onSubmit={submit}
                 isRunning={isRunning}
-                isJudging={isJudging}
-                isSubmitting={isSubmitting}
+                isJudging={isRunning}
+                isSubmitting={isRunning}
               />
             }
           />
@@ -200,6 +197,5 @@ const Title = styled.div`
 const TestCase = styled.div`
   border: 1px solid ${Color.Gray60};
   padding: 4px;
-  width: fit-content;
   margin: 4px;
 `

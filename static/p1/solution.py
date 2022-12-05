@@ -49,5 +49,3 @@ def solution(nums, k):
             maxheap.push(minheap.pop())
         ans.append(median())
     return ans
-
-print(solution(list(map(int, input().split())), int(input())))

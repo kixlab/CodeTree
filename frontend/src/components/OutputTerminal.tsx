@@ -19,4 +19,5 @@ const Container = styled.div`
   white-space: pre-line;
   overflow-x: auto;
   min-height: 200px;
+  word-break: break-word;
 `

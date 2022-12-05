@@ -134,21 +134,3 @@
     }
   }
 }
-
-.tutorial-skip {
-  background: $error-red;
-  color: $white;
-  padding: 10px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  cursor: pointer;
-  user-select: none;
-  font-weight: bold;
-  border: none;
-
-  &:hover {
-    background: $error-red-20;
-  }
-}

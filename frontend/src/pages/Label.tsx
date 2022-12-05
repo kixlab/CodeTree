@@ -10,6 +10,7 @@ import { InstructionContainer } from '../components/TaskContainer'
 import { useGroupSubgoals } from '../hooks/useGroupSubgoals'
 import { useLabelSubmit } from '../hooks/useLabelSubmit'
 import { useMyCode } from '../hooks/useMyCode'
+import { Color } from '../shared/Common'
 import { getString } from '../shared/Localization'
 import { InstructionTask } from '../templates/InstructionTask'
 
@@ -71,7 +72,7 @@ function Label() {
           <InstructionContainer
             instruction={
               <div>
-                <h1>{getString('label_title')}</h1>
+                <Title>{getString('label_title')}</Title>
                 <div>{getString('label_instruction')}</div>
                 <br />
                 <Warning>{getString('label_warning')}</Warning>
@@ -118,6 +119,13 @@ const TaskContainer = styled.div`
   display: grid;
   height: 100%;
   grid-template-columns: 41px 1fr;
+`
+
+const Title = styled.div`
+  padding: 0;
+  font-size: 24px;
+  color: ${Color.Gray85};
+  margin: 15px 0 10px 0;
 `
 
 export default Label

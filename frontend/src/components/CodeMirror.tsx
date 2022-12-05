@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react'
-import CM from '@uiw/react-codemirror'
 import { cpp } from '@codemirror/lang-cpp'
 import { javascript } from '@codemirror/lang-javascript'
 import { python } from '@codemirror/lang-python'
 import styled from '@emotion/styled'
+import CM from '@uiw/react-codemirror'
+import React, { useMemo } from 'react'
 import { CODE_LINE_HEIGHT } from '../shared/Constants'
 
 interface Props {

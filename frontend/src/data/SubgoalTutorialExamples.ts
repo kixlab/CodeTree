@@ -1,30 +1,36 @@
 import { SubgoalNode } from '../pages/Label'
 import { colorGenerator } from '../shared/Utils'
 
-export const practice1 = `4x – 8 = 2x + 6
-4x – 8 + 8 = 2x + 6 + 8
-4x – 8 + 8 - 2x = 2x + 6 + 8 - 2x
-4x – 2x = 6 + 8
-2x = 14
-2x / 2 = 14 / 2
-x = 7`
+export const PRACTICE_EXAMPLE1 = `def mergeSort(list):
+  if len(list) <= 1:
+      return list
+  else:
+    mid = len(list) // 2
+    left = mergeSort(list[:mid])
+    right = mergeSort(list[mid:])
+    sorted = []
+    while len(left) + len(right) > 0:
+        if len(left) > 0 and len(right) > 0:
+            if left[0] <= right[0]:
+                sorted.append(left.pop(0))
+            else:
+                sorted.append(right.pop(0))
+        elif len(left) > 0:
+            sorted.append(left.pop(0))
+        elif len(right) > 0:
+            sorted.append(right.pop(0))
+    return sorted`
 
-export const practice2 = `x = 4 * (5 – 2) + 12 / (4 – 1) – 7
-x = 4 * (3) + 12 / (3) – 7
-x = 4 * 3 + 12 / 3 – 7
-x = 12 + 4 – 7
-x = 11`
+export const PRACTICE_EXAMPLE2 = PRACTICE_EXAMPLE1
 
-export const practice3 = `x^2 - x - 2 = 0
-(x + 1)(x - 2) = 0
-x = -1 or x = 2`
+export const PRACTICE_EXAMPLE3 = PRACTICE_EXAMPLE1
 
 const colorGen = colorGenerator()
 
 export const practice1Subgoals: SubgoalNode[] = [
   {
     id: 0,
-    label: '변수를 같은 변으로 모으기',
+    label: '리스트를 정렬할 필요가 없는 경우 확인하기',
     group: [],
     children: [],
     parentId: null,
@@ -34,7 +40,7 @@ export const practice1Subgoals: SubgoalNode[] = [
   },
   {
     id: 1,
-    label: '양변 정리하기',
+    label: '리스트를 반으로 나누어 각각 정렬하기',
     group: [],
     children: [],
     parentId: null,
@@ -44,7 +50,7 @@ export const practice1Subgoals: SubgoalNode[] = [
   },
   {
     id: 2,
-    label: '변수의 계수를 1로 만들기',
+    label: '정렬된 두 리스트를 정렬된 하나로 합치기',
     group: [],
     children: [],
     parentId: null,
@@ -56,32 +62,32 @@ export const practice1Subgoals: SubgoalNode[] = [
 
 export const practice2Subgoals: SubgoalNode[] = [
   {
-    id: 0,
-    label: '',
-    group: [0, 1],
+    id: 10000,
+    label: '정렬된 두 리스트를 정렬된 하나로 합치기',
+    group: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
     children: [],
     parentId: null,
     depth: 0,
+    canAddSubgoal: false,
+    color: colorGen(),
+  },
+  {
+    id: 0,
+    label: '',
+    group: [9, 10, 11, 12, 13],
+    children: [],
+    parentId: 10000,
+    depth: 1,
     canAddSubgoal: false,
     color: colorGen(),
   },
   {
     id: 1,
     label: '',
-    group: [2, 3],
+    group: [14, 15, 16, 17],
     children: [],
-    parentId: null,
-    depth: 0,
-    canAddSubgoal: false,
-    color: colorGen(),
-  },
-  {
-    id: 2,
-    label: '',
-    group: [4],
-    children: [],
-    parentId: null,
-    depth: 0,
+    parentId: 10000,
+    depth: 1,
     canAddSubgoal: false,
     color: colorGen(),
   },
@@ -90,8 +96,8 @@ export const practice2Subgoals: SubgoalNode[] = [
 export const practice3Subgoals: SubgoalNode[] = [
   {
     id: 10000,
-    label: '이차방정식의 해 구하기',
-    group: [0, 1, 2],
+    label: '결과 리스트에 각 리스트의 최소값 중 작은 값 추가하기',
+    group: [9, 10, 11, 12, 13],
     children: [],
     parentId: null,
     depth: 0,
