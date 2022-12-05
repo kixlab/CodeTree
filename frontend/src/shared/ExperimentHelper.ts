@@ -1,6 +1,6 @@
 import { PRODUCTION, SERVER_ADDRESS } from '../environments/Configuration'
 import { PostParticipantProgressParams, PostParticipantProgressResult } from '../protocol/PostParticipantProgress'
-import { Post2 } from './HttpRequest'
+import { Post } from './HttpRequest'
 import { getString } from './Localization'
 import { GroupUrl, SCENARIO, Stage } from './Scenario'
 
@@ -46,7 +46,7 @@ export function nextStage(jump = 0): string {
   const participantStage = parseInt(localStorage.getItem(PARTICIPANT_STAGE) || '0', 10)
   if (currentStage === participantStage) {
     const nextStage = SCENARIO[participantStage + 1]
-    Post2<PostParticipantProgressParams, PostParticipantProgressResult>(`${SERVER_ADDRESS}/postParticipantProgress`, {
+    Post<PostParticipantProgressParams, PostParticipantProgressResult>(`${SERVER_ADDRESS}/postParticipantProgress`, {
       participantId: id,
       stage: SCENARIO[getCurrentStage()].name,
       timeRemaining: getTimeRemaining(),

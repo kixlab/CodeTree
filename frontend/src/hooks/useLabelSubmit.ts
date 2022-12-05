@@ -4,7 +4,7 @@ import { SERVER_ADDRESS } from '../environments/Configuration'
 import { SubgoalNode } from '../pages/Label'
 import { PostSubgoalsParams, PostSubgoalsResults, Subgoal as SubgoalWithoutId } from '../protocol/PostSubgoals'
 import { getId, ID_NOT_FOUND, nextStage } from '../shared/ExperimentHelper'
-import { Post2 } from '../shared/HttpRequest'
+import { Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 import { saveSubgoals } from '../shared/Utils'
 
@@ -28,7 +28,7 @@ export function useLabelSubmit(lecture: string | undefined, fileName: string | u
 
         saveSubgoals(subgoals, fileName)
 
-        const res = await Post2<PostSubgoalsParams, PostSubgoalsResults>(`${SERVER_ADDRESS}/postSubgoals`, {
+        const res = await Post<PostSubgoalsParams, PostSubgoalsResults>(`${SERVER_ADDRESS}/postSubgoals`, {
           participantId: getId() ?? ID_NOT_FOUND,
           lectureName: lecture,
           fileName,

@@ -6,7 +6,7 @@ import { Group } from '../protocol/Common'
 import { GetIdAndGroupParams, GetIdAndGroupResults } from '../protocol/GetIdAndGroup'
 import { GetParticipantStatusParams, GetParticipantStatusResults } from '../protocol/GetParticipantStatus'
 import { PostParticipantProgressParams, PostParticipantProgressResult } from '../protocol/PostParticipantProgress'
-import { Get, Post2 } from '../shared/HttpRequest'
+import { Get, Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 import { GroupUrl, SCENARIO, Stage } from '../shared/Scenario'
 
@@ -41,7 +41,7 @@ export function useExperiment() {
 
       if (currentStage === stage) {
         const nextStage = SCENARIO[stage + 1]
-        await Post2<PostParticipantProgressParams, PostParticipantProgressResult>(
+        await Post<PostParticipantProgressParams, PostParticipantProgressResult>(
           `${SERVER_ADDRESS}/postParticipantProgress`,
           {
             participantId: id,

@@ -17,7 +17,7 @@ import { PostPracticeCodeParams, PostPracticeCodeResults } from '../protocol/Pos
 import { PostPracticeRunParams, PostPracticeRunResults } from '../protocol/PostPracticeRun'
 import { Color } from '../shared/Common'
 import { getId, ID_NOT_FOUND, nextStage } from '../shared/ExperimentHelper'
-import { Post2 } from '../shared/HttpRequest'
+import { Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 import { InstructionTask } from '../templates/InstructionTask'
 
@@ -49,7 +49,7 @@ export function Practice() {
     setIsRunning(true)
     setOutputCorrect(null)
 
-    const res = await Post2<PostPracticeRunParams, PostPracticeRunResults>(`${SERVER_ADDRESS}/postPracticeRun`, {
+    const res = await Post<PostPracticeRunParams, PostPracticeRunResults>(`${SERVER_ADDRESS}/postPracticeRun`, {
       code,
       category,
       problemId,
@@ -71,7 +71,7 @@ export function Practice() {
     setIsJudging(true)
     setOutputCorrect(null)
 
-    const res = await Post2<PostPracticeAnswerParams, PostPracticeAnswerResults>(
+    const res = await Post<PostPracticeAnswerParams, PostPracticeAnswerResults>(
       `${SERVER_ADDRESS}/postPracticeAnswer`,
       {
         code,
@@ -94,7 +94,7 @@ export function Practice() {
     }
 
     setIsSubmitting(true)
-    const res = await Post2<PostPracticeCodeParams, PostPracticeCodeResults>(`${SERVER_ADDRESS}/postPracticeCode`, {
+    const res = await Post<PostPracticeCodeParams, PostPracticeCodeResults>(`${SERVER_ADDRESS}/postPracticeCode`, {
       participantId: getId() ?? ID_NOT_FOUND,
       lectureName: category,
       fileName: problemId,

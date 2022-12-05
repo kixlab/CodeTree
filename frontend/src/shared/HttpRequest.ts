@@ -12,7 +12,7 @@ export async function Get<P, R>(baseUrl: string, params: P): Promise<R | null> {
   return null
 }
 
-export async function Post2<P, R>(url: string, params: P): Promise<R | null> {
+export async function Post<P, R>(url: string, params: P): Promise<R | null> {
   const res = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },
     method: 'POST',

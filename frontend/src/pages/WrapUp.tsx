@@ -5,7 +5,7 @@ import { Page } from '../components/Page'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { PostParticipantFinishedParams, PostParticipantFinishedResult } from '../protocol/PostParticipantFinished'
 import { getGroup, getId } from '../shared/ExperimentHelper'
-import { Post2 } from '../shared/HttpRequest'
+import { Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 
 function WrapUp() {
@@ -13,7 +13,7 @@ function WrapUp() {
     const id = getId()
     const group = getGroup()
     if (id && group) {
-      Post2<PostParticipantFinishedParams, PostParticipantFinishedResult>(`${SERVER_ADDRESS}/postParticipantFinished`, {
+      Post<PostParticipantFinishedParams, PostParticipantFinishedResult>(`${SERVER_ADDRESS}/postParticipantFinished`, {
         participantId: id,
         group,
       })
