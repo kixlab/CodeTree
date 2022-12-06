@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import React from 'react'
 import { SubgoalNode } from '../pages/Label'
 import { Color } from '../shared/Common'
-import { CODE_LINE_HEIGHT } from '../shared/Constants'
+import { CODE_LINE_HEIGHT, SUBGOAL_STICK_GAP, SUBGOAL_STICK_WIDTH } from '../shared/Constants'
 
 interface Props {
   subgoals: SubgoalNode[]
@@ -37,6 +37,7 @@ export function HierarchyVisualizer({ subgoals, lineHeight = CODE_LINE_HEIGHT }:
 const Container = styled.div`
   position: relative;
   border-right: 1px solid ${Color.Gray15};
+  padding: 4px 0;
 `
 
 const Stick = styled.div<{ color: string; index: number; depth: number; isLast: boolean; lineHeight: number }>`
@@ -46,7 +47,7 @@ const Stick = styled.div<{ color: string; index: number; depth: number; isLast: 
     width: 7px;
     height: ${isLast ? lineHeight - 8 : lineHeight}px;
     top: ${index * lineHeight}px;
-    left: ${depth * 12 + 5}px;
+    left: ${depth * (SUBGOAL_STICK_WIDTH + SUBGOAL_STICK_GAP) + SUBGOAL_STICK_GAP}px;
     z-index: 100;
   `}
 `

@@ -8,8 +8,8 @@ import { GetSubgoalTreeParams, GetSubgoalTreeResults } from '../protocol/GetSubg
 
 type SubgoalNode = GetSubgoalTreeResults['tree']['children'][number]
 
-export const getSubgoalTreeController = Get<GetSubgoalTreeParams, GetSubgoalTreeResults>(async (params) => {
-  const snapshot = await GetData<SubgoalTreeData>(`/cs101_sample_code/${params.lectureName}/${params.fileName.split('.')[0]}/subgoalTree`)
+export const getSubgoalTreeController = Get<GetSubgoalTreeParams, GetSubgoalTreeResults>(async params => {
+  const snapshot = await GetData<SubgoalTreeData>(`/${params.lectureName}/${params.fileName.split('.')[0]}/subgoalTree`)
   const tree: SubgoalNode = {
     label: '',
     group: snapshot.subgoalNodes.reduce((g, n) => [...new Set([...g, ...n.group])], [] as number[]),

@@ -529,6 +529,10 @@ const Localiztion: Dictionary = {
     ko: '문제 풀기',
     en: 'Practice Problem',
   },
+  practice_subgoal_title: {
+    ko: '내가 찾은 하위 목표',
+    en: '',
+  },
   practice_instruction: {
     ko: '이번엔 아래 문제를 O(n^2) 보다 효울적으로 풀어보세요. 앞선 단계에서 찾은 하위 목표를 더 효율적으로 구현할 방법을 생각해보세요.',
     en: ``,

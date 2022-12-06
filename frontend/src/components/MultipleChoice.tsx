@@ -86,7 +86,6 @@ function getHighlightState(index: number, checked: number[], answers: number[] =
 }
 
 const Container = styled.div`
-  padding: 10px;
   margin-bottom: 40px;
   min-height: 250px;
 `

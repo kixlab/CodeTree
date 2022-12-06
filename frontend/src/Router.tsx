@@ -9,7 +9,6 @@ import { Instruction } from './pages/Instruction'
 import Label from './pages/Label'
 import LabelTutorial from './pages/LabelTutorial'
 import { Parsons } from './pages/Parsons'
-import { PersonalizedPresent } from './pages/PersonalizedPresent'
 import { PostTest } from './pages/PostTest'
 import { Practice } from './pages/Practice'
 import { PreTest } from './pages/PreTest'
@@ -17,7 +16,6 @@ import Survey from './pages/Survey'
 import VerbalAnalogy from './pages/VerbalAnalogy'
 import Vote from './pages/Vote'
 import { VoteTutorial } from './pages/VoteTutorial'
-import WorkedExample from './pages/WorkedExample'
 import WrapUp from './pages/WrapUp'
 
 export const Router = createBrowserRouter(
@@ -30,14 +28,11 @@ export const Router = createBrowserRouter(
       <Route path="verbal-analogy" element={<VerbalAnalogy />} />
       <Route path="label-tutorial" element={<LabelTutorial />} />
       <Route path="vote-tutorial" element={<VoteTutorial />} />
-      <Route path="worked-example/:lecture/:fileName" element={<WorkedExample />} />
       <Route path="label/:lecture/:fileName" element={<Label />} />
       <Route path="vote/:lecture/:fileName" element={<Vote />} />
       <Route path="practice/:category/:problemId" element={<Practice />} />
       <Route path="assessment/:lecture/:fileName" element={<Assessment />} />
       <Route path="parsons/:lecture/:fileName" element={<Parsons />} />
-      <Route path="personalized-present/:lecture/:fileName" element={<PersonalizedPresent />} />
-      <Route path="present/:lecture/:fileName" element={<PersonalizedPresent />} />
       <Route path="cognitive" element={<Cognitive />} />
       <Route path="posttest" element={<PostTest />} />
       <Route path="survey" element={<Survey />} />

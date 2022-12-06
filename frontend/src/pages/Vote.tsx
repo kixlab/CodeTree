@@ -4,9 +4,9 @@ import { CodeGrouper } from '../components/CodeGrouper'
 import { HierarchyVisualizer } from '../components/HierarchyVisualizer'
 import MultipleChoice from '../components/MultipleChoice'
 import { Page } from '../components/Page'
-import ProblemContainer from '../components/ProblemContainer'
+import { ProblemContainer } from '../components/ProblemContainer'
 import StageNavigator from '../components/StageNavigator/StageNavigator'
-import { InstructionContainer } from '../components/TaskContainer'
+import { InstructionContainer } from '../components/InstructionContainer'
 import { useHierarchyVisualier as useHierarchyVisualizer } from '../hooks/useHierarchyVisualizer'
 import { useMyCode } from '../hooks/useMyCode'
 import { useProblem } from '../hooks/useProblem'
@@ -66,29 +66,6 @@ export default function Vote() {
       <InstructionTask
         instruction={
           <InstructionContainer
-            instruction={
-              <div>
-                <h1>{`${getString('vote_title')} ${getExampleNumber()}`}</h1>
-                <div>{getString('vote_instruction')}</div>
-                <ProblemContainer problem={problem} />
-              </div>
-            }
-            task={
-              <MultipleChoice
-                options={votingList[currentStage]?.labels}
-                checkedOption={choiceList[currentStage]?.choice ?? []}
-                directInput={choiceList[currentStage]?.newOption ?? ''}
-                onOptionClick={onOptionClick}
-                onTextInputChange={onTextInputChange}
-                answers={votingList[currentStage]?.answers}
-                showAnswer={showAnswer}
-                tip={
-                  showAnswer && choiceList[currentStage]?.choice.includes(-1)
-                    ? getString('vote_tutorial_tip_no_answer')
-                    : undefined
-                }
-              />
-            }
             footer={
               <StageNavigator
                 currentStage={currentStage}
@@ -101,7 +78,25 @@ export default function Vote() {
                 showActionButton={showActionButton}
               />
             }
-          />
+          >
+            <h1>{`${getString('vote_title')} ${getExampleNumber()}`}</h1>
+            <div>{getString('vote_instruction')}</div>
+            <ProblemContainer problem={problem} />
+            <MultipleChoice
+              options={votingList[currentStage]?.labels}
+              checkedOption={choiceList[currentStage]?.choice ?? []}
+              directInput={choiceList[currentStage]?.newOption ?? ''}
+              onOptionClick={onOptionClick}
+              onTextInputChange={onTextInputChange}
+              answers={votingList[currentStage]?.answers}
+              showAnswer={showAnswer}
+              tip={
+                showAnswer && choiceList[currentStage]?.choice.includes(-1)
+                  ? getString('vote_tutorial_tip_no_answer')
+                  : undefined
+              }
+            />
+          </InstructionContainer>
         }
         task={
           <LinearLayout ratios={[`${visualizerWidth}px`, '1fr']}>

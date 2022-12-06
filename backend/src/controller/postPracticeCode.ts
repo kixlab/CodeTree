@@ -1,11 +1,11 @@
-import { CodeSubmissionData } from '../database/DataBaseDataTypes'
-import { SetData } from '../database/DataBaseRef'
 import { Post } from '../HttpResponse'
 import { PostPracticeCodeParams, PostPracticeCodeResults } from '../protocol/PostPracticeCode'
+import { logService } from '../service/log'
 
 export const postPracticeCodeController = Post<PostPracticeCodeParams, PostPracticeCodeResults>(
   async ({ lectureName, fileName, participantId, code }) => {
-    await SetData<CodeSubmissionData>(`/result/${lectureName}/${fileName}/${participantId}/${Date.now()}`, { code })
+    logService.logPracticeSubmission(lectureName, fileName, participantId, code)
+
     return {}
   }
 )

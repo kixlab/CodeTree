@@ -6,7 +6,7 @@ import { CodeGrouper } from '../components/CodeGrouper'
 import { HierarchyVisualizer } from '../components/HierarchyVisualizer'
 import { Page } from '../components/Page'
 import { SubgoalContainer } from '../components/SubgoalContainer'
-import { InstructionContainer } from '../components/TaskContainer'
+import { InstructionContainer } from '../components/InstructionContainer'
 import { useGroupSubgoals } from '../hooks/useGroupSubgoals'
 import { useLabelSubmit } from '../hooks/useLabelSubmit'
 import { useMyCode } from '../hooks/useMyCode'
@@ -70,30 +70,25 @@ function Label() {
       <InstructionTask
         instruction={
           <InstructionContainer
-            instruction={
-              <div>
-                <Title>{getString('label_title')}</Title>
-                <div>{getString('label_instruction')}</div>
-                <br />
-                <Warning>{getString('label_warning')}</Warning>
-              </div>
-            }
-            task={
-              <SubgoalContainer
-                subgoals={subgoals}
-                addSubgoal={addSubgoal}
-                selectedSubgoal={selectedSubgoal}
-                removeSubgoal={removeSubgoal}
-                selectSubgoal={selectSubgoal}
-                editSubgoal={editSubgoal}
-              />
-            }
             footer={
               <ActionButton onClick={submit(subgoals)} disabled={isSubmitting}>
                 {getString('label_action_button')}
               </ActionButton>
             }
-          />
+          >
+            <Title>{getString('label_title')}</Title>
+            <div>{getString('label_instruction')}</div>
+            <br />
+            <Warning>{getString('label_warning')}</Warning>
+            <SubgoalContainer
+              subgoals={subgoals}
+              addSubgoal={addSubgoal}
+              selectedSubgoal={selectedSubgoal}
+              removeSubgoal={removeSubgoal}
+              selectSubgoal={selectSubgoal}
+              editSubgoal={editSubgoal}
+            />
+          </InstructionContainer>
         }
         task={
           <TaskContainer>

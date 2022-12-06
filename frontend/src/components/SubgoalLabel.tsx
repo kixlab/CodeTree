@@ -4,14 +4,15 @@ import { css } from '@emotion/react'
 import { Color } from '../shared/Common'
 import { getString } from '../shared/Localization'
 import { SubgoalNode } from '../pages/Label'
+import { SUBGOAL_STICK_WIDTH } from '../shared/Constants'
 
 interface Props {
   selected: boolean
   subgoal: SubgoalNode
   distFromParentNode: number
-  removeSubgoal: ((id: number) => void) | null
-  selectSubgoal: (id: number) => void
-  editSubgoal: ((label: string) => void) | null
+  removeSubgoal?: (id: number) => void
+  selectSubgoal?: (id: number) => void
+  editSubgoal?: (label: string) => void
   addSubgoal?: (id: number | null) => void
 }
 
@@ -47,7 +48,7 @@ export function SubgoalLabel({
       distFromParentNode={distFromParentNode}
       clickable={editSubgoal === null}
       onClick={() => {
-        if (editSubgoal === null) selectSubgoal(id)
+        if (editSubgoal === null) selectSubgoal?.(id)
       }}
       color={color ?? 'transparent'}
     >
@@ -57,7 +58,7 @@ export function SubgoalLabel({
           defaultValue={label}
           onChange={inputChangedHandler}
           placeholder={getString('label_placeholder')}
-          onFocus={() => selectSubgoal(id)}
+          onFocus={() => selectSubgoal?.(id)}
           ref={inputRef}
         />
       ) : (
@@ -110,11 +111,11 @@ const Container = styled.div<{
     css`
       &::before {
         content: '';
-        width: 20px;
-        height: ${distFromParentNode * 104}px;
+        width: 18px;
+        height: ${distFromParentNode * 74}px;
         position: absolute;
         left: -22px;
-        top: -${distFromParentNode * 104 - 35}px;
+        top: -${distFromParentNode * 74 - 35}px;
         border-left: 2px solid ${Color.Gray30};
         border-bottom: 2px solid ${Color.Gray30};
         z-index: 1;
@@ -123,7 +124,7 @@ const Container = styled.div<{
 
     &::after {
       content: '';
-      width: 5px;
+      width: ${SUBGOAL_STICK_WIDTH}px;
       height: calc(100% + 4px);
       position: absolute;
       background-color: ${color};
@@ -156,8 +157,6 @@ const Close = styled.button`
 const Input = styled.input<{ isError: boolean }>`
   ${({ isError }) => css`
     width: calc(100% - 35px);
-    margin-top: 15px;
-    margin-bottom: 15px;
     outline: none;
     padding: 3px;
     border: none;
@@ -174,8 +173,6 @@ const Input = styled.input<{ isError: boolean }>`
 
 const Label = styled.div`
   width: calc(100% - 35px);
-  margin-top: 15px;
-  margin-bottom: 15px;
   padding: 3px;
   border: none;
   font-size: 16px;

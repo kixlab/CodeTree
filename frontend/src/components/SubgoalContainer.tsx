@@ -10,9 +10,9 @@ interface Props {
   selectedSubgoal: number | null
   canAddSubgoals?: boolean
   addSubgoal?: (id: number | null) => void
-  removeSubgoal: ((id: number) => void) | null
-  selectSubgoal: (id: number) => void
-  editSubgoal: ((id: number, label: string) => void) | null
+  removeSubgoal?: (id: number) => void
+  selectSubgoal?: (id: number) => void
+  editSubgoal?: (id: number, label: string) => void
 }
 
 export function SubgoalContainer({
@@ -38,7 +38,7 @@ export function SubgoalContainer({
             distFromParentNode={distFromParentNode}
             selectSubgoal={selectSubgoal}
             removeSubgoal={removeSubgoal}
-            editSubgoal={editSubgoal ? (label: string) => editSubgoal?.(subgoal.id, label) : null}
+            editSubgoal={editSubgoal && ((label: string) => editSubgoal?.(subgoal.id, label))}
           />
         )
       })}
@@ -53,7 +53,7 @@ export function SubgoalContainer({
 }
 
 const Container = styled.div`
-  padding: 10px;
+  margin-top: 8px;
 `
 
 const AddButton = styled.button`
@@ -65,7 +65,6 @@ const AddButton = styled.button`
   user-select: none;
   outline: none;
   width: 100%;
-  height: 104px;
   position: relative;
   text-align: left;
 
@@ -82,8 +81,6 @@ const AddButton = styled.button`
 
 const PlaceholderInput = styled.div`
   width: calc(100% - 35px);
-  margin-top: 15px;
-  margin-bottom: 15px;
   padding: 3px;
   font-size: 16px;
   border-bottom: 1px solid ${Color.Gray20};

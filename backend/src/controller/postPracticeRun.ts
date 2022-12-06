@@ -1,13 +1,12 @@
-import { CodeSubmissionData } from '../database/DataBaseDataTypes'
-import { SetData } from '../database/DataBaseRef'
 import { Post } from '../HttpResponse'
 import { PostPracticeRunParams, PostPracticeRunResults } from '../protocol/PostPracticeRun'
 import { judgeService } from '../service/judge'
+import { logService } from '../service/log'
 import { storageService } from '../service/storage'
 
 export const postPracticeRunController = Post<PostPracticeRunParams, PostPracticeRunResults>(
   async ({ code, problemId, codeType, category, participantId }) => {
-    await SetData<CodeSubmissionData>(`/result/${category}/${problemId}/${participantId}/${Date.now()}`, { code })
+    logService.logPracticeSubmission(category, problemId, participantId, code)
 
     const inFiles = await storageService.getFiles(`${category}/${problemId}/in/`)
     const outFiles = await storageService.getFiles(`${category}/${problemId}/out/`)

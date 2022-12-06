@@ -9,12 +9,13 @@ interface Props {
 
 const Container = styled.div`
   margin-top: 15px;
+  margin-bottom: 20px;
   border: 1px solid ${Color.Gray30};
   padding: 10px;
   border-radius: 4px;
   background: ${Color.Gray00};
   position: relative;
-  min-height: 100px;
+  min-height: fit-content;
   font-size: 14px;
 
   code {
@@ -36,12 +37,10 @@ const Container = styled.div`
   }
 `
 
-function ProblemContainer(props: Props) {
+export function ProblemContainer(props: Props) {
   return (
     <Container>
       <ReactMarkdown>{props.problem}</ReactMarkdown>
     </Container>
   )
 }
-
-export default ProblemContainer

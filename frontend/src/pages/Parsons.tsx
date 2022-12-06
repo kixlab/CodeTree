@@ -4,8 +4,8 @@ import React, { useCallback, useState } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import { useParams } from 'react-router-dom'
 import { Page } from '../components/Page'
-import ProblemContainer from '../components/ProblemContainer'
-import { InstructionContainer } from '../components/TaskContainer'
+import { ProblemContainer } from '../components/ProblemContainer'
+import { InstructionContainer } from '../components/InstructionContainer'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { useProblem } from '../hooks/useProblem'
 import { PostParsonsAnswerParams, PostParsonsAnswerResults } from '../protocol/PostParsonsAnswer'
@@ -86,20 +86,16 @@ export function Parsons() {
       <InstructionTask
         instruction={
           <InstructionContainer
-            instruction={
-              <div>
-                <h1>{`${getString('parsons_title')} 5`}</h1>
-                <div>{getString('parsons_instruction')}</div>
-                <ProblemContainer problem={problem} />
-              </div>
-            }
-            task={<div />}
             footer={
               <button className="submit" type="submit" onClick={onSubmitBtnClick} disabled={isSubmitting}>
                 {getString('parsons_action_button')}
               </button>
             }
-          />
+          >
+            <h1>{`${getString('parsons_title')} 5`}</h1>
+            <div>{getString('parsons_instruction')}</div>
+            <ProblemContainer problem={problem} />
+          </InstructionContainer>
         }
         task={
           <DragDropContext

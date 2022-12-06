@@ -1,6 +1,7 @@
 import { cpp } from '@codemirror/lang-cpp'
 import { javascript } from '@codemirror/lang-javascript'
 import { python } from '@codemirror/lang-python'
+import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import CM from '@uiw/react-codemirror'
 import React, { useMemo } from 'react'
@@ -8,10 +9,11 @@ import { CODE_LINE_HEIGHT } from '../shared/Constants'
 
 interface Props {
   code: string
+  fontSize?: number
   mode?: 'python' | 'javascript' | 'cpp'
 }
 
-function Component({ code, mode = 'python' }: Props) {
+function Component({ code, fontSize = CODE_LINE_HEIGHT - 8, mode = 'python' }: Props) {
   const extensions = useMemo(() => {
     if (mode === 'python') {
       return [python()]
@@ -23,7 +25,7 @@ function Component({ code, mode = 'python' }: Props) {
   }, [mode])
 
   return (
-    <Container>
+    <Container fontSize={fontSize}>
       <CM
         autoFocus
         value={code}
@@ -38,18 +40,20 @@ function Component({ code, mode = 'python' }: Props) {
 
 export const CodeMirror = React.memo(Component)
 
-const Container = styled.div`
-  & > div {
-    height: 100%;
-    font-size: ${CODE_LINE_HEIGHT - 8}px;
-
-    .cm-editor {
+const Container = styled.div<{ fontSize: number }>`
+  ${({ fontSize }) => css`
+    & > div {
       height: 100%;
-    }
-  }
+      font-size: ${fontSize}px;
 
-  div {
-    background-color: transparent !important;
-    border: none !important;
-  }
+      .cm-editor {
+        height: 100%;
+      }
+    }
+
+    div {
+      background-color: transparent !important;
+      border: none !important;
+    }
+  `}
 `

@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import { SubgoalNode } from '../pages/Label'
 import { VotingItem } from '../protocol/GetVotingList'
 import { Color } from '../shared/Common'
+import { SUBGOAL_STICK_GAP, SUBGOAL_STICK_WIDTH } from '../shared/Constants'
 
 export function useHierarchyVisualier(votingList: VotingItem[], currentVotingItem: number) {
   const subgoalNodes = useMemo(() => {
@@ -13,7 +14,8 @@ export function useHierarchyVisualier(votingList: VotingItem[], currentVotingIte
     return nodes
   }, [currentVotingItem, votingList])
 
-  const visualizerWidth = (subgoalNodes.reduce((max, v) => Math.max(max, v.depth), 0) + 1) * 12 + 5
+  const visualizerWidth =
+    (subgoalNodes.reduce((max, v) => Math.max(max, v.depth), 0) + 1) * SUBGOAL_STICK_WIDTH + SUBGOAL_STICK_GAP
 
   return {
     subgoalNodes,
@@ -21,16 +23,17 @@ export function useHierarchyVisualier(votingList: VotingItem[], currentVotingIte
   }
 }
 
-function makeSubgoalNode(votingList: VotingItem[]): SubgoalNode[] {
+export function makeSubgoalNode(votingList: VotingItem[], colorGen?: () => string): SubgoalNode[] {
   return votingList.map(votingItem => {
     return {
       id: votingItem.id,
       group: votingItem.group,
       parentId: getDirectParent(votingItem.id, votingList) ?? null,
       depth: votingList.filter(item => isSubset(votingItem.group, item.group)).length - 1,
-      label: '',
+      label: votingItem.labels[0],
       children: votingList.filter(item => isSubset(item.group, votingItem.group)).map(item => item.id),
-      color: Color.Gray20,
+      color: colorGen?.() ?? Color.Orange,
+      canAddSubgoal: false,
     }
   })
 }
