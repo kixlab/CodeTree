@@ -3,9 +3,9 @@ import { GetData } from '../database/DataBaseRef'
 import { Get } from '../HttpResponse'
 import { GetMyProgramCodeParams, GetMyProgramCodeResults } from '../protocol/GetMyProgramCode'
 
-export const getMyProgramCodeController = Get<GetMyProgramCodeParams, GetMyProgramCodeResults>(async (params) => {
+export const getMyProgramCodeController = Get<GetMyProgramCodeParams, GetMyProgramCodeResults>(async params => {
   const snapshots = await GetData<CodeSubmissionData>(
-    `/result/${params.category}/${params.problemId}/${params.participantId}`
+    `/${params.category}/${params.problemId}/submissions/${params.participantId}`
   )
 
   let unordered = JSON.parse(JSON.stringify(snapshots))

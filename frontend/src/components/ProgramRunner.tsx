@@ -7,10 +7,7 @@ import { Color, SUBMIT_BUTTON_HEIGHT } from '../shared/Common'
 interface Props {
   onClickRun: () => void
   onJudging: () => void
-  onSubmit: () => void
   isRunning: boolean
-  isSubmitting: boolean
-  isJudging: boolean
 }
 
 export function ProgramRunner(props: Props) {
@@ -19,12 +16,9 @@ export function ProgramRunner(props: Props) {
       <RunButton type="button" onClick={props.onClickRun} disabled={props.isRunning}>
         {getString('practice_run')}
       </RunButton>
-      <JudgeButton type="button" onClick={props.onJudging} disabled={props.isJudging}>
+      <JudgeButton type="button" onClick={props.onJudging} disabled={props.isRunning}>
         {getString('practice_submit')}
       </JudgeButton>
-      <SubmitButton type="submit" onClick={props.onSubmit} disabled={props.isSubmitting}>
-        {getString('practice_action_button')}
-      </SubmitButton>
     </Container>
   )
 }
@@ -52,7 +46,7 @@ const RunButton = styled.button`
   border-right: 1px solid ${Color.Gray30};
 
   &:hover {
-    background: ${Color.Gray75};
+    background: ${Color.Gray60};
   }
 
   &:disabled {
@@ -68,20 +62,6 @@ const JudgeButton = styled.button`
 
   &:hover {
     background: ${Color.Green40};
-  }
-
-  &:disabled {
-    background: ${Color.Gray30};
-    cursor: not-allowed;
-  }
-`
-
-const SubmitButton = styled.button`
-  ${ButtonStyle};
-  background: ${Color.Blue};
-
-  &:hover {
-    background: ${Color.Blue20};
   }
 
   &:disabled {

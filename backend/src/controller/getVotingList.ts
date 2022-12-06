@@ -4,12 +4,10 @@ import { Get } from '../HttpResponse'
 import { GetVotingListParams, GetVotingListResults } from '../protocol/GetVotingList'
 import { labelSelectService } from '../service/labelSelect'
 
-export const getVotingListController = Get<GetVotingListParams, GetVotingListResults>(async (params) => {
-  const snapshot = await GetData<SubgoalTreeData>(
-    `/cs101_sample_code/${params.lectureName}/${params.fileName.split('.')[0]}/subgoalTree`
-  )
+export const getVotingListController = Get<GetVotingListParams, GetVotingListResults>(async params => {
+  const snapshot = await GetData<SubgoalTreeData>(`/${params.lectureName}/${params.fileName.split('.')[0]}/subgoalTree`)
   const items = await GetData<ExampleData['votingItems']>(
-    `/cs101_sample_code/${params.lectureName}/${params.fileName.split('.')[0]}/votingItems/${params.participantId}`
+    `/${params.lectureName}/${params.fileName.split('.')[0]}/votingItems/${params.participantId}`
   )
   if (items != null) {
     return {
@@ -28,13 +26,10 @@ export const getVotingListController = Get<GetVotingListParams, GetVotingListRes
       }
     })
 
-    await UpdateData<SubgoalTreeData>(
-      `/cs101_sample_code/${params.lectureName}/${params.fileName.split('.')[0]}/subgoalTree`,
-      snapshot
-    )
+    await UpdateData<SubgoalTreeData>(`/${params.lectureName}/${params.fileName.split('.')[0]}/subgoalTree`, snapshot)
 
     await SetData<ExampleData['votingItems']>(
-      `/cs101_sample_code/${params.lectureName}/${params.fileName.split('.')[0]}/votingItems/${params.participantId}`,
+      `/${params.lectureName}/${params.fileName.split('.')[0]}/votingItems/${params.participantId}`,
       votingItems
     )
     return {

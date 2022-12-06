@@ -12,7 +12,7 @@ import { CodeGrouper } from './CodeGrouper'
 import { HierarchyVisualizer } from './HierarchyVisualizer'
 import MultipleChoice from './MultipleChoice'
 import StageNavigator from './StageNavigator/StageNavigator'
-import { InstructionContainer } from './TaskContainer'
+import { InstructionContainer } from './InstructionContainer'
 
 interface Props {
   practiceNum: number
@@ -55,19 +55,6 @@ export function VotePractice({ practiceNum, code, votingList, checkAnswer, tips 
         <InstructionTask
           instruction={
             <InstructionContainer
-              instruction={<div>{getString(`tutorial_vote_practice${practiceNum}_instruction`)}</div>}
-              task={
-                <MultipleChoice
-                  options={votingList[currentStage]?.labels}
-                  checkedOption={choiceList[currentStage]?.choice}
-                  directInput={choiceList[currentStage]?.newOption ?? ''}
-                  answers={votingList[currentStage]?.answers}
-                  onOptionClick={onOptionClick}
-                  onTextInputChange={onTextInputChange}
-                  showAnswer={showAnswer}
-                  tip={showAnswer ? tips[currentStage] : undefined}
-                />
-              }
               footer={
                 <StageNavigator
                   currentStage={currentStage}
@@ -79,7 +66,19 @@ export function VotePractice({ practiceNum, code, votingList, checkAnswer, tips 
                   clickNext={clickNext}
                 />
               }
-            />
+            >
+              <div>{getString(`tutorial_vote_practice${practiceNum}_instruction`)}</div>
+              <MultipleChoice
+                options={votingList[currentStage]?.labels}
+                checkedOption={choiceList[currentStage]?.choice}
+                directInput={choiceList[currentStage]?.newOption ?? ''}
+                answers={votingList[currentStage]?.answers}
+                onOptionClick={onOptionClick}
+                onTextInputChange={onTextInputChange}
+                showAnswer={showAnswer}
+                tip={showAnswer ? tips[currentStage] : undefined}
+              />
+            </InstructionContainer>
           }
           task={
             <LinearLayout ratios={[`${visualizerWidth}px`, '1fr']}>

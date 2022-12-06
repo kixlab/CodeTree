@@ -10,7 +10,7 @@ import { CodeGrouper } from './CodeGrouper'
 import { HierarchyVisualizer } from './HierarchyVisualizer'
 import { SkipButton } from './SkipButton'
 import { SubgoalContainer } from './SubgoalContainer'
-import { InstructionContainer } from './TaskContainer'
+import { InstructionContainer } from './InstructionContainer'
 
 interface Props {
   firstSubgoals: SubgoalNode[]
@@ -64,20 +64,17 @@ export function TutorialContent(props: Props) {
             <InstructionTask
               instruction={
                 <InstructionContainer
-                  instruction={<div>{getString('tutorial_practice1_instruction')}</div>}
-                  task={
-                    <SubgoalContainer
-                      subgoals={props.firstSubgoals}
-                      selectedSubgoal={props.firstSelectedSubgoal ?? null}
-                      removeSubgoal={null}
-                      selectSubgoal={props.firstSelectSubgoal}
-                      editSubgoal={null}
-                    />
-                  }
                   footer={
                     <ActionButton onClick={props.firstCheckAnswer}>{getString('tutorial_check_answer')}</ActionButton>
                   }
-                />
+                >
+                  <div>{getString('tutorial_practice1_instruction')}</div>
+                  <SubgoalContainer
+                    subgoals={props.firstSubgoals}
+                    selectedSubgoal={props.firstSelectedSubgoal ?? null}
+                    selectSubgoal={props.firstSelectSubgoal}
+                  />
+                </InstructionContainer>
               }
               task={
                 <TaskContainer>
@@ -107,20 +104,18 @@ export function TutorialContent(props: Props) {
             <InstructionTask
               instruction={
                 <InstructionContainer
-                  instruction={<div>{getString('tutorial_practice2_instruction')}</div>}
-                  task={
-                    <SubgoalContainer
-                      subgoals={props.secondSubgoals}
-                      selectedSubgoal={props.secondSelectedSubgoal ?? null}
-                      removeSubgoal={null}
-                      selectSubgoal={props.secondSelectSubgoal}
-                      editSubgoal={props.secondEditSubgoal}
-                    />
-                  }
                   footer={
                     <ActionButton onClick={props.secondCheckAnswer}>{getString('tutorial_check_answer')}</ActionButton>
                   }
-                />
+                >
+                  <div>{getString('tutorial_practice2_instruction')}</div>
+                  <SubgoalContainer
+                    subgoals={props.secondSubgoals}
+                    selectedSubgoal={props.secondSelectedSubgoal ?? null}
+                    selectSubgoal={props.secondSelectSubgoal}
+                    editSubgoal={props.secondEditSubgoal}
+                  />
+                </InstructionContainer>
               }
               task={
                 <TaskContainer>
@@ -145,22 +140,20 @@ export function TutorialContent(props: Props) {
             <InstructionTask
               instruction={
                 <InstructionContainer
-                  instruction={<div>{getString('tutorial_practice3_instruction')}</div>}
-                  task={
-                    <SubgoalContainer
-                      subgoals={props.thirdSubgoals}
-                      selectedSubgoal={props.thirdSelectedSubgoal ?? null}
-                      removeSubgoal={null}
-                      selectSubgoal={props.thirdSelectSubgoal}
-                      editSubgoal={props.thirdEditSubgoal}
-                      addSubgoal={props.thirdAddSubgoal}
-                      canAddSubgoals={false}
-                    />
-                  }
                   footer={
                     <ActionButton onClick={props.thirdCheckAnswer}>{getString('tutorial_check_answer')}</ActionButton>
                   }
-                />
+                >
+                  <div>{getString('tutorial_practice3_instruction')}</div>
+                  <SubgoalContainer
+                    subgoals={props.thirdSubgoals}
+                    selectedSubgoal={props.thirdSelectedSubgoal ?? null}
+                    selectSubgoal={props.thirdSelectSubgoal}
+                    editSubgoal={props.thirdEditSubgoal}
+                    addSubgoal={props.thirdAddSubgoal}
+                    canAddSubgoals={false}
+                  />
+                </InstructionContainer>
               }
               task={
                 <TaskContainer>

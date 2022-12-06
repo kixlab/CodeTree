@@ -2,8 +2,8 @@ import React, { useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import CodeEditor from '../components/CodeEditor'
 import { Page } from '../components/Page'
-import ProblemContainer from '../components/ProblemContainer'
-import { InstructionContainer } from '../components/TaskContainer'
+import { ProblemContainer } from '../components/ProblemContainer'
+import { InstructionContainer } from '../components/InstructionContainer'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { useConfirmBeforeLeave } from '../hooks/useConfirmBeforeLeave'
 import { useProblem } from '../hooks/useProblem'
@@ -60,20 +60,16 @@ export function Assessment() {
       <InstructionTask
         instruction={
           <InstructionContainer
-            instruction={
-              <div>
-                <h1>{`${getString('assessment_title')} ${getProblemNumber()}`}</h1>
-                <div>{getString('assessment_instruction')}</div>
-                <ProblemContainer problem={problem} />
-              </div>
-            }
-            task={<div />}
             footer={
               <button className="submit" type="submit" onClick={moveOnToNextProblem} disabled={isSubmitting}>
                 {getString('assessment_action_button')}
               </button>
             }
-          />
+          >
+            <h1>{`${getString('assessment_title')} ${getProblemNumber()}`}</h1>
+            <div>{getString('assessment_instruction')}</div>
+            <ProblemContainer problem={problem} />
+          </InstructionContainer>
         }
         task={<CodeEditor code={code} editorKey={fileName} onCodeChange={setCode} />}
       />

@@ -4,17 +4,15 @@ import { Color, SUBMIT_BUTTON_HEIGHT } from '../shared/Common'
 import { HEADER_HEIGHT } from '../shared/Constants'
 
 interface Props {
-  instruction: JSX.Element
-  task: JSX.Element
   footer?: JSX.Element
+  children: React.ReactNode
 }
 
 export function InstructionContainer(props: Props) {
   return (
     <Container>
       <ScollableArea>
-        <Instruction>{props.instruction}</Instruction>
-        {props.task}
+        <Instruction>{props.children}</Instruction>
       </ScollableArea>
       <Footer>{props.footer}</Footer>
     </Container>
@@ -26,6 +24,7 @@ const Container = styled.div`
   height: 100%;
   border-right: 1px solid ${Color.Gray15};
   max-height: calc(100vh - ${HEADER_HEIGHT}px);
+  background: ${Color.Gray05};
 `
 
 const ScollableArea = styled.div`
@@ -38,7 +37,6 @@ const ScollableArea = styled.div`
 const Instruction = styled.div`
   width: calc(100% - 40px);
   color: ${Color.Gray50};
-  background: ${Color.Gray05};
   padding: 10px;
   padding-bottom: 20px;
   padding-left: 20px;

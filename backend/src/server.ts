@@ -6,15 +6,13 @@ import https from 'https'
 import { getHealthController } from './controller/getHealth'
 import { getIdAndGroupController } from './controller/getIdAndGroup'
 import { getMyProgramCodeController } from './controller/getMyProgramCode'
+import { getMySubgoalsController } from './controller/getMySubgoals'
 import { getNewSubgoalTreeController } from './controller/getNewSubgoalTree'
 import { getParsonsListController } from './controller/getParsonsList'
 import { getParticipantStatusController } from './controller/getParticipantStatus'
 import { getParticipationAvailabilityController } from './controller/getParticipationAvailability'
 import { getProblemMarkDownController } from './controller/getProblemMarkDown'
 import { getProblemSkeletonController } from './controller/getProblemSkeleton'
-import { getProgramCodeController } from './controller/getProgramCode'
-import { getProgramExplanationController } from './controller/getProgramExplanation'
-import { getSkeletonCodeController } from './controller/getSkeletonCode'
 import { getSubgoalTreeController } from './controller/getSubgoalTree'
 import { getVotingListController } from './controller/getVotingList'
 import { postAssessmentCodeController } from './controller/postAssessmentCode'
@@ -45,7 +43,7 @@ app.use(cors)
 app.get('/getHealth', getHealthController)
 app.get('/getIdAndGroup', getIdAndGroupController)
 app.get('/getMyProgramCode', getMyProgramCodeController)
-app.get('/getProgramCode', getProgramCodeController)
+app.get('/getMySubgoals', getMySubgoalsController)
 app.get('/getProblemMarkDown', getProblemMarkDownController)
 app.get('/getParticipationAvailability', getParticipationAvailabilityController)
 app.get('/getParticipantStatus', getParticipantStatusController)
@@ -53,8 +51,6 @@ app.get('/getVotingList', getVotingListController)
 app.get('/getNewSubgoalTree', getNewSubgoalTreeController)
 app.get('/getSubgoalTree', getSubgoalTreeController)
 app.get('/getParsonsList', getParsonsListController)
-app.get('/getSkeletonCode', getSkeletonCodeController)
-app.get('/getProgramExplanation', getProgramExplanationController)
 app.get('/getProblemSkeleton', getProblemSkeletonController)
 app.post('/postVotingChoices', postVotingChoicesController)
 app.post('/postSubgoals', postSubgoalsController)
