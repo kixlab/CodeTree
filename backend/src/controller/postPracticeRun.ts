@@ -23,15 +23,14 @@ export const postPracticeRunController = Post<PostPracticeRunParams, PostPractic
     return {
       correctCases: score,
       testcases: results.length,
-      output: results
-        .filter(r => r[0] === false)
-        .map(r => {
-          return {
-            input: r[3],
-            output: r[1],
-            expected: r[2],
-          }
-        }),
+      output: results.map(r => {
+        return {
+          input: r[3],
+          output: r[1],
+          expected: r[2],
+          correct: r[0],
+        }
+      }),
     }
   }
 )

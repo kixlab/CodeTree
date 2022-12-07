@@ -3,23 +3,18 @@ import { javascript } from '@codemirror/lang-javascript'
 import { python } from '@codemirror/lang-python'
 import styled from '@emotion/styled'
 import CodeMirror from '@uiw/react-codemirror'
-import React, { ChangeEvent, useMemo } from 'react'
+import React, { useMemo } from 'react'
+import { CodeType } from '../protocol/Common'
 import { Color } from '../shared/Common'
 
 interface Props {
   code: string
   editorKey?: string
-  mode?: 'python' | 'javascript' | 'cpp'
+  mode?: CodeType
   onCodeChange: (code: string) => void
-  onChangeMode?: (mode: 'python' | 'javascript' | 'cpp') => void
 }
 
-function CodeEditor({ code, editorKey, mode = 'python', onCodeChange, onChangeMode }: Props) {
-  const onClickLanguage = (e: ChangeEvent<HTMLSelectElement>) => {
-    const language = e.target.value as 'python' | 'javascript' | 'cpp'
-    onChangeMode?.(language)
-  }
-
+export function CodeEditor({ code, editorKey, mode = 'python', onCodeChange }: Props) {
   const extensions = useMemo(() => {
     if (mode === 'python') {
       return [python()]
@@ -35,13 +30,6 @@ function CodeEditor({ code, editorKey, mode = 'python', onCodeChange, onChangeMo
 
   return (
     <Container>
-      <Select onChange={onClickLanguage} defaultValue={mode}>
-        {['javascript', 'python', 'cpp'].map(language => (
-          <option key={language} value={language}>
-            {language}
-          </option>
-        ))}
-      </Select>
       <CodeMirror
         key={editorKey}
         autoFocus
@@ -65,7 +53,7 @@ const Container = styled.div`
   color: ${Color.Gray85};
 
   & > div {
-    height: calc(100% - 25px);
+    height: 100%;
     font-size: 22px;
 
     .cm-editor {
@@ -73,9 +61,3 @@ const Container = styled.div`
     }
   }
 `
-
-const Select = styled.select`
-  height: 25px;
-`
-
-export default CodeEditor

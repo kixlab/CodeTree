@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ActionButton } from '../components/ActionButton'
-import CodeEditor from '../components/CodeEditor'
+import { CodeEditor } from '../components/CodeEditor'
 import { InstructionContainer } from '../components/InstructionContainer'
 import { OutputTerminal } from '../components/OutputTerminal'
 import { Page } from '../components/Page'
@@ -104,7 +104,14 @@ export function Practice() {
         }
         task={
           <TaskContainer>
-            <CodeEditor code={code} onCodeChange={setCode} mode={mode} onChangeMode={setMode} />
+            <CodeEditor code={code} onCodeChange={setCode} mode={mode} />
+            <ProgramRunner
+              onClickRun={run}
+              onJudging={judge}
+              isRunning={isRunning || isSubmitting}
+              mode={mode}
+              onChangeMode={setMode}
+            />
             <TaskWrapper>
               {outputCorrect !== null && <Result correct={outputCorrect}>{judgeResult}</Result>}
               <OutputTerminal>
@@ -112,7 +119,7 @@ export function Practice() {
                   ? getString('practice_terminal_running')
                   : programOutput === null
                   ? getString('practice_terminal_output')
-                  : programOutput.map(({ input, output, expected }, i) => {
+                  : programOutput.map(({ input, output, expected, correct }, i) => {
                       return (
                         <TestCase key={i}>
                           <div>
@@ -123,7 +130,7 @@ export function Practice() {
                           <div>
                             출력값:
                             <br />
-                            {output}
+                            <Output isCorrect={correct}>{output}</Output>
                           </div>
                           <div>
                             기대값:
@@ -135,7 +142,6 @@ export function Practice() {
                     })}
               </OutputTerminal>
             </TaskWrapper>
-            <ProgramRunner onClickRun={run} onJudging={judge} isRunning={isRunning || isSubmitting} />
           </TaskContainer>
         }
       />
@@ -170,9 +176,15 @@ const TestCase = styled.div`
   margin: 4px;
 `
 
+const Output = styled.div<{ isCorrect: boolean }>`
+  ${({ isCorrect }) => css`
+    color: ${isCorrect ? Color.Green40 : Color.Error20};
+  `}
+`
+
 const TaskContainer = styled.div`
   display: grid;
-  grid-template-rows: 0.6fr 0.4fr ${SUBMIT_BUTTON_HEIGHT}px;
+  grid-template-rows: 0.6fr ${SUBMIT_BUTTON_HEIGHT + 8}px 0.4fr;
   height: calc(100vh - ${HEADER_HEIGHT}px);
 `
 

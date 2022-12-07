@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react'
 import { SERVER_ADDRESS } from '../environments/Configuration'
+import { CodeType } from '../protocol/Common'
 import { GetProblemSkeletonParams, GetProblemSkeletonResults } from '../protocol/GetProblemSkeleton'
 import { Get } from '../shared/HttpRequest'
 
-export function useSkeletonCode(
-  category: string | undefined,
-  problemId: string | undefined,
-  mode: 'cpp' | 'javascript' | 'python'
-) {
+export function useSkeletonCode(category: string | undefined, problemId: string | undefined, mode: CodeType) {
   const [skeletonCode, setSkeletonCode] = useState('')
 
   useEffect(() => {
