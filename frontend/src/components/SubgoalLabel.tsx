@@ -46,9 +46,9 @@ export function SubgoalLabel({
       selected={selected}
       depth={depth}
       distFromParentNode={distFromParentNode}
-      clickable={editSubgoal === null}
+      clickable={!editSubgoal}
       onClick={() => {
-        if (editSubgoal === null) selectSubgoal?.(id)
+        if (!editSubgoal) selectSubgoal?.(id)
       }}
       color={color ?? 'transparent'}
     >
