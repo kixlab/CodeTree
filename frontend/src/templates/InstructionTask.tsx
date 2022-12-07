@@ -21,7 +21,7 @@ export function InstructionTask({ instruction, task, heightAuto = false }: Props
 const Container = styled.div<{ heightAuto: boolean }>`
   ${({ heightAuto }) => css`
     display: grid;
-    grid-template-columns: minmax(auto, ${TASK_CONTAINER_MAX_WIDTH}px) 60%;
+    grid-template-columns: minmax(auto, ${TASK_CONTAINER_MAX_WIDTH}px) auto;
     height: ${heightAuto ? 'initial' : `calc(100vh - ${HEADER_HEIGHT}px)`};
     width: 100%;
   `}

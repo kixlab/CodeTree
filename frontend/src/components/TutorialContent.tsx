@@ -189,10 +189,6 @@ export function TutorialContent(props: Props) {
 }
 
 const Row = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-items: stretch;
   padding-top: 10px;
   padding-bottom: 10px;
 
@@ -245,14 +241,10 @@ const TaskContainer = styled.div`
 `
 
 const FigureContainer = styled.div`
-  max-width: 500px;
-  flex: 1;
-  padding-top: 25px;
   display: flex;
   align-self: center;
   border: 1px solid ${Color.Gray15};
   margin: 10px;
-  user-select: none;
 
   & > img {
     width: 100%;

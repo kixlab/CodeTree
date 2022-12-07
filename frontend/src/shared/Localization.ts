@@ -148,11 +148,11 @@ const Localiztion: Dictionary = {
     en: 'Practice',
   },
   tutorial_practice1_goal: {
-    ko: ': 연관된 목표를 가지는 풀이 과정 묶기',
+    ko: ': 연관된 목표를 가지는 코드 묶기',
     en: '',
   },
   tutorial_practice2_goal: {
-    ko: ': 각 풀이 묶음의 목표 설명하기',
+    ko: ': 코드 묶음의 목표 설명하기',
     en: '',
   },
   tutorial_practice3_goal: {
@@ -563,7 +563,7 @@ const Localiztion: Dictionary = {
     en: 'testcases passed.',
   },
   practice_action_button: {
-    ko: '하위 목표 학습',
+    ko: '다음',
     en: 'Next',
   },
   practice_alert_back: {
