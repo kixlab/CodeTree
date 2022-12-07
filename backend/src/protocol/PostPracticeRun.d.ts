@@ -2,7 +2,7 @@ export interface PostPracticeRunParams {
   code: string
   codeType: 'python' | 'javascript' | 'cpp'
   category: string
-  problemId: string,
+  problemId: string
   participantId: string
 }
 
@@ -13,5 +13,6 @@ export interface PostPracticeRunResults {
     input: string
     output: string
     expected: string
+    correct: boolean
   }[]
 }

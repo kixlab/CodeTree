@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import CodeEditor from '../components/CodeEditor'
+import { CodeEditor } from '../components/CodeEditor'
 import { Page } from '../components/Page'
 import { ProblemContainer } from '../components/ProblemContainer'
 import { InstructionContainer } from '../components/InstructionContainer'

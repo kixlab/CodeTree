@@ -12,10 +12,10 @@ class StorageService {
         (getFileErr, files) => {
           if (files) {
             files[0]?.download((downloadErr, content) => {
-              if (content) {
+              if (!downloadErr) {
                 resolve(content.toString('utf8'))
               } else {
-                reject(downloadErr?.message ?? '')
+                reject(downloadErr.message)
               }
             })
           } else {
@@ -37,7 +37,7 @@ class StorageService {
         .sort((a, b) => a.name.localeCompare(b.name, undefined, sortingOptions))
         .map(async file => {
           const [content] = await file.download()
-          return content.toString('utf8')
+          return { name: file.name, content: content.toString('utf8') }
         })
     )
   }

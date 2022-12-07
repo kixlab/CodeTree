@@ -14,7 +14,7 @@ export const postPracticeRunController = Post<PostPracticeRunParams, PostPractic
     const results = await Promise.all(
       inFiles.slice(0, 5).map(async (input, i) => {
         const key = `p${participantId}-${problemId}-${i}`
-        return await judgeService.test(key, input, outFiles[i], code, codeType)
+        return await judgeService.test(key, input.content, outFiles[i].content, code, codeType)
       })
     )
 
@@ -23,15 +23,14 @@ export const postPracticeRunController = Post<PostPracticeRunParams, PostPractic
     return {
       correctCases: score,
       testcases: results.length,
-      output: results
-        .filter(r => r[0] === false)
-        .map(r => {
-          return {
-            input: r[3],
-            output: r[1],
-            expected: r[2],
-          }
-        }),
+      output: results.map(r => {
+        return {
+          input: r[3],
+          output: r[1],
+          expected: r[2],
+          correct: r[0],
+        }
+      }),
     }
   }
 )
