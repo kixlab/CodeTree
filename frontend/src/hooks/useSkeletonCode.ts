@@ -6,6 +6,7 @@ import { Get } from '../shared/HttpRequest'
 
 export function useSkeletonCode(category: string | undefined, problemId: string | undefined, mode: CodeType) {
   const [skeletonCode, setSkeletonCode] = useState('')
+  const [skeletons, setSkeletons] = useState<GetProblemSkeletonResults['skeletons']>([])
 
   useEffect(() => {
     if (!category || !problemId) {
@@ -14,13 +15,19 @@ export function useSkeletonCode(category: string | undefined, problemId: string 
     Get<GetProblemSkeletonParams, GetProblemSkeletonResults>(`${SERVER_ADDRESS}/getProblemSkeleton`, {
       category,
       problemId,
-      codeType: mode,
     }).then(res => {
       if (res) {
-        setSkeletonCode(res.code)
+        setSkeletons(res.skeletons)
       }
     })
   }, [category, mode, problemId])
+
+  useEffect(() => {
+    const skeleton = skeletons.find(skeleton => skeleton.codeType === mode)
+    if (skeleton) {
+      setSkeletonCode(skeleton.content)
+    }
+  }, [mode, skeletons])
 
   return { skeletonCode }
 }

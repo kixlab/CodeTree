@@ -14,7 +14,7 @@ export const postPracticeAnswerController = Post<PostPracticeAnswerParams, PostP
     const results = await Promise.all(
       inFiles.map(async (input, i) => {
         const key = `p${participantId}-${problemId}-${i}`
-        return await judgeService.test(key, input, outFiles[i], code, codeType)
+        return await judgeService.test(key, input.content, outFiles[i].content, code, codeType)
       })
     )
 

@@ -14,7 +14,7 @@ export const postPracticeRunController = Post<PostPracticeRunParams, PostPractic
     const results = await Promise.all(
       inFiles.slice(0, 5).map(async (input, i) => {
         const key = `p${participantId}-${problemId}-${i}`
-        return await judgeService.test(key, input, outFiles[i], code, codeType)
+        return await judgeService.test(key, input.content, outFiles[i].content, code, codeType)
       })
     )
 
