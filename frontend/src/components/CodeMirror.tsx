@@ -9,11 +9,11 @@ import { CODE_LINE_HEIGHT } from '../shared/Constants'
 
 interface Props {
   code: string
-  fontSize?: number
+  lineHeight?: number
   mode?: 'python' | 'javascript' | 'cpp'
 }
 
-function Component({ code, fontSize = CODE_LINE_HEIGHT - 8, mode = 'python' }: Props) {
+function Component({ code, lineHeight = CODE_LINE_HEIGHT - 8, mode = 'python' }: Props) {
   const extensions = useMemo(() => {
     if (mode === 'python') {
       return [python()]
@@ -25,7 +25,7 @@ function Component({ code, fontSize = CODE_LINE_HEIGHT - 8, mode = 'python' }: P
   }, [mode])
 
   return (
-    <Container fontSize={fontSize}>
+    <Container lineHeight={lineHeight}>
       <CM
         autoFocus
         value={code}
@@ -40,11 +40,11 @@ function Component({ code, fontSize = CODE_LINE_HEIGHT - 8, mode = 'python' }: P
 
 export const CodeMirror = React.memo(Component)
 
-const Container = styled.div<{ fontSize: number }>`
-  ${({ fontSize }) => css`
+const Container = styled.div<{ lineHeight: number }>`
+  ${({ lineHeight }) => css`
     & > div {
       height: 100%;
-      font-size: ${fontSize}px;
+      font-size: ${lineHeight - 2}px;
 
       .cm-editor {
         height: 100%;
@@ -54,6 +54,7 @@ const Container = styled.div<{ fontSize: number }>`
     div {
       background-color: transparent !important;
       border: none !important;
+      line-height: ${lineHeight}px;
     }
   `}
 `
