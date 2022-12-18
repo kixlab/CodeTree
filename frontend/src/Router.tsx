@@ -12,6 +12,7 @@ import { Parsons } from './pages/Parsons'
 import { PostTest } from './pages/PostTest'
 import { Practice } from './pages/Practice'
 import { PreTest } from './pages/PreTest'
+import { Present } from './pages/Present'
 import Survey from './pages/Survey'
 import VerbalAnalogy from './pages/VerbalAnalogy'
 import Vote from './pages/Vote'
@@ -29,6 +30,7 @@ export const Router = createBrowserRouter(
       <Route path="label-tutorial" element={<LabelTutorial />} />
       <Route path="vote-tutorial" element={<VoteTutorial />} />
       <Route path="label/:lecture/:fileName" element={<Label />} />
+      <Route path="present/:category/:problemId/:participantId" element={<Present />} />
       <Route path="vote/:lecture/:fileName" element={<Vote />} />
       <Route path="practice/:category/:problemId" element={<Practice />} />
       <Route path="assessment/:lecture/:fileName" element={<Assessment />} />

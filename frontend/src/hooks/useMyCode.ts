@@ -4,9 +4,12 @@ import { GetMyProgramCodeParams, GetMyProgramCodeResults } from '../protocol/Get
 import { getId, ID_NOT_FOUND } from '../shared/ExperimentHelper'
 import { Get } from '../shared/HttpRequest'
 
-export function useMyCode(category: string | undefined, problemId: string | undefined) {
+export function useMyCode(
+  category: string | undefined,
+  problemId: string | undefined,
+  participantId = getId() ?? ID_NOT_FOUND
+) {
   const [code, setCode] = useState('')
-  const participantId = getId() ?? ID_NOT_FOUND
 
   useEffect(() => {
     if (category && problemId) {

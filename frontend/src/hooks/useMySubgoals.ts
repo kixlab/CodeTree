@@ -7,9 +7,12 @@ import { Get } from '../shared/HttpRequest'
 import { colorGenerator } from '../shared/Utils'
 import { makeSubgoalNode } from './useHierarchyVisualizer'
 
-export function useMySubgoals(category: string | undefined, problemId: string | undefined) {
+export function useMySubgoals(
+  category: string | undefined,
+  problemId: string | undefined,
+  participantId = getId() ?? ID_NOT_FOUND
+) {
   const [subgoals, setSubgoals] = useState<Subgoal[]>([])
-  const participantId = getId() ?? ID_NOT_FOUND
 
   const subgoalsWithCode = useMemo(() => {
     const nodes = makeSubgoalNode(
