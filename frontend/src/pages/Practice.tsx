@@ -48,6 +48,7 @@ export function Practice() {
   const isSecondPractice = getCurrentStage() === 6
   const subgoals = useMySubgoals(category, isSecondPractice ? 'p3' : undefined)
   const prevCode = useMyCode(category, isSecondPractice ? 'p3' : undefined)
+  const [canProceed, setCanProceed] = useState(false)
 
   const navigate = useNavigate()
 
@@ -75,13 +76,19 @@ export function Practice() {
     setCode(skeletonCode)
   }, [skeletonCode])
 
+  useEffect(() => {
+    if (isRunning && !canProceed) {
+      setCanProceed(true)
+    }
+  }, [canProceed, isRunning])
+
   return (
     <Page>
       <InstructionTask
         instruction={
           <InstructionContainer
             footer={
-              <ActionButton onClick={submit} disabled={isRunning || isSubmitting}>
+              <ActionButton onClick={submit} disabled={isRunning || isSubmitting || !canProceed}>
                 {getString('practice_action_button')}
               </ActionButton>
             }
@@ -95,7 +102,7 @@ export function Practice() {
                 <Title>{getString('practice_subgoal_title')}</Title>
                 <CodeContainer>
                   <HierarchyVisualizer subgoals={subgoals} lineHeight={20} />
-                  <CodeMirror code={prevCode} fontSize={14} />
+                  <CodeMirror code={prevCode} lineHeight={20} />
                 </CodeContainer>
                 <SubgoalContainer subgoals={subgoals} selectedSubgoal={null} canAddSubgoals={false} />
               </>
