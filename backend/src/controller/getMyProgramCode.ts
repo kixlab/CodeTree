@@ -1,21 +1,11 @@
-import { CodeSubmissionData } from '../database/DataBaseDataTypes'
-import { GetData } from '../database/DataBaseRef'
 import { Get } from '../HttpResponse'
 import { GetMyProgramCodeParams, GetMyProgramCodeResults } from '../protocol/GetMyProgramCode'
+import { codeSubmissionService } from '../service/codeSubmission'
 
-export const getMyProgramCodeController = Get<GetMyProgramCodeParams, GetMyProgramCodeResults>(async params => {
-  const snapshots = await GetData<CodeSubmissionData>(
-    `/${params.category}/${params.problemId}/submissions/${params.participantId}`
-  )
+export const getMyProgramCodeController = Get<GetMyProgramCodeParams, GetMyProgramCodeResults>(
+  async ({ category, problemId, participantId }) => {
+    const { code } = await codeSubmissionService.getLatestSubmissionOfParticipant(category, problemId, participantId)
 
-  let unordered = JSON.parse(JSON.stringify(snapshots))
-
-  let idx = -1
-  for (const snapshot in snapshots) {
-    if (idx < Number(snapshot)) idx = Number(snapshot)
+    return { code }
   }
-
-  const code = unordered[String(idx)].code
-
-  return { code }
-})
+)

@@ -5,10 +5,10 @@ import http from 'http'
 import https from 'https'
 import { getHealthController } from './controller/getHealth'
 import { getIdAndGroupController } from './controller/getIdAndGroup'
+import { getMostSimilarCodeController } from './controller/getMostSimilarCode'
 import { getMyProgramCodeController } from './controller/getMyProgramCode'
 import { getMySubgoalsController } from './controller/getMySubgoals'
 import { getNewSubgoalTreeController } from './controller/getNewSubgoalTree'
-import { getParsonsListController } from './controller/getParsonsList'
 import { getParticipantStatusController } from './controller/getParticipantStatus'
 import { getParticipationAvailabilityController } from './controller/getParticipationAvailability'
 import { getProblemMarkDownController } from './controller/getProblemMarkDown'
@@ -16,7 +16,6 @@ import { getProblemSkeletonController } from './controller/getProblemSkeleton'
 import { getSubgoalTreeController } from './controller/getSubgoalTree'
 import { getVotingListController } from './controller/getVotingList'
 import { postAssessmentCodeController } from './controller/postAssessmentCode'
-import { postParsonsAnswerController } from './controller/postParsonsAnswer'
 import { postParticipantFinishedController } from './controller/postParticipantFinished'
 import { postParticipantProgressController } from './controller/postParticipantProgress'
 import { postPracticeAnswerController } from './controller/postPracticeAnswer'
@@ -47,16 +46,15 @@ app.get('/getMySubgoals', getMySubgoalsController)
 app.get('/getProblemMarkDown', getProblemMarkDownController)
 app.get('/getParticipationAvailability', getParticipationAvailabilityController)
 app.get('/getParticipantStatus', getParticipantStatusController)
+app.get('/getMostSimilarCode', getMostSimilarCodeController)
 app.get('/getVotingList', getVotingListController)
 app.get('/getNewSubgoalTree', getNewSubgoalTreeController)
 app.get('/getSubgoalTree', getSubgoalTreeController)
-app.get('/getParsonsList', getParsonsListController)
 app.get('/getProblemSkeleton', getProblemSkeletonController)
 app.post('/postVotingChoices', postVotingChoicesController)
 app.post('/postSubgoals', postSubgoalsController)
 app.post('/postPracticeCode', postPracticeCodeController)
 app.post('/postAssessmentCode', postAssessmentCodeController)
-app.post('/postParsonsAnswer', postParsonsAnswerController)
 app.post('/postParticipantProgress', postParticipantProgressController)
 app.post('/postParticipantFinished', postParticipantFinishedController)
 app.post('/postPracticeRun', postPracticeRunController)
