@@ -7,10 +7,6 @@ export interface CodeSubmissionData {
   code: string
 }
 
-export interface ParsonsAnswerData {
-  answerList: string
-}
-
 export interface ProgressData {
   timeRemaining: number
 }
@@ -45,37 +41,15 @@ export interface ChoiceListData {
   [key: string]: VotingChoice[]
 }
 
-export interface ExampleData {
-  problem: string
+export interface ProblemData {
   subgoals: SubgoalsData[]
   subgoalTree?: SubgoalTreeData
   choiceList?: ChoiceListData
   votingItems?: VotingItem[]
-}
-
-export interface PracticeData {
-  problem: string
-  testCases?: {
-    args: string
-  }[]
   submissions?: {
-    [key: string]: CodeSubmissionData
-  }
-}
-
-export interface AssessmentData {
-  problem: string
-  skeleton?: string
-  submissions?: {
-    [key: string]: CodeSubmissionData
-  }
-}
-
-export interface Assessment5Data {
-  list: string[]
-  problem: string
-  submissions?: {
-    [key: string]: ParsonsAnswerData
+    [participantId: string]: {
+      [timestamp: string]: CodeSubmissionData
+    }
   }
 }
 

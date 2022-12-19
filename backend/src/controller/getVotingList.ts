@@ -1,4 +1,4 @@
-import { ExampleData, SubgoalTreeData } from '../database/DataBaseDataTypes'
+import { ProblemData, SubgoalTreeData } from '../database/DataBaseDataTypes'
 import { GetData, SetData, UpdateData } from '../database/DataBaseRef'
 import { Get } from '../HttpResponse'
 import { GetVotingListParams, GetVotingListResults } from '../protocol/GetVotingList'
@@ -6,7 +6,7 @@ import { labelSelectService } from '../service/labelSelect'
 
 export const getVotingListController = Get<GetVotingListParams, GetVotingListResults>(async params => {
   const snapshot = await GetData<SubgoalTreeData>(`/${params.lectureName}/${params.fileName.split('.')[0]}/subgoalTree`)
-  const items = await GetData<ExampleData['votingItems']>(
+  const items = await GetData<ProblemData['votingItems']>(
     `/${params.lectureName}/${params.fileName.split('.')[0]}/votingItems/${params.participantId}`
   )
   if (items != null) {
@@ -28,7 +28,7 @@ export const getVotingListController = Get<GetVotingListParams, GetVotingListRes
 
     await UpdateData<SubgoalTreeData>(`/${params.lectureName}/${params.fileName.split('.')[0]}/subgoalTree`, snapshot)
 
-    await SetData<ExampleData['votingItems']>(
+    await SetData<ProblemData['votingItems']>(
       `/${params.lectureName}/${params.fileName.split('.')[0]}/votingItems/${params.participantId}`,
       votingItems
     )

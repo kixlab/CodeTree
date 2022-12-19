@@ -78,6 +78,7 @@ const Line = styled.button<{ checkState?: CheckBoxAvailability; selectable: bool
     align-items: center;
     transition: all 0.2s;
     margin: 0;
+    line-height: ${lineHeight}px;
 
     ${checkState === CheckBoxAvailability.UNAVAILABLE &&
     css`
