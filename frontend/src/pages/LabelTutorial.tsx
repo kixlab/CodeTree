@@ -3,29 +3,33 @@ import { useNavigate } from 'react-router-dom'
 import { Page } from '../components/Page'
 import { TutorialContent } from '../components/TutorialContent'
 import {
-  PRACTICE_EXAMPLE1,
   practice1Subgoals,
   practice2Subgoals,
   practice3Subgoals,
+  PRACTICE_EXAMPLE1,
   PRACTICE_EXAMPLE2,
   PRACTICE_EXAMPLE3,
 } from '../data/SubgoalTutorialExamples'
 import { useGroupSubgoals } from '../hooks/useGroupSubgoals'
 import { nextStage } from '../shared/ExperimentHelper'
 import { getString } from '../shared/Localization'
-import { CheckBoxAvailability, SubgoalNode } from './Label'
+import { SubgoalNode } from '../types/subgoalNode'
 
 function useCheckAnswer() {
   const [showAnswer, setShowAnswer] = React.useState(false)
 
-  const checkAnswer = useCallback((checkBoxAvailability: CheckBoxAvailability[], subgoals: SubgoalNode[]) => {
-    if (subgoals.some(s => s.label.length === 0)) {
-      window.alert(getString('tutorial_alert_fill_all_boxes'))
-      return
-    }
+  const checkAnswer = useCallback(
+    (url: string, subgoals: SubgoalNode[]) => () => {
+      if (subgoals.some(s => s.label.length === 0)) {
+        window.alert(getString('tutorial_alert_fill_all_boxes'))
+        return
+      }
 
-    setShowAnswer(true)
-  }, [])
+      window.open(url, '_blank')
+      setShowAnswer(true)
+    },
+    []
+  )
 
   return { showAnswer, checkAnswer }
 }
@@ -80,28 +84,25 @@ function LabelTutorial() {
         firstSubgoals={subgoals1}
         firstSelectedSubgoal={selectedSubgoal1}
         firstCheckBoxAvailability={checkBoxAvailability1}
-        showFirstAnswer={showAnswer1}
         secondSubgoals={subgoals2}
         secondSelectedSubgoal={selectedSubgoal2}
         secondCheckBoxAvailability={checkBoxAvailability2}
-        showSecondAnswer={showAnswer2}
         thirdSubgoals={subgoals3}
         thirdSelectedSubgoal={selectedSubgoal3}
         thirdCheckBoxAvailability={checkBoxAvailability3}
-        showThirdAnswer={showAnswer3}
         firstSelectSubgoal={selectSubgoal1}
         firstClickCheckBox={clickCheckBox1}
-        firstCheckAnswer={() => checkAnswer1(checkBoxAvailability1, subgoals1)}
+        firstCheckAnswer={checkAnswer1('/assets/practice1-solution (ko).png', subgoals1)}
         secondSelectSubgoal={selectSubgoal2}
         secondEditSubgoal={editSubgoal2}
-        secondCheckAnswer={() => checkAnswer2(checkBoxAvailability2, subgoals2)}
+        secondCheckAnswer={checkAnswer2('/assets/practice2-solution (ko).png', subgoals2)}
         thirdSelectSubgoal={selectSubgoal3}
         thirdEditSubgoal={editSubgoal3}
         thirdCheckAnswer={() => {
           if (subgoals3.length <= 1) {
             window.alert(getString('tutorial_alert_add_smaller_subgoals'))
           } else {
-            checkAnswer3(checkBoxAvailability3, subgoals3)
+            checkAnswer3('/assets/practice3-solution (ko).png', subgoals3)()
           }
         }}
         thirdAddSubgoal={(id: number | null) => addSubgoal3(id, false)}

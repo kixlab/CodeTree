@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import SubgoalLabel from './SubgoalLabel'
-import { SubgoalNode } from '../pages/Label'
 import { getString } from '../shared/Localization'
 import { Color } from '../shared/Common'
+import { SubgoalNode } from '../types/subgoalNode'
 
 interface Props {
   subgoals: SubgoalNode[]
@@ -54,6 +54,7 @@ export function SubgoalContainer({
 
 const Container = styled.div`
   margin-top: 8px;
+  padding: 8px;
 `
 
 const AddButton = styled.button`

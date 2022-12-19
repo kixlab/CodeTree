@@ -1,12 +1,12 @@
 import { Post } from '../HttpResponse'
 import { PostPracticeAnswerParams, PostPracticeAnswerResults } from '../protocol/PostPracticeAnswer'
+import { codeSubmissionService } from '../service/codeSubmission'
 import { judgeService } from '../service/judge'
-import { logService } from '../service/log'
 import { storageService } from '../service/storage'
 
 export const postPracticeAnswerController = Post<PostPracticeAnswerParams, PostPracticeAnswerResults>(
   async ({ code, problemId, codeType, category, participantId }) => {
-    logService.logPracticeSubmission(category, problemId, participantId, code)
+    codeSubmissionService.logPracticeSubmission(category, problemId, participantId, code)
 
     const inFiles = await storageService.getFiles(`${category}/${problemId}/in/`)
     const outFiles = await storageService.getFiles(`${category}/${problemId}/out/`)

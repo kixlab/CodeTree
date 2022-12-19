@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { ChoiceState } from '../pages/Vote'
-import { VotingItem } from '../protocol/GetVotingList'
+import { VotingItem } from '../protocol/Common'
 import { PostVotingChoicesParams, PostVotingChoicesResults } from '../protocol/PostVotingChoices'
 import { getId, ID_NOT_FOUND } from '../shared/ExperimentHelper'
 import { Post } from '../shared/HttpRequest'

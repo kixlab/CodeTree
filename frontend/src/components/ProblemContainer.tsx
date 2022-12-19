@@ -9,7 +9,6 @@ interface Props {
 
 const Container = styled.div`
   margin-top: 15px;
-  margin-bottom: 20px;
   border: 1px solid ${Color.Gray30};
   padding: 10px;
   border-radius: 4px;

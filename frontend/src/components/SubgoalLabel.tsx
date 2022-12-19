@@ -3,8 +3,8 @@ import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 import { Color } from '../shared/Common'
 import { getString } from '../shared/Localization'
-import { SubgoalNode } from '../pages/Label'
 import { SUBGOAL_STICK_WIDTH } from '../shared/Constants'
+import { SubgoalNode } from '../types/subgoalNode'
 
 interface Props {
   selected: boolean

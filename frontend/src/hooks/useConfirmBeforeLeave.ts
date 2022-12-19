@@ -3,8 +3,8 @@ import { getString } from '../shared/Localization'
 
 export function useConfirmBeforeLeave() {
   const onBeforeUnload = useCallback((event: BeforeUnloadEvent) => {
-    event.returnValue = getString('assessment_alert_back')
-    return getString('assessment_alert_back')
+    event.returnValue = getString('alert_back')
+    return getString('alert_back')
   }, [])
 
   useEffect(() => {

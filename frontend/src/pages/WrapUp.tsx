@@ -8,7 +8,7 @@ import { getGroup, getId } from '../shared/ExperimentHelper'
 import { Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 
-function WrapUp() {
+export function WrapUp() {
   useEffectOnce(() => {
     const id = getId()
     const group = getGroup()
@@ -65,5 +65,3 @@ function WrapUp() {
     </Page>
   )
 }
-
-export default WrapUp

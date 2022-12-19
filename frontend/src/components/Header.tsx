@@ -41,7 +41,7 @@ export function Header({ onTimeOut }: Props) {
 
   return (
     <Container>
-      <Logo>CodeTree</Logo>
+      <Logo>CodeGraph</Logo>
       <Supplement>
         <ProgressBar currentIndex={getCurrentStage()} stageList={SCENARIO.map(stage => stage.name)} />
         <Timer data-prefix={getString('header_timer_prefix')}>
@@ -60,11 +60,8 @@ export function Header({ onTimeOut }: Props) {
 }
 
 const Container = styled.div`
-  height: calc(${HEADER_HEIGHT}px - 21px);
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  height: calc(${HEADER_HEIGHT}px - 17px);
+  padding: 8px 12px;
   border-bottom: 1px solid ${Color.Gray15};
   position: relative;
 `

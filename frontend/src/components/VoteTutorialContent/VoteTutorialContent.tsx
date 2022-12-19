@@ -1,6 +1,6 @@
 import React from 'react'
 import { PRACTICE_EXAMPLE1, PRACTICE_EXAMPLE2 } from '../../data/SubgoalTutorialExamples'
-import { VotingItem } from '../../protocol/GetVotingList'
+import { VotingItem } from '../../protocol/Common'
 import { getString } from '../../shared/Localization'
 import { SkipButton } from '../SkipButton'
 import { VotePractice } from '../VotePractice'

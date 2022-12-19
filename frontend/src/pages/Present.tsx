@@ -5,10 +5,10 @@ import { CodeGrouper } from '../components/CodeGrouper'
 import { HierarchyVisualizer } from '../components/HierarchyVisualizer'
 import { InstructionContainer } from '../components/InstructionContainer'
 import { Page } from '../components/Page'
+import { SplitView } from '../components/SplitView'
 import { SubgoalContainer } from '../components/SubgoalContainer'
 import { useMyCode } from '../hooks/useMyCode'
 import { useMySubgoals } from '../hooks/useMySubgoals'
-import { InstructionTask } from '../templates/InstructionTask'
 
 type MatchParams = {
   category: string
@@ -23,19 +23,16 @@ export function Present() {
 
   return (
     <Page>
-      <InstructionTask
-        instruction={
-          <InstructionContainer>
-            <SubgoalContainer subgoals={subgoals} selectedSubgoal={null} />
-          </InstructionContainer>
-        }
-        task={
-          <TaskContainer>
-            <HierarchyVisualizer subgoals={subgoals} />
-            <CodeGrouper code={code} />
-          </TaskContainer>
-        }
-      />
+      <SplitView initialWidths={[3, 6]}>
+        <InstructionContainer>
+          <SubgoalContainer subgoals={subgoals} selectedSubgoal={null} />
+        </InstructionContainer>
+
+        <TaskContainer>
+          <HierarchyVisualizer subgoals={subgoals} />
+          <CodeGrouper code={code} />
+        </TaskContainer>
+      </SplitView>
     </Page>
   )
 }

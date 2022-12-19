@@ -6,7 +6,7 @@ import Consent from './pages/Consent'
 import Contact from './pages/Contact'
 import Demographic from './pages/Demographic'
 import { Instruction } from './pages/Instruction'
-import Label from './pages/Label'
+import { Label } from './pages/Label'
 import LabelTutorial from './pages/LabelTutorial'
 import { PostTest } from './pages/PostTest'
 import { Practice } from './pages/Practice'
@@ -16,7 +16,8 @@ import Survey from './pages/Survey'
 import VerbalAnalogy from './pages/VerbalAnalogy'
 import Vote from './pages/Vote'
 import { VoteTutorial } from './pages/VoteTutorial'
-import WrapUp from './pages/WrapUp'
+import { WrapUp } from './pages/WrapUp'
+import { Abstraction } from './pages/Abstraction'
 
 export const Router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +30,7 @@ export const Router = createBrowserRouter(
       <Route path="label-tutorial" element={<LabelTutorial />} />
       <Route path="vote-tutorial" element={<VoteTutorial />} />
       <Route path="label/:lecture/:fileName" element={<Label />} />
+      <Route path="abstraction/:category/:problemId" element={<Abstraction />} />
       <Route path="present/:category/:problemId/:participantId" element={<Present />} />
       <Route path="vote/:lecture/:fileName" element={<Vote />} />
       <Route path="practice/:category/:problemId" element={<Practice />} />

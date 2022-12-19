@@ -1,6 +1,6 @@
 import { shuffle, isEmpty, compact } from 'lodash'
 import { LabelVoteData, SubgoalTreeData } from '../../database/DataBaseDataTypes'
-import { VotingItem } from '../../protocol/GetVotingList'
+import { VotingItem } from '../../protocol/Common'
 import { getLeastExposureLabel, getRandomExclusive, getTopVoteLabel } from './utils'
 
 class LabelSelectService {

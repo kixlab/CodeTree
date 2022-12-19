@@ -1,9 +1,9 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import React from 'react'
-import { SubgoalNode } from '../pages/Label'
 import { Color } from '../shared/Common'
 import { CODE_LINE_HEIGHT, SUBGOAL_STICK_GAP, SUBGOAL_STICK_WIDTH } from '../shared/Constants'
+import { SubgoalNode } from '../types/subgoalNode'
 
 interface Props {
   subgoals: SubgoalNode[]

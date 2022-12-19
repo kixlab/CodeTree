@@ -1,13 +1,13 @@
 import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SERVER_ADDRESS } from '../environments/Configuration'
-import { SubgoalNode } from '../pages/Label'
 import { PostSubgoalsParams, PostSubgoalsResults } from '../protocol/PostSubgoals'
 import { getId, ID_NOT_FOUND, nextStage } from '../shared/ExperimentHelper'
 import { Subgoal as SubgoalWithoutId } from '../protocol/Common'
 import { Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 import { saveSubgoals } from '../shared/Utils'
+import { SubgoalNode } from '../types/subgoalNode'
 
 export function useLabelSubmit(lecture: string | undefined, fileName: string | undefined) {
   const [isSubmitting, setIsSubmitting] = useState(false)

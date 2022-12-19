@@ -2,9 +2,10 @@ import produce from 'immer'
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { useEffectOnce } from 'react-use'
 import findLastIndex from 'lodash/findLastIndex'
-import { CheckBoxAvailability, SubgoalNode } from '../pages/Label'
 import { getString } from '../shared/Localization'
 import { colorGenerator } from '../shared/Utils'
+import { CheckBoxAvailability } from '../types/checkboxAvailability'
+import { SubgoalNode } from '../types/subgoalNode'
 
 export function useGroupSubgoals(numberOfLines: number, initialSubgoals: SubgoalNode[] = []) {
   const [subgoalNextId, setSubgoalNextId] = useState(0)
@@ -160,7 +161,7 @@ export function useGroupSubgoals(numberOfLines: number, initialSubgoals: Subgoal
   }, [initialSubgoals])
 
   useEffectOnce(() => {
-    if (initialSubgoals.length === 0) {
+    if (initialSubgoals.length === 0 && subgoals.length === 0) {
       addSubgoal()
     }
   })

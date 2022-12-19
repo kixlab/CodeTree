@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { Page } from '../components/Page'
 import VoteTutorialContent from '../components/VoteTutorialContent/VoteTutorialContent'
 import { VotingList1, VotingList2 } from '../data/VoteTutorialData'
-import { VotingItem } from '../protocol/GetVotingList'
+import { VotingItem } from '../protocol/Common'
 import { nextStage } from '../shared/ExperimentHelper'
 import { getString } from '../shared/Localization'
 

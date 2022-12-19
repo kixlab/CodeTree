@@ -8,3 +8,15 @@ export type Subgoal = {
   label: string
   group: number[]
 }
+
+export interface VotingItem {
+  id: number
+  group: number[]
+  labels: string[]
+  answers: number[]
+}
+
+export interface VotingChoice {
+  id: number
+  labels: string[]
+}

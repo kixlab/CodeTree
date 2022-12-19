@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react'
-import { CheckBoxAvailability } from '../pages/Label'
+import { CheckBoxAvailability } from '../types/checkboxAvailability'
 
 export function useHighlightCodeSegment(numberOfLines: number) {
   const [highlightedLines, setHighlightedLines] = useState<number[]>([])
