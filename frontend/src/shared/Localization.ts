@@ -409,10 +409,6 @@ const Localiztion: Dictionary = {
     ko: '다음',
     en: 'Next',
   },
-  label_alert_back: {
-    ko: '페이지를 벗어나면 작성하신 내용이 저장되지 않습니다.',
-    en: '',
-  },
   label_placeholder: {
     ko: '"~를 ~하기" 형태로 작성해보세요.',
     en: 'A good goal description starts with a verb.',
@@ -566,10 +562,6 @@ const Localiztion: Dictionary = {
     ko: '다음',
     en: 'Next',
   },
-  practice_alert_back: {
-    ko: '페이지를 벗어나면 작성하신 내용이 저장되지 않습니다. 내용을 유지하려면 먼저 따로 저장해두세요.',
-    en: '',
-  },
   practice_code_example: {
     ko: '이전 페이지 예시 문제 풀이',
     en: '',
@@ -597,30 +589,9 @@ const Localiztion: Dictionary = {
     ko: '제한 시간이 다 되었습니다. 다음 문제로 이동합니다.',
     en: 'Time is up. Your current program code will be submitted.',
   },
-  assessment_alert_back: {
+  alert_back: {
     ko: '페이지를 벗어나면 작성하신 내용이 저장되지 않습니다. 내용을 유지하려면 먼저 따로 저장해두세요.',
     en: '',
-  },
-  parsons_title: {
-    ko: '평가 문제',
-    en: 'Assessment Problem',
-  },
-  parsons_instruction: {
-    ko: `이번 문제는 주어진 코드의 순서 맞추기 입니다. 아래 문제를 해결하는 코드가 되도록 오른쪽 코드 블럭의 순서를 바꾸어보세요.
-    코드 블럭을 드래그하면 순서를 바꿀 수 있습니다. 인덴트(들여쓰기)는 고려하지 않아도 됩니다.`,
-    en: ``,
-  },
-  parsons_action_button: {
-    ko: '다음 단계로 이동',
-    en: 'Move On',
-  },
-  parsons_confirm_submit: {
-    ko: '정말 제출하시겠습니까?',
-    en: 'Are you sure to submit?',
-  },
-  parsons_alert_time_up: {
-    ko: '제한 시간이 다 되었습니다. 다음 단계로 이동합니다.',
-    en: 'Time is up. Your current answer will be submitted.',
   },
   posttest_alert_time_up: {
     ko: '제한 시간이 다 되었습니다. 현재 가지고 있는 답안을 제출하고 다음 단계로 이동해주세요. 아직 풀지 못한 문제는 "잘 모르겠음"을 체크한 다음 제출해주세요.',

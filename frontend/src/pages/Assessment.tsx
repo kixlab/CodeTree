@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { CodeEditor } from '../components/CodeEditor'
+import { InstructionContainer } from '../components/InstructionContainer'
 import { Page } from '../components/Page'
 import { ProblemContainer } from '../components/ProblemContainer'
-import { InstructionContainer } from '../components/InstructionContainer'
+import { SplitView } from '../components/SplitView'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { useConfirmBeforeLeave } from '../hooks/useConfirmBeforeLeave'
 import { useProblem } from '../hooks/useProblem'
@@ -12,7 +13,6 @@ import { getId, ID_NOT_FOUND, nextStage } from '../shared/ExperimentHelper'
 import { Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 import { getProblemNumber } from '../shared/Utils'
-import { InstructionTask } from '../templates/InstructionTask'
 
 type MatchParams = {
   lecture: string
@@ -57,22 +57,20 @@ export function Assessment() {
 
   return (
     <Page onTimeOut={onTimeout}>
-      <InstructionTask
-        instruction={
-          <InstructionContainer
-            footer={
-              <button className="submit" type="submit" onClick={moveOnToNextProblem} disabled={isSubmitting}>
-                {getString('assessment_action_button')}
-              </button>
-            }
-          >
-            <h1>{`${getString('assessment_title')} ${getProblemNumber()}`}</h1>
-            <div>{getString('assessment_instruction')}</div>
-            <ProblemContainer problem={problem} />
-          </InstructionContainer>
-        }
-        task={<CodeEditor code={code} editorKey={fileName} onCodeChange={setCode} />}
-      />
+      <SplitView initialWidths={[3, 6]}>
+        <InstructionContainer
+          footer={
+            <button className="submit" type="submit" onClick={moveOnToNextProblem} disabled={isSubmitting}>
+              {getString('assessment_action_button')}
+            </button>
+          }
+        >
+          <h1>{`${getString('assessment_title')} ${getProblemNumber()}`}</h1>
+          <div>{getString('assessment_instruction')}</div>
+          <ProblemContainer problem={problem} />
+        </InstructionContainer>
+        <CodeEditor code={code} editorKey={fileName} onCodeChange={setCode} />
+      </SplitView>
     </Page>
   )
 }

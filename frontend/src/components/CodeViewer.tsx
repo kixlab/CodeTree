@@ -38,7 +38,7 @@ function Component({ code, lineHeight = CODE_LINE_HEIGHT - 8, mode = 'python' }:
   )
 }
 
-export const CodeMirror = React.memo(Component)
+export const CodeViewer = React.memo(Component)
 
 const Container = styled.div<{ lineHeight: number }>`
   ${({ lineHeight }) => css`
@@ -48,6 +48,7 @@ const Container = styled.div<{ lineHeight: number }>`
 
       .cm-editor {
         height: 100%;
+        outline: none !important;
       }
     }
 

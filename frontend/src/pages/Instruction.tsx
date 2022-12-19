@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import React, { useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ActionButton } from '../components/ActionButton'
 import FormatContainer from '../components/FormatContainer/FormatContainer'
 import { Page } from '../components/Page'
 import { SERVER_ADDRESS } from '../environments/Configuration'
@@ -9,7 +10,6 @@ import {
   GetParticipationAvailabilityParams,
   GetParticipationAvailabilityResults,
 } from '../protocol/GetParticipationAvailability'
-import { Color } from '../shared/Common'
 import { initialize, nextStage } from '../shared/ExperimentHelper'
 import { Get } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
@@ -96,37 +96,14 @@ export function Instruction() {
         </table>
 
         <Footer>
-          <ParticipateButton type="button" onClick={onStart} disabled={!canParticipate}>
+          <ActionButton onClick={onStart} disabled={!canParticipate}>
             실험 참여
-          </ParticipateButton>
+          </ActionButton>
         </Footer>
       </FormatContainer>
     </Page>
   )
 }
-
-const ParticipateButton = styled.button`
-  background: ${Color.Blue};
-  color: ${Color.Gray00};
-  border: none;
-  border-radius: 4px;
-  padding: 10px;
-  padding-left: 25px;
-  padding-right: 25px;
-  font-size: 16px;
-  cursor: pointer;
-  outline: none;
-  width: 100%;
-
-  &:hover {
-    background: ${Color.Blue20};
-  }
-
-  &:disabled {
-    background: ${Color.Gray30};
-    cursor: not-allowed;
-  }
-`
 
 const Footer = styled.div`
   margin-top: 20px;

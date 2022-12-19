@@ -2,8 +2,7 @@ import styled from '@emotion/styled'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { ActionButton } from '../components/ActionButton'
-import { CodeGrouper } from '../components/CodeGrouper'
-import { HierarchyVisualizer } from '../components/HierarchyVisualizer'
+import { CodeViewer } from '../components/CodeViewer'
 import { InstructionBox } from '../components/InstructionBox'
 import { InstructionContainer } from '../components/InstructionContainer'
 import { Page } from '../components/Page'
@@ -12,29 +11,22 @@ import { SubgoalContainer } from '../components/SubgoalContainer'
 import { Title } from '../components/Title'
 import { useConfirmBeforeLeave } from '../hooks/useConfirmBeforeLeave'
 import { useGroupSubgoals } from '../hooks/useGroupSubgoals'
-import { useLabelSubmit } from '../hooks/useLabelSubmit'
 import { useMyCode } from '../hooks/useMyCode'
+import { useMostSimilarCode } from '../hooks/useSimilarCode'
 import { getString } from '../shared/Localization'
 
 type MatchParams = {
-  lecture: string
-  fileName: string
+  category: string
+  problemId: string
 }
 
-export function Label() {
-  const { lecture, fileName } = useParams<MatchParams>()
-  const code = useMyCode(lecture, fileName)
-  const {
-    addSubgoal,
-    removeSubgoal,
-    editSubgoal,
-    selectSubgoal,
-    clickCheckBox,
-    subgoals,
-    selectedSubgoal,
-    checkBoxAvailability,
-  } = useGroupSubgoals(code.split('\n').length)
-  const { submit, isSubmitting } = useLabelSubmit(lecture, fileName)
+export function Abstraction() {
+  const { category, problemId } = useParams<MatchParams>()
+  const code = useMyCode(category, problemId)
+  const { mostSimilarCode } = useMostSimilarCode(category, problemId, code)
+  const { addSubgoal, removeSubgoal, editSubgoal, selectSubgoal, subgoals, selectedSubgoal } = useGroupSubgoals(
+    code.split('\n').length
+  )
 
   useConfirmBeforeLeave()
 
@@ -42,17 +34,11 @@ export function Label() {
     <Page>
       <SplitView initialWidths={[3, 6]}>
         <InstructionContainer
-          footer={
-            <ActionButton onClick={submit(subgoals)} disabled={isSubmitting}>
-              {getString('label_action_button')}
-            </ActionButton>
-          }
+          footer={<ActionButton onClick={() => {}}>{getString('label_action_button')}</ActionButton>}
         >
           <InstructionBox>
             <Title>{getString('label_title')}</Title>
             <div>{getString('label_instruction')}</div>
-            <br />
-            <Warning>{getString('label_warning')}</Warning>
           </InstructionBox>
           <SubgoalContainer
             subgoals={subgoals}
@@ -63,21 +49,25 @@ export function Label() {
             editSubgoal={editSubgoal}
           />
         </InstructionContainer>
-        <TaskContainer>
-          <HierarchyVisualizer subgoals={subgoals} />
-          <CodeGrouper code={code} checkBoxAvailability={checkBoxAvailability} selectable onClickLine={clickCheckBox} />
-        </TaskContainer>
+        <SplitView>
+          <CodeContainer>
+            <Tag>나의 코드</Tag>
+            <CodeViewer code={code} />
+          </CodeContainer>
+          <CodeContainer>
+            <Tag>다른 풀이 코드</Tag>
+            <CodeViewer code={mostSimilarCode} />
+          </CodeContainer>
+        </SplitView>
       </SplitView>
     </Page>
   )
 }
 
-const Warning = styled.b`
-  font-size: 12px;
+const CodeContainer = styled.div`
+  overflow: hidden;
 `
 
-const TaskContainer = styled.div`
-  display: grid;
-  height: 100%;
-  grid-template-columns: 41px 1fr;
+const Tag = styled.div`
+  padding: 4px;
 `

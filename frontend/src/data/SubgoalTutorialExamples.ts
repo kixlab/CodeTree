@@ -1,5 +1,5 @@
-import { SubgoalNode } from '../pages/Label'
 import { colorGenerator } from '../shared/Utils'
+import { SubgoalNode } from '../types/subgoalNode'
 
 export const PRACTICE_EXAMPLE1 = `def mergeSort(list):
   if len(list) <= 1:

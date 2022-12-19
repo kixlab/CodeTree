@@ -1,9 +1,9 @@
 import produce from 'immer'
 import { useCallback, useEffect, useState } from 'react'
-import { CheckBoxAvailability } from '../pages/Label'
 import { ChoiceState } from '../pages/Vote'
 import { VotingItem } from '../protocol/GetVotingList'
 import { getString } from '../shared/Localization'
+import { CheckBoxAvailability } from '../types/checkboxAvailability'
 import { useStageNavigator } from './useStageNavigator'
 import { useThrottleCallback } from './useThrottleCallback'
 

@@ -20,11 +20,10 @@ export function InstructionContainer(props: Props) {
 }
 
 const Container = styled.div`
-  width: calc(100% - 1px);
+  width: 100%;
   height: 100%;
-  border-right: 1px solid ${Color.Gray15};
   max-height: calc(100vh - ${HEADER_HEIGHT}px);
-  background: ${Color.Gray05};
+  background: ${Color.Gray00};
 `
 
 const ScollableArea = styled.div`
@@ -35,12 +34,8 @@ const ScollableArea = styled.div`
 `
 
 const Instruction = styled.div`
-  width: calc(100% - 40px);
+  width: 100%;
   color: ${Color.Gray50};
-  padding: 10px;
-  padding-bottom: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
 `
 
 const Footer = styled.div`

@@ -1,9 +1,9 @@
 import difference from 'lodash/difference'
 import { useMemo } from 'react'
-import { SubgoalNode } from '../pages/Label'
 import { VotingItem } from '../protocol/GetVotingList'
 import { Color } from '../shared/Common'
 import { SUBGOAL_STICK_GAP, SUBGOAL_STICK_WIDTH } from '../shared/Constants'
+import { SubgoalNode } from '../types/subgoalNode'
 
 export function useHierarchyVisualier(votingList: VotingItem[], currentVotingItem: number) {
   const subgoalNodes = useMemo(() => {

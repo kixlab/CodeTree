@@ -1,10 +1,10 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import React from 'react'
-import { CodeMirror } from './CodeMirror'
-import { CheckBoxAvailability } from '../pages/Label'
+import { CodeViewer } from './CodeViewer'
 import { Color } from '../shared/Common'
 import { CODE_LINE_HEIGHT } from '../shared/Constants'
+import { CheckBoxAvailability } from '../types/checkboxAvailability'
 
 interface Props {
   code: string
@@ -41,7 +41,7 @@ function Component({
             >
               <Text>
                 {explanations[i] && <Explanation indent={line.split('\t').length - 1}>{explanations[i]}</Explanation>}
-                <CodeMirror code={line} />
+                <CodeViewer code={line} />
               </Text>
             </Line>
           )

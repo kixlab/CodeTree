@@ -1,12 +1,15 @@
+import { css } from '@emotion/react'
+import styled from '@emotion/styled'
 import React, { useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { CodeGrouper } from '../components/CodeGrouper'
 import { HierarchyVisualizer } from '../components/HierarchyVisualizer'
+import { InstructionContainer } from '../components/InstructionContainer'
 import MultipleChoice from '../components/MultipleChoice'
 import { Page } from '../components/Page'
 import { ProblemContainer } from '../components/ProblemContainer'
+import { SplitView } from '../components/SplitView'
 import StageNavigator from '../components/StageNavigator/StageNavigator'
-import { InstructionContainer } from '../components/InstructionContainer'
 import { useHierarchyVisualier as useHierarchyVisualizer } from '../hooks/useHierarchyVisualizer'
 import { useMyCode } from '../hooks/useMyCode'
 import { useProblem } from '../hooks/useProblem'
@@ -16,8 +19,6 @@ import { useVotingList } from '../hooks/useVotingList'
 import { nextStage } from '../shared/ExperimentHelper'
 import { getString } from '../shared/Localization'
 import { getExampleNumber } from '../shared/Utils'
-import { InstructionTask } from '../templates/InstructionTask'
-import { LinearLayout } from '../templates/LinearLayout'
 
 type MatchParams = {
   lecture: string
@@ -63,48 +64,52 @@ export default function Vote() {
 
   return (
     <Page>
-      <InstructionTask
-        instruction={
-          <InstructionContainer
-            footer={
-              <StageNavigator
-                currentStage={currentStage}
-                maxStage={maxStage}
-                isSubmitting={isSubmitting}
-                submit={submit}
-                nextButtonText={showAnswer ? getString('vote_next_button') : getString('vote_check_answer')}
-                clickPrev={clickPrev}
-                clickNext={clickNext}
-                showActionButton={showActionButton}
-              />
-            }
-          >
-            <h1>{`${getString('vote_title')} ${getExampleNumber()}`}</h1>
-            <div>{getString('vote_instruction')}</div>
-            <ProblemContainer problem={problem} />
-            <MultipleChoice
-              options={votingList[currentStage]?.labels}
-              checkedOption={choiceList[currentStage]?.choice ?? []}
-              directInput={choiceList[currentStage]?.newOption ?? ''}
-              onOptionClick={onOptionClick}
-              onTextInputChange={onTextInputChange}
-              answers={votingList[currentStage]?.answers}
-              showAnswer={showAnswer}
-              tip={
-                showAnswer && choiceList[currentStage]?.choice.includes(-1)
-                  ? getString('vote_tutorial_tip_no_answer')
-                  : undefined
-              }
+      <SplitView initialWidths={[3, 6]}>
+        <InstructionContainer
+          footer={
+            <StageNavigator
+              currentStage={currentStage}
+              maxStage={maxStage}
+              isSubmitting={isSubmitting}
+              submit={submit}
+              nextButtonText={showAnswer ? getString('vote_next_button') : getString('vote_check_answer')}
+              clickPrev={clickPrev}
+              clickNext={clickNext}
+              showActionButton={showActionButton}
             />
-          </InstructionContainer>
-        }
-        task={
-          <LinearLayout ratios={[`${visualizerWidth}px`, '1fr']}>
-            <HierarchyVisualizer subgoals={subgoalNodes} />
-            <CodeGrouper code={code} checkBoxAvailability={checkBoxAvailability} />
-          </LinearLayout>
-        }
-      />
+          }
+        >
+          <h1>{`${getString('vote_title')} ${getExampleNumber()}`}</h1>
+          <div>{getString('vote_instruction')}</div>
+          <ProblemContainer problem={problem} />
+          <MultipleChoice
+            options={votingList[currentStage]?.labels}
+            checkedOption={choiceList[currentStage]?.choice ?? []}
+            directInput={choiceList[currentStage]?.newOption ?? ''}
+            onOptionClick={onOptionClick}
+            onTextInputChange={onTextInputChange}
+            answers={votingList[currentStage]?.answers}
+            showAnswer={showAnswer}
+            tip={
+              showAnswer && choiceList[currentStage]?.choice.includes(-1)
+                ? getString('vote_tutorial_tip_no_answer')
+                : undefined
+            }
+          />
+        </InstructionContainer>
+        <CodeContainer hierarchyWidth={visualizerWidth}>
+          <HierarchyVisualizer subgoals={subgoalNodes} />
+          <CodeGrouper code={code} checkBoxAvailability={checkBoxAvailability} />
+        </CodeContainer>
+      </SplitView>
     </Page>
   )
 }
+
+const CodeContainer = styled.div<{ hierarchyWidth: number }>`
+  ${({ hierarchyWidth }) => css`
+    display: grid;
+    height: 100%;
+    grid-template-columns: ${hierarchyWidth}px 1fr;
+  `}
+`

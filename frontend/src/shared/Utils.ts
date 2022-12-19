@@ -1,4 +1,4 @@
-import { SubgoalNode } from '../pages/Label'
+import { SubgoalNode } from '../types/subgoalNode'
 
 export function getExampleNumber(): number {
   return parseInt(window.location.href.split('/').pop()?.split('example')[1]?.[0] ?? '', 10)

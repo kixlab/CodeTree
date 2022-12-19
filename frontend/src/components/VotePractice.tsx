@@ -1,3 +1,4 @@
+import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import React, { useEffect } from 'react'
 import { useHierarchyVisualier } from '../hooks/useHierarchyVisualizer'
@@ -6,13 +7,12 @@ import { VotingItem } from '../protocol/GetVotingList'
 import { Color } from '../shared/Common'
 import { CODE_LINE_HEIGHT } from '../shared/Constants'
 import { getString } from '../shared/Localization'
-import { InstructionTask } from '../templates/InstructionTask'
-import { LinearLayout } from '../templates/LinearLayout'
 import { CodeGrouper } from './CodeGrouper'
 import { HierarchyVisualizer } from './HierarchyVisualizer'
-import MultipleChoice from './MultipleChoice'
-import StageNavigator from './StageNavigator/StageNavigator'
 import { InstructionContainer } from './InstructionContainer'
+import MultipleChoice from './MultipleChoice'
+import { SplitView } from './SplitView'
+import StageNavigator from './StageNavigator/StageNavigator'
 
 interface Props {
   practiceNum: number
@@ -52,42 +52,37 @@ export function VotePractice({ practiceNum, code, votingList, checkAnswer, tips 
         )}`}
       </Title>
       <Content>
-        <InstructionTask
-          instruction={
-            <InstructionContainer
-              footer={
-                <StageNavigator
-                  currentStage={currentStage}
-                  maxStage={maxStage}
-                  isSubmitting={false}
-                  nextButtonText={showAnswer ? getString('vote_next_button') : getString('vote_check_answer')}
-                  showActionButton={showActionButton}
-                  clickPrev={clickPrev}
-                  clickNext={clickNext}
-                />
-              }
-            >
-              <div>{getString(`tutorial_vote_practice${practiceNum}_instruction`)}</div>
-              <MultipleChoice
-                options={votingList[currentStage]?.labels}
-                checkedOption={choiceList[currentStage]?.choice}
-                directInput={choiceList[currentStage]?.newOption ?? ''}
-                answers={votingList[currentStage]?.answers}
-                onOptionClick={onOptionClick}
-                onTextInputChange={onTextInputChange}
-                showAnswer={showAnswer}
-                tip={showAnswer ? tips[currentStage] : undefined}
+        <SplitView initialWidths={[3, 6]}>
+          <InstructionContainer
+            footer={
+              <StageNavigator
+                currentStage={currentStage}
+                maxStage={maxStage}
+                isSubmitting={false}
+                nextButtonText={showAnswer ? getString('vote_next_button') : getString('vote_check_answer')}
+                showActionButton={showActionButton}
+                clickPrev={clickPrev}
+                clickNext={clickNext}
               />
-            </InstructionContainer>
-          }
-          task={
-            <LinearLayout ratios={[`${visualizerWidth}px`, '1fr']}>
-              <HierarchyVisualizer subgoals={subgoalNodes} lineHeight={CODE_LINE_HEIGHT - 16} />
-              <CodeGrouper code={code} checkBoxAvailability={checkBoxAvailability} />
-            </LinearLayout>
-          }
-          heightAuto
-        />
+            }
+          >
+            <div>{getString(`tutorial_vote_practice${practiceNum}_instruction`)}</div>
+            <MultipleChoice
+              options={votingList[currentStage]?.labels}
+              checkedOption={choiceList[currentStage]?.choice}
+              directInput={choiceList[currentStage]?.newOption ?? ''}
+              answers={votingList[currentStage]?.answers}
+              onOptionClick={onOptionClick}
+              onTextInputChange={onTextInputChange}
+              showAnswer={showAnswer}
+              tip={showAnswer ? tips[currentStage] : undefined}
+            />
+          </InstructionContainer>
+          <CodeContainer hierarchyWidth={visualizerWidth}>
+            <HierarchyVisualizer subgoals={subgoalNodes} lineHeight={CODE_LINE_HEIGHT - 16} />
+            <CodeGrouper code={code} checkBoxAvailability={checkBoxAvailability} />
+          </CodeContainer>
+        </SplitView>
       </Content>
     </div>
   )
@@ -107,4 +102,12 @@ const Content = styled.div`
   display: flex;
   align-items: stretch;
   flex-wrap: wrap;
+`
+
+const CodeContainer = styled.div<{ hierarchyWidth: number }>`
+  ${({ hierarchyWidth }) => css`
+    display: grid;
+    height: 100%;
+    grid-template-columns: ${hierarchyWidth}px 1fr;
+  `}
 `
