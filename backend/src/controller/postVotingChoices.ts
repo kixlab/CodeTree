@@ -1,7 +1,8 @@
 import { SubgoalTreeData } from '../database/DataBaseDataTypes'
 import { GetData, SetData, UpdateData } from '../database/DataBaseRef'
 import { Post } from '../HttpResponse'
-import { PostVotingChoicesParams, PostVotingChoicesResults, VotingChoice } from '../protocol/PostVotingChoices'
+import { VotingChoice } from '../protocol/Common'
+import { PostVotingChoicesParams, PostVotingChoicesResults } from '../protocol/PostVotingChoices'
 
 export const postVotingChoicesController = Post<PostVotingChoicesParams, PostVotingChoicesResults>(async params => {
   await SetData<VotingChoice[]>(

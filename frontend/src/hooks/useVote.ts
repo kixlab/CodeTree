@@ -1,7 +1,7 @@
 import produce from 'immer'
 import { useCallback, useEffect, useState } from 'react'
 import { ChoiceState } from '../pages/Vote'
-import { VotingItem } from '../protocol/GetVotingList'
+import { VotingItem } from '../protocol/Common'
 import { getString } from '../shared/Localization'
 import { CheckBoxAvailability } from '../types/checkboxAvailability'
 import { useStageNavigator } from './useStageNavigator'

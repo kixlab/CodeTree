@@ -1,5 +1,4 @@
-import { VotingItem } from '../protocol/GetVotingList'
-import { VotingChoice } from '../protocol/PostVotingChoices'
+import { VotingItem, VotingChoice } from '../protocol/Common'
 
 type GroupType = 'A' | 'B' | 'C'
 

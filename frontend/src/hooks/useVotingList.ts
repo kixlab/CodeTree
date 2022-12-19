@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { SERVER_ADDRESS } from '../environments/Configuration'
-import { GetVotingListParams, GetVotingListResults, VotingItem } from '../protocol/GetVotingList'
+import { VotingItem } from '../protocol/Common'
+import { GetVotingListParams, GetVotingListResults } from '../protocol/GetVotingList'
 import { getId, ID_NOT_FOUND } from '../shared/ExperimentHelper'
 import { Get } from '../shared/HttpRequest'
 

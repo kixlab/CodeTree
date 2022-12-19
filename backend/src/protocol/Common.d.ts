@@ -15,3 +15,8 @@ export interface VotingItem {
   labels: string[]
   answers: number[]
 }
+
+export interface VotingChoice {
+  id: number
+  labels: string[]
+}
