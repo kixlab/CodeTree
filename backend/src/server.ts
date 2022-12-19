@@ -3,6 +3,7 @@ import express from 'express'
 import fs from 'fs'
 import http from 'http'
 import https from 'https'
+import { getAlgorithmSuggestionController } from './controller/getAlgorithmSuggestion'
 import { getHealthController } from './controller/getHealth'
 import { getIdAndGroupController } from './controller/getIdAndGroup'
 import { getMostSimilarCodeController } from './controller/getMostSimilarCode'
@@ -14,6 +15,7 @@ import { getParticipationAvailabilityController } from './controller/getParticip
 import { getProblemMarkDownController } from './controller/getProblemMarkDown'
 import { getProblemSkeletonController } from './controller/getProblemSkeleton'
 import { getSubgoalTreeController } from './controller/getSubgoalTree'
+import { postSuggestionBySubgoalsController } from './controller/getSuggestionBySubgoals'
 import { getVotingListController } from './controller/getVotingList'
 import { postAssessmentCodeController } from './controller/postAssessmentCode'
 import { postParticipantFinishedController } from './controller/postParticipantFinished'
@@ -51,6 +53,8 @@ app.get('/getVotingList', getVotingListController)
 app.get('/getNewSubgoalTree', getNewSubgoalTreeController)
 app.get('/getSubgoalTree', getSubgoalTreeController)
 app.get('/getProblemSkeleton', getProblemSkeletonController)
+app.get('/getAlgorithmSuggestion', getAlgorithmSuggestionController)
+app.get('/postSuggestionBySubgoals', postSuggestionBySubgoalsController)
 app.post('/postVotingChoices', postVotingChoicesController)
 app.post('/postSubgoals', postSubgoalsController)
 app.post('/postPracticeCode', postPracticeCodeController)

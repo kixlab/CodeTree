@@ -1,5 +1,5 @@
 import { CodeSubmissionData, ProblemData } from '../../database/DataBaseDataTypes'
-import { GetData } from '../../database/DataBaseRef'
+import { GetData, SetData } from '../../database/DataBaseRef'
 import { ID } from '../../protocol/Common'
 
 class CodeSubmissionService {
@@ -28,6 +28,10 @@ class CodeSubmissionService {
     const code = submissions?.[latest]?.code ?? ''
 
     return { code }
+  }
+
+  async logPracticeSubmission(category: string, problemId: string, participantId: ID, code: string): Promise<void> {
+    await SetData<CodeSubmissionData>(`/${category}/${problemId}/submissions/${participantId}/${Date.now()}`, { code })
   }
 }
 
