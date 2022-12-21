@@ -2,15 +2,14 @@ import styled from '@emotion/styled'
 import React, { useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ActionButton } from '../components/ActionButton'
-import FormatContainer from '../components/FormatContainer/FormatContainer'
+import { FormatContainer } from '../components/FormatContainer'
 import { Page } from '../components/Page'
 import { SERVER_ADDRESS } from '../environments/Configuration'
-import { GetIdAndGroupParams, GetIdAndGroupResults } from '../protocol/GetIdAndGroup'
+import { useExperiment } from '../hooks/useExperiment'
 import {
   GetParticipationAvailabilityParams,
   GetParticipationAvailabilityResults,
 } from '../protocol/GetParticipationAvailability'
-import { initialize, nextStage } from '../shared/ExperimentHelper'
 import { Get } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 import { SCENARIO } from '../shared/Scenario'
@@ -18,6 +17,7 @@ import { SCENARIO } from '../shared/Scenario'
 export function Instruction() {
   const [canParticipate, setCanParticipate] = React.useState(false)
   const navigate = useNavigate()
+  const { initialize, nextStage } = useExperiment()
 
   useEffect(() => {
     Get<GetParticipationAvailabilityParams, GetParticipationAvailabilityResults>(
@@ -31,12 +31,9 @@ export function Instruction() {
   })
 
   const onStart = useCallback(async () => {
-    const res = await Get<GetIdAndGroupParams, GetIdAndGroupResults>(`${SERVER_ADDRESS}/getIdAndGroup`, {})
-    if (res) {
-      initialize(res.id, res.group)
-      navigate(nextStage())
-    }
-  }, [navigate])
+    await initialize()
+    navigate(await nextStage())
+  }, [initialize, navigate, nextStage])
 
   return (
     <Page>

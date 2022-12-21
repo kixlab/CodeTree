@@ -16,6 +16,7 @@ import { SplitView } from '../components/SplitView'
 import { SubgoalContainer } from '../components/SubgoalContainer'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { useConfirmBeforeLeave } from '../hooks/useConfirmBeforeLeave'
+import { useExperiment } from '../hooks/useExperiment'
 import { useJudgeCode } from '../hooks/useJudgeCode'
 import { useMyCode } from '../hooks/useMyCode'
 import { useMySubgoals } from '../hooks/useMySubgoals'
@@ -24,7 +25,6 @@ import { useSkeletonCode } from '../hooks/useSkeletonCode'
 import { PostPracticeCodeParams, PostPracticeCodeResults } from '../protocol/PostPracticeCode'
 import { Color, SUBMIT_BUTTON_HEIGHT } from '../shared/Common'
 import { HEADER_HEIGHT } from '../shared/Constants'
-import { getCurrentStage, getId, ID_NOT_FOUND, nextStage } from '../shared/ExperimentHelper'
 import { Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 
@@ -43,12 +43,13 @@ export function Practice() {
     problemId,
     mode
   )
+  const { id, currentStage, nextStage } = useExperiment()
   const problem = useProblem(category, problemId)
   const { skeletonCode } = useSkeletonCode(category, problemId, mode)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const isSecondPractice = getCurrentStage() === 6
-  const subgoals = useMySubgoals(category, isSecondPractice ? 'p3' : undefined)
-  const prevCode = useMyCode(category, isSecondPractice ? 'p3' : undefined)
+  const isSecondPractice = currentStage === 6
+  const subgoals = useMySubgoals(category, isSecondPractice ? 'p3' : undefined, id)
+  const prevCode = useMyCode(category, isSecondPractice ? 'p3' : undefined, id)
   const [canProceed, setCanProceed] = useState(false)
 
   const navigate = useNavigate()
@@ -62,16 +63,16 @@ export function Practice() {
 
     setIsSubmitting(true)
     const res = await Post<PostPracticeCodeParams, PostPracticeCodeResults>(`${SERVER_ADDRESS}/postPracticeCode`, {
-      participantId: getId() ?? ID_NOT_FOUND,
+      participantId: id,
       lectureName: category,
       fileName: problemId,
       code,
     })
     setIsSubmitting(false)
     if (res) {
-      navigate(nextStage())
+      navigate(await nextStage())
     }
-  }, [category, code, navigate, problemId])
+  }, [category, code, id, navigate, nextStage, problemId])
 
   useEffect(() => {
     setCode(skeletonCode)
@@ -95,7 +96,7 @@ export function Practice() {
         >
           <InstructionBox>
             <Title>{getString('practice_title')}</Title>
-            {getCurrentStage() === 4 ? getString('practice_instruction_easy') : getString('practice_instruction')}
+            {currentStage === 4 ? getString('practice_instruction_easy') : getString('practice_instruction')}
             <br />
             <ProblemContainer problem={problem} />
           </InstructionBox>

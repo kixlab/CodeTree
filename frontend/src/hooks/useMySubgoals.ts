@@ -1,17 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { SERVER_ADDRESS } from '../environments/Configuration'
-import { Subgoal } from '../protocol/Common'
+import { ID, Subgoal } from '../protocol/Common'
 import { GetMySubgoalsParams, GetMySubgoalsResults } from '../protocol/GetMySubgoals'
-import { getId, ID_NOT_FOUND } from '../shared/ExperimentHelper'
 import { Get } from '../shared/HttpRequest'
 import { colorGenerator } from '../shared/Utils'
 import { makeSubgoalNode } from './useHierarchyVisualizer'
 
-export function useMySubgoals(
-  category: string | undefined,
-  problemId: string | undefined,
-  participantId = getId() ?? ID_NOT_FOUND
-) {
+export function useMySubgoals(category: string | undefined, problemId: string | undefined, participantId: ID) {
   const [subgoals, setSubgoals] = useState<Subgoal[]>([])
 
   const subgoalsWithCode = useMemo(() => {

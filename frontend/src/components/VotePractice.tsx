@@ -9,10 +9,11 @@ import { CODE_LINE_HEIGHT } from '../shared/Constants'
 import { getString } from '../shared/Localization'
 import { CodeGrouper } from './CodeGrouper'
 import { HierarchyVisualizer } from './HierarchyVisualizer'
+import { InstructionBox } from './InstructionBox'
 import { InstructionContainer } from './InstructionContainer'
 import MultipleChoice from './MultipleChoice'
 import { SplitView } from './SplitView'
-import StageNavigator from './StageNavigator/StageNavigator'
+import { StageNavigator } from './StageNavigator'
 
 interface Props {
   practiceNum: number
@@ -66,17 +67,19 @@ export function VotePractice({ practiceNum, code, votingList, checkAnswer, tips 
               />
             }
           >
-            <div>{getString(`tutorial_vote_practice${practiceNum}_instruction`)}</div>
-            <MultipleChoice
-              options={votingList[currentStage]?.labels}
-              checkedOption={choiceList[currentStage]?.choice}
-              directInput={choiceList[currentStage]?.newOption ?? ''}
-              answers={votingList[currentStage]?.answers}
-              onOptionClick={onOptionClick}
-              onTextInputChange={onTextInputChange}
-              showAnswer={showAnswer}
-              tip={showAnswer ? tips[currentStage] : undefined}
-            />
+            <InstructionBox>
+              {getString(`tutorial_vote_practice${practiceNum}_instruction`)}
+              <MultipleChoice
+                options={votingList[currentStage]?.labels}
+                checkedOption={choiceList[currentStage]?.choice}
+                directInput={choiceList[currentStage]?.newOption ?? ''}
+                answers={votingList[currentStage]?.answers}
+                onOptionClick={onOptionClick}
+                onTextInputChange={onTextInputChange}
+                showAnswer={showAnswer}
+                tip={showAnswer ? tips[currentStage] : undefined}
+              />
+            </InstructionBox>
           </InstructionContainer>
           <CodeContainer hierarchyWidth={visualizerWidth}>
             <HierarchyVisualizer subgoals={subgoalNodes} lineHeight={CODE_LINE_HEIGHT - 16} />

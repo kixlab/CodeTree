@@ -7,6 +7,7 @@ import { InstructionContainer } from '../components/InstructionContainer'
 import { Page } from '../components/Page'
 import { SplitView } from '../components/SplitView'
 import { SubgoalContainer } from '../components/SubgoalContainer'
+import { ID_NOT_FOUND } from '../hooks/useExperiment'
 import { useMyCode } from '../hooks/useMyCode'
 import { useMySubgoals } from '../hooks/useMySubgoals'
 
@@ -18,8 +19,8 @@ type MatchParams = {
 
 export function Present() {
   const { category, problemId, participantId } = useParams<MatchParams>()
-  const code = useMyCode(category, problemId, participantId)
-  const subgoals = useMySubgoals(category, problemId, participantId)
+  const code = useMyCode(category, problemId, participantId ?? ID_NOT_FOUND)
+  const subgoals = useMySubgoals(category, problemId, participantId ?? ID_NOT_FOUND)
 
   return (
     <Page>

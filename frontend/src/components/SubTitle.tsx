@@ -6,13 +6,13 @@ interface Props {
   children: React.ReactNode
 }
 
-export function Title({ children }: Props) {
+export function SubTitle({ children }: Props) {
   return <Container>{children}</Container>
 }
 
 const Container = styled.div`
-  font-size: 24px;
-  color: ${Color.Gray85};
-  margin: 0 0 8px 0;
-  font-weight: bold;
+  color: ${Color.Gray75};
+  text-decoration: underline;
+  font-size: 16px;
+  margin-bottom: 8px;
 `

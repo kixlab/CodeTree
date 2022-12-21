@@ -1,6 +1,6 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import React, { FC } from 'react'
+import React from 'react'
 import { GetSubgoalTreeResults } from '../../protocol/GetSubgoalTree'
 import { Color } from '../../shared/Common'
 

@@ -1,51 +1,49 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import FormatContainer from '../components/FormatContainer/FormatContainer'
+import React, { useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { ActionButton } from '../components/ActionButton'
+import { FormatContainer } from '../components/FormatContainer'
 import { Page } from '../components/Page'
-import { getGroup, getId, nextStage } from '../shared/ExperimentHelper'
+import { SubTitle } from '../components/SubTitle'
+import { Title } from '../components/Title'
+import { useExperiment } from '../hooks/useExperiment'
 import { getString } from '../shared/Localization'
 
 export default function Contact() {
+  const { id, group, nextStage } = useExperiment()
+  const navigate = useNavigate()
+
+  const next = useCallback(async () => {
+    navigate(await nextStage())
+  }, [navigate, nextStage])
+
   return (
     <Page>
       <FormatContainer>
-        <h1>{getString('contact_title')}</h1>
-        {!getId() && (
-          <div>
-            <h3>
-              <b>{getString('contact_missing_id')}</b>
-            </h3>
-            <div>
-              {getString('contact_missing_id_solution')}
-              <ul>
-                <li>jinhw@kaist.ac.kr</li>
-              </ul>
-            </div>
-          </div>
+        <Title>{getString('contact_title')}</Title>
+        {id && (
+          <p>
+            <SubTitle>{getString('contact_missing_id')}</SubTitle>
+            {getString('contact_missing_id_solution')}
+            <ul>
+              <li>jinhw@kaist.ac.kr</li>
+            </ul>
+          </p>
         )}
-        {!getGroup() && (
-          <div>
-            <h3>
-              <b>{getString('contact_missing_group')}</b>
-            </h3>
-            <div>
-              {getString('contact_missing_group_solution')}
-              <ul>
-                <li>jinhw@kaist.ac.kr</li>
-              </ul>
-            </div>
-          </div>
+        {!group && (
+          <p>
+            <SubTitle>{getString('contact_missing_group')}</SubTitle>
+            {getString('contact_missing_group_solution')}
+            <ul>
+              <li>jinhw@kaist.ac.kr</li>
+            </ul>
+          </p>
         )}
-        {getId() && getGroup() && (
-          <div>
-            <h3>
-              <b>{getString('contact_wrong_url')}</b>
-            </h3>
-            <p>
-              {getString('contact_wrong_url_solution')}
-              <Link to={nextStage()}>{getString('contact_wrong_url_link')}</Link>
-            </p>
-          </div>
+        {id && group && (
+          <p>
+            <SubTitle>{getString('contact_wrong_url')}</SubTitle>
+            {getString('contact_wrong_url_solution')}
+            <ActionButton onClick={next}>{getString('contact_wrong_url_link')}</ActionButton>
+          </p>
         )}
       </FormatContainer>
     </Page>

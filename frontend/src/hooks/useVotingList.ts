@@ -2,18 +2,19 @@ import { useEffect, useState } from 'react'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { VotingItem } from '../protocol/Common'
 import { GetVotingListParams, GetVotingListResults } from '../protocol/GetVotingList'
-import { getId, ID_NOT_FOUND } from '../shared/ExperimentHelper'
 import { Get } from '../shared/HttpRequest'
+import { useExperiment } from './useExperiment'
 
 export function useVotingList(lectureName: string | undefined, fileName: string | undefined) {
   const [votingList, setVotingList] = useState<VotingItem[]>([])
+  const { id } = useExperiment()
 
   useEffect(() => {
     if (lectureName && fileName) {
       Get<GetVotingListParams, GetVotingListResults>(`${SERVER_ADDRESS}/getVotingList`, {
         lectureName,
         fileName,
-        participantId: getId() ?? ID_NOT_FOUND,
+        participantId: id,
       }).then(res => {
         if (res) {
           setVotingList(
@@ -29,7 +30,7 @@ export function useVotingList(lectureName: string | undefined, fileName: string 
         }
       })
     }
-  }, [fileName, lectureName])
+  }, [fileName, id, lectureName])
 
   return { votingList }
 }

@@ -97,14 +97,6 @@ const Localiztion: Dictionary = {
     ko: '제한 시간이 다 되었습니다. 현재 가지고 있는 답안을 제출하고 다음 단계로 이동해주세요. 아직 풀지 못한 문제는 "잘 모르겠음"를 체크한 다음 제출해주세요.',
     en: 'Time is up. Please submit what you have now. Check "I don\'t know" for the questions you did not answer.',
   },
-  tutorial_title: {
-    ko: '학습 안내',
-    en: 'Training',
-  },
-  tutorial_introduction: {
-    ko: `아래 3가지 연습 활동을 통해 하위 목표 학습법과 인터페이스를 익혀보세요.`,
-    en: ``,
-  },
   tutorial_learn_subgoal: {
     ko: '하위 목표 학습법',
     en: 'Learn Subgoals',
