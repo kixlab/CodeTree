@@ -18,6 +18,9 @@ import Vote from './pages/Vote'
 import { VoteTutorial } from './pages/VoteTutorial'
 import { WrapUp } from './pages/WrapUp'
 import { Abstraction } from './pages/Abstraction'
+import { Explore } from './pages/Explore'
+import { Reorganize } from './pages/Reorganize'
+import { Connect } from './pages/Connect'
 
 export const Router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,6 +37,9 @@ export const Router = createBrowserRouter(
       <Route path="present/:category/:problemId/:participantId" element={<Present />} />
       <Route path="vote/:lecture/:fileName" element={<Vote />} />
       <Route path="practice/:category/:problemId" element={<Practice />} />
+      <Route path="explore/:category/:problemId" element={<Explore />} />
+      <Route path="reorganize/:category/:problemId" element={<Reorganize />} />
+      <Route path="connect/:category/:problemId" element={<Connect />} />
       <Route path="assessment/:lecture/:fileName" element={<Assessment />} />
       <Route path="cognitive" element={<Cognitive />} />
       <Route path="posttest" element={<PostTest />} />

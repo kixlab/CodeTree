@@ -21,29 +21,23 @@ export default function Contact() {
       <FormatContainer>
         <Title>{getString('contact_title')}</Title>
         {id && (
-          <p>
+          <>
             <SubTitle>{getString('contact_missing_id')}</SubTitle>
-            {getString('contact_missing_id_solution')}
-            <ul>
-              <li>jinhw@kaist.ac.kr</li>
-            </ul>
-          </p>
+            <p>{getString('contact_missing_id_solution')}</p>
+          </>
         )}
         {!group && (
-          <p>
+          <>
             <SubTitle>{getString('contact_missing_group')}</SubTitle>
-            {getString('contact_missing_group_solution')}
-            <ul>
-              <li>jinhw@kaist.ac.kr</li>
-            </ul>
-          </p>
+            <p>{getString('contact_missing_group_solution')}</p>
+          </>
         )}
         {id && group && (
-          <p>
+          <>
             <SubTitle>{getString('contact_wrong_url')}</SubTitle>
-            {getString('contact_wrong_url_solution')}
+            <p>{getString('contact_wrong_url_solution')}</p>
             <ActionButton onClick={next}>{getString('contact_wrong_url_link')}</ActionButton>
-          </p>
+          </>
         )}
       </FormatContainer>
     </Page>

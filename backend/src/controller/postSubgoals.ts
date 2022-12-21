@@ -1,12 +1,18 @@
 import { SubgoalData } from '../database/DataBaseDataTypes'
-import { UpdateData } from '../database/DataBaseRef'
+import { SetData } from '../database/DataBaseRef'
 import { Post } from '../HttpResponse'
 import { PostSubgoalsParams, PostSubgoalsResults } from '../protocol/PostSubgoals'
 
 export const postSubgoalsController = Post<PostSubgoalsParams, PostSubgoalsResults>(async params => {
-  await UpdateData<SubgoalData[]>(
+  await SetData<SubgoalData[]>(
     `/${params.lectureName}/${params.fileName.split('.')[0]}/subgoals/${params.participantId}`,
-    params.subgoals
+    params.subgoals.map(subgoal => {
+      return {
+        label: subgoal.label,
+        group: subgoal.group,
+        parentId: subgoal.parentId,
+      }
+    })
   )
   return {}
 })

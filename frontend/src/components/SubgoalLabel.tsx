@@ -10,6 +10,7 @@ interface Props {
   selected: boolean
   subgoal: SubgoalNode
   distFromParentNode: number
+  suggestion?: string[]
   removeSubgoal?: (id: number) => void
   selectSubgoal?: (id: number) => void
   editSubgoal?: (label: string) => void
@@ -17,9 +18,10 @@ interface Props {
 }
 
 export function SubgoalLabel({
-  subgoal: { id, label, group, depth, canAddSubgoal = true, color },
+  subgoal: { id, label, depth, canAddSubgoal = true, color },
   selected,
   distFromParentNode,
+  suggestion = [],
   removeSubgoal,
   selectSubgoal,
   editSubgoal,
@@ -76,9 +78,15 @@ export function SubgoalLabel({
         </Close>
       )}
       {canAddSubgoal && (
-        <AddButton type="button" onClick={() => addSubgoal?.(id)} disabled={group.length < 2 || !addSubgoal}>
+        <AddButton type="button" onClick={() => addSubgoal?.(id)} disabled={!addSubgoal}>
           {getString('label_add_subgoal')}
         </AddButton>
+      )}
+      {suggestion.length > 0 && (
+        <>
+          <Highlight>{suggestion?.join(',')}</Highlight>
+          <span>을 사용해보는건 어떨까요?</span>
+        </>
       )}
     </Container>
   )
@@ -103,8 +111,7 @@ const Container = styled.div<{
 
     ${selected &&
     css`
-      box-shadow: 0 0 10px ${Color.Gray15};
-      border: 2px solid ${Color.Gray50};
+      border: 2px solid ${Color.Gray85};
     `}
 
     ${depth > 0 &&
@@ -158,7 +165,7 @@ const Input = styled.input<{ isError: boolean }>`
   ${({ isError }) => css`
     width: calc(100% - 35px);
     outline: none;
-    padding: 3px;
+    padding: 2px;
     border: none;
     font-size: 16px;
     border-bottom: 1px solid ${Color.Gray30};
@@ -173,7 +180,7 @@ const Input = styled.input<{ isError: boolean }>`
 
 const Label = styled.div`
   width: calc(100% - 35px);
-  padding: 3px;
+  padding: 2px;
   border: none;
   font-size: 16px;
 `
@@ -194,6 +201,11 @@ const AddButton = styled.button<{ disabled: boolean }>`
         }
       `}
     `}
+`
+
+const Highlight = styled.span`
+  background-color: yellow;
+  font-size: 14px;
 `
 
 export default SubgoalLabel

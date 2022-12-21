@@ -4,8 +4,12 @@ import { codeSubmissionService } from '../service/codeSubmission'
 
 export const getMyProgramCodeController = Get<GetMyProgramCodeParams, GetMyProgramCodeResults>(
   async ({ category, problemId, participantId }) => {
-    const { code } = await codeSubmissionService.getLatestSubmissionOfParticipant(category, problemId, participantId)
+    const { code, codeType } = await codeSubmissionService.getLatestSubmissionOfParticipant(
+      category,
+      problemId,
+      participantId
+    )
 
-    return { code }
+    return { code, codeType }
   }
 )

@@ -25,7 +25,7 @@ type MatchParams = {
 export function Label() {
   const { lecture, fileName } = useParams<MatchParams>()
   const { id } = useExperiment()
-  const code = useMyCode(lecture, fileName, id)
+  const { code } = useMyCode(lecture, fileName, id)
   const {
     addSubgoal,
     removeSubgoal,

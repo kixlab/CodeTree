@@ -25,13 +25,20 @@ class CodeSubmissionService {
       }
     }
 
-    const code = submissions?.[latest]?.code ?? ''
-
-    return { code }
+    return submissions[latest]
   }
 
-  async logPracticeSubmission(category: string, problemId: string, participantId: ID, code: string): Promise<void> {
-    await SetData<CodeSubmissionData>(`/${category}/${problemId}/submissions/${participantId}/${Date.now()}`, { code })
+  async logPracticeSubmission(
+    category: string,
+    problemId: string,
+    participantId: ID,
+    code: string,
+    codeType: CodeSubmissionData['codeType']
+  ): Promise<void> {
+    await SetData<CodeSubmissionData>(`/${category}/${problemId}/submissions/${participantId}/${Date.now()}`, {
+      code,
+      codeType,
+    })
   }
 }
 

@@ -17,16 +17,15 @@ export const getIdAndGroupController = Get<GetIdAndGroupParams, GetIdAndGroupRes
   await UpdateData<GroupData>(`/experiment/group`, {
     lastAssignment: group,
   })
-  const id = await PushData<ParticipantData>(
-    `/experiment/participants`,
-    {
-      group,
-      time: time2TimeStamp(Date.now()),
-    })
+  const id = await PushData<ParticipantData>(`/experiment/participants`, {
+    group,
+    time: time2TimeStamp(Date.now()),
+    lastTimestamp: Date.parse(new Date().toISOString()),
+  })
 
   return {
     id,
-    group
+    group,
   }
 })
 

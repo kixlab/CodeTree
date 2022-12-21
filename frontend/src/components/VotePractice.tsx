@@ -14,6 +14,7 @@ import { InstructionContainer } from './InstructionContainer'
 import MultipleChoice from './MultipleChoice'
 import { SplitView } from './SplitView'
 import { StageNavigator } from './StageNavigator'
+import { Title } from './Title'
 
 interface Props {
   practiceNum: number
@@ -90,15 +91,6 @@ export function VotePractice({ practiceNum, code, votingList, checkAnswer, tips 
     </div>
   )
 }
-
-const Title = styled.div`
-  margin: 0;
-  padding: 0;
-  font-size: 24px;
-  color: ${Color.Gray75};
-  margin-top: 15px;
-  margin-bottom: 10px;
-`
 
 const Content = styled.div`
   border: 1px solid ${Color.Gray15};

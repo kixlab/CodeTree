@@ -1,3 +1,5 @@
+import { CodeType } from './Common'
+
 export interface GetMyProgramCodeParams {
   category: string
   problemId: string
@@ -6,4 +8,5 @@ export interface GetMyProgramCodeParams {
 
 export interface GetMyProgramCodeResults {
   code: string
+  codeType: CodeType
 }

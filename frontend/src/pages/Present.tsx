@@ -19,7 +19,7 @@ type MatchParams = {
 
 export function Present() {
   const { category, problemId, participantId } = useParams<MatchParams>()
-  const code = useMyCode(category, problemId, participantId ?? ID_NOT_FOUND)
+  const { code } = useMyCode(category, problemId, participantId ?? ID_NOT_FOUND)
   const subgoals = useMySubgoals(category, problemId, participantId ?? ID_NOT_FOUND)
 
   return (

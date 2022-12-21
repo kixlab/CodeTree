@@ -5,12 +5,10 @@ import { GetParticipantStatusParams, GetParticipantStatusResults } from '../prot
 
 export const getParticipantStatusController = Get<GetParticipantStatusParams, GetParticipantStatusResults>(
   async ({ participantId }) => {
-    const {
-      group,
-      lastTimestamp = -1,
-      progress,
-    } = await GetData<ParticipantData>(`/experiment/participants/${participantId}`)
-    const lastStage = progress ? Object.keys(progress).length : -1
+    const { group, lastTimestamp, progress } = await GetData<ParticipantData>(
+      `/experiment/participants/${participantId}`
+    )
+    const lastStage = progress ? Object.keys(progress).length : 0
     return { group, lastTimestamp, lastStage }
   }
 )
