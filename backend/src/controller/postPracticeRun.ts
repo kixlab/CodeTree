@@ -6,7 +6,7 @@ import { storageService } from '../service/storage'
 
 export const postPracticeRunController = Post<PostPracticeRunParams, PostPracticeRunResults>(
   async ({ code, problemId, codeType, category, participantId }) => {
-    codeSubmissionService.logPracticeSubmission(category, problemId, participantId, code)
+    codeSubmissionService.logPracticeSubmission(category, problemId, participantId, code, codeType)
 
     const inFiles = await storageService.getFiles(`${category}/${problemId}/in/`)
     const outFiles = await storageService.getFiles(`${category}/${problemId}/out/`)

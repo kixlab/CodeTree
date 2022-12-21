@@ -4,11 +4,13 @@ import SubgoalLabel from './SubgoalLabel'
 import { getString } from '../shared/Localization'
 import { Color } from '../shared/Common'
 import { SubgoalNode } from '../types/subgoalNode'
+import { PostSuggestionBySubgoalsResults } from '../protocol/PostSuggestionBySubgoals'
 
 interface Props {
   subgoals: SubgoalNode[]
   selectedSubgoal: number | null
   canAddSubgoals?: boolean
+  suggestions?: PostSuggestionBySubgoalsResults['subgoalsWithSuggestion']
   addSubgoal?: (id: number | null) => void
   removeSubgoal?: (id: number) => void
   selectSubgoal?: (id: number) => void
@@ -23,6 +25,7 @@ export function SubgoalContainer({
   selectSubgoal,
   editSubgoal,
   subgoals,
+  suggestions,
 }: Props) {
   return (
     <Container>
@@ -39,6 +42,7 @@ export function SubgoalContainer({
             selectSubgoal={selectSubgoal}
             removeSubgoal={removeSubgoal}
             editSubgoal={editSubgoal && ((label: string) => editSubgoal?.(subgoal.id, label))}
+            suggestion={suggestions?.[i]?.suggestions}
           />
         )
       })}
@@ -53,7 +57,6 @@ export function SubgoalContainer({
 }
 
 const Container = styled.div`
-  margin-top: 8px;
   padding: 8px;
 `
 
@@ -82,11 +85,10 @@ const AddButton = styled.button`
 
 const PlaceholderInput = styled.div`
   width: calc(100% - 35px);
-  padding: 3px;
+  padding: 2px;
   font-size: 16px;
   border-bottom: 1px solid ${Color.Gray20};
   color: ${Color.Gray30};
-  height: 25px;
 `
 
 const PlaceholderAddSubgoal = styled.div`

@@ -1,5 +1,4 @@
-import React from 'react'
-import { useEffectOnce } from 'react-use'
+import React, { useEffect } from 'react'
 import { FormatContainer } from '../components/FormatContainer'
 import { Page } from '../components/Page'
 import { Title } from '../components/Title'
@@ -12,14 +11,14 @@ import { getString } from '../shared/Localization'
 export function WrapUp() {
   const { id, group } = useExperiment()
 
-  useEffectOnce(() => {
+  useEffect(() => {
     if (group) {
       Post<PostParticipantFinishedParams, PostParticipantFinishedResult>(`${SERVER_ADDRESS}/postParticipantFinished`, {
         participantId: id,
         group,
       })
     }
-  })
+  }, [group, id])
 
   return (
     <Page>

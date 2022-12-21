@@ -34,7 +34,7 @@ export interface ChoiceState {
 export default function Vote() {
   const { lecture, fileName } = useParams<MatchParams>()
   const { id, nextStage } = useExperiment()
-  const code = useMyCode(lecture, fileName, id)
+  const { code } = useMyCode(lecture, fileName, id)
   const problem = useProblem(lecture, fileName)
   const { votingList } = useVotingList(lecture, fileName)
   const {

@@ -14,31 +14,26 @@ const PARTICIPANT_ID_KEY = 'PARTICIPANT_ID_KEY'
 export const ID_NOT_FOUND = 'ID_NOT_FOUND'
 
 export function useExperiment() {
-  const id: ID = localStorage.getItem(PARTICIPANT_ID_KEY) ?? ID_NOT_FOUND
+  const [id, setId] = useState<ID>(localStorage.getItem(PARTICIPANT_ID_KEY) ?? ID_NOT_FOUND)
   const [group, setGroup] = useState<Group | null>(null)
-  const [stage, setStage] = useState<number>(-1)
-  const [timeStamp, setTimeStamp] = useState<number>(-1)
-  const [timeRemaining, setTimeRemaining] = useState<number>(0)
+  const [stage, setStage] = useState<number>(0)
+  const [timeStamp, setTimeStamp] = useState<number>(Date.parse(new Date().toISOString()))
+  const [timeRemaining, setTimeRemaining] = useState<number>(Infinity)
   const [shouldMoveStage, setShouldMoveStage] = useState<boolean>(false)
-  const [currentStage, setCurrentStage] = useState<number>(-1)
+  const [currentStage, setCurrentStage] = useState<number>(0)
   const { pathname } = useLocation()
 
   const initialize = useCallback(async () => {
     const res = await Get<GetIdAndGroupParams, GetIdAndGroupResults>(`${SERVER_ADDRESS}/getIdAndGroup`, {})
     if (res) {
       localStorage.setItem(PARTICIPANT_ID_KEY, res.id)
+      setId(res.id)
       setGroup(res.group)
-      setStage(0)
-      setTimeStamp(Date.now())
     }
   }, [])
 
   const nextStage = useCallback(
     async (jump = 0) => {
-      if (group === null) {
-        return '/contact'
-      }
-
       if (currentStage === stage) {
         const nextStage = SCENARIO[stage + 1]
         await Post<PostParticipantProgressParams, PostParticipantProgressResult>(
@@ -50,15 +45,14 @@ export function useExperiment() {
           }
         )
         setStage(stage + 1)
-        setTimeStamp(Date.now())
         if (nextStage.isVariable === true) {
-          return (nextStage.url as GroupUrl[]).find(groupUrl => groupUrl.group === group)?.url || '/'
+          return (nextStage.url as GroupUrl[]).find(groupUrl => groupUrl.group === group)?.url ?? '/'
         }
         return nextStage.url as string
       }
       const nextStage = SCENARIO[stage + jump]
       if (nextStage.isVariable === true) {
-        return (nextStage.url as GroupUrl[]).find(groupUrl => groupUrl.group === group)?.url || '/'
+        return (nextStage.url as GroupUrl[]).find(groupUrl => groupUrl.group === group)?.url ?? '/'
       }
       return nextStage.url as string
     },
@@ -74,6 +68,8 @@ export function useExperiment() {
     })
     if (newStage !== stage) {
       setCurrentStage(newStage)
+      const nowUTC = Date.parse(new Date().toISOString())
+      setTimeStamp(nowUTC)
     }
   }, [pathname, stage])
 
@@ -88,24 +84,41 @@ export function useExperiment() {
     }
   }, [currentStage, stage])
 
-  useEffect(() => {
-    const timeLimit = SCENARIO[currentStage]?.timeLimit ?? 0
-    setTimeRemaining(timeLimit - Math.floor((new Date().getTime() - timeStamp, 10) / 1000))
-  }, [currentStage, timeStamp])
-
   useEffectOnce(() => {
-    if (id) {
+    if (id !== ID_NOT_FOUND) {
       Get<GetParticipantStatusParams, GetParticipantStatusResults>(`${SERVER_ADDRESS}/getParticipantStatus`, {
         participantId: id,
       }).then(res => {
         if (res) {
           setGroup(res.group)
-          setStage(res.lastStage)
+          setStage(res.lastStage + 1)
           setTimeStamp(res.lastTimestamp)
         }
       })
     }
   })
+
+  useEffect(() => {
+    const timeLimit = SCENARIO[currentStage]?.timeLimit || 100_000
+    const nowUTC = Date.parse(new Date().toISOString())
+    setTimeRemaining(Math.max(0, timeLimit - Math.floor((nowUTC - timeStamp) / 1000)))
+  }, [currentStage, timeStamp])
+
+  useEffect(() => {
+    let timer: number | null = null
+
+    if (timeRemaining > 0) {
+      timer = window.setTimeout(() => {
+        setTimeRemaining(timeRemaining - 1)
+      }, 1000)
+    }
+
+    return () => {
+      if (timer) {
+        window.clearInterval(timer)
+      }
+    }
+  }, [timeRemaining])
 
   return { group, id, timeRemaining, currentStage, shouldMoveStage, initialize, nextStage }
 }

@@ -1,13 +1,13 @@
 import difference from 'lodash/difference'
 import { useMemo } from 'react'
-import { VotingItem } from '../protocol/Common'
+import { Subgoal, VotingItem } from '../protocol/Common'
 import { Color } from '../shared/Common'
 import { SUBGOAL_STICK_GAP, SUBGOAL_STICK_WIDTH } from '../shared/Constants'
 import { SubgoalNode } from '../types/subgoalNode'
 
 export function useHierarchyVisualier(votingList: VotingItem[], currentVotingItem: number) {
   const subgoalNodes = useMemo(() => {
-    const nodes = makeSubgoalNode(votingList)
+    const nodes = makeSubgoalNodeFromVotingList(votingList)
     if (nodes[currentVotingItem]) {
       nodes[currentVotingItem].color = Color.Orange
     }
@@ -23,7 +23,7 @@ export function useHierarchyVisualier(votingList: VotingItem[], currentVotingIte
   }
 }
 
-export function makeSubgoalNode(votingList: VotingItem[], colorGen?: () => string): SubgoalNode[] {
+export function makeSubgoalNodeFromVotingList(votingList: VotingItem[], colorGen?: () => string): SubgoalNode[] {
   return votingList.map(votingItem => {
     return {
       id: votingItem.id,
@@ -32,6 +32,32 @@ export function makeSubgoalNode(votingList: VotingItem[], colorGen?: () => strin
       depth: votingList.filter(item => isSubset(votingItem.group, item.group)).length - 1,
       label: votingItem.labels[0],
       children: votingList.filter(item => isSubset(item.group, votingItem.group)).map(item => item.id),
+      color: colorGen?.() ?? Color.Orange,
+      canAddSubgoal: false,
+    }
+  })
+}
+
+export function makeSubgoalNode(subgoals: Subgoal[], colorGen?: () => string): SubgoalNode[] {
+  function dfs(id: number): number {
+    const { parentId } = subgoals[id]
+    if (parentId === null) {
+      return 0
+    }
+    return dfs(parentId) + 1
+  }
+
+  return subgoals.map((subgoal, id) => {
+    return {
+      id,
+      group: subgoal.group ?? [],
+      parentId: subgoal.parentId,
+      depth: dfs(id),
+      label: subgoal.label,
+      children: subgoals
+        .map((item, i) => [item.parentId, i] as const)
+        .filter(item => item[0] === id)
+        .map(item => item[1]),
       color: colorGen?.() ?? Color.Orange,
       canAddSubgoal: false,
     }

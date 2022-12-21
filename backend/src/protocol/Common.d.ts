@@ -7,6 +7,7 @@ export type CodeType = 'python' | 'javascript' | 'cpp'
 export type Subgoal = {
   label: string
   group: number[]
+  parentId: number | null
 }
 
 export interface VotingItem {

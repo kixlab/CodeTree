@@ -3,8 +3,8 @@ import { PostPracticeCodeParams, PostPracticeCodeResults } from '../protocol/Pos
 import { codeSubmissionService } from '../service/codeSubmission'
 
 export const postPracticeCodeController = Post<PostPracticeCodeParams, PostPracticeCodeResults>(
-  async ({ lectureName, fileName, participantId, code }) => {
-    codeSubmissionService.logPracticeSubmission(lectureName, fileName, participantId, code)
+  async ({ lectureName, fileName, participantId, code, codeType }) => {
+    codeSubmissionService.logPracticeSubmission(lectureName, fileName, participantId, code, codeType)
 
     return {}
   }

@@ -4,6 +4,7 @@ type GroupType = 'A' | 'B' | 'C'
 
 export interface CodeSubmissionData {
   code: string
+  codeType: 'python' | 'javascript' | 'cpp'
 }
 
 export interface ProgressData {
@@ -13,6 +14,7 @@ export interface ProgressData {
 export interface SubgoalData {
   label: string
   group: number[]
+  parentId: number | null
 }
 
 export interface SubgoalsData {
@@ -64,7 +66,7 @@ export interface GroupData {
 export interface ParticipantData {
   group: GroupType
   time: string
-  lastTimestamp?: EpochTimeStamp
+  lastTimestamp: EpochTimeStamp
   progress?: {
     [key: string]: ProgressData
   }

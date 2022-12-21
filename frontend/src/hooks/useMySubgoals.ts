@@ -10,16 +10,7 @@ export function useMySubgoals(category: string | undefined, problemId: string | 
   const [subgoals, setSubgoals] = useState<Subgoal[]>([])
 
   const subgoalsWithCode = useMemo(() => {
-    const nodes = makeSubgoalNode(
-      subgoals.map((subgoal, i) => ({
-        id: i,
-        labels: [subgoal.label],
-        group: subgoal.group,
-        answers: [],
-      })),
-      colorGenerator()
-    )
-    return nodes
+    return makeSubgoalNode(subgoals, colorGenerator())
   }, [subgoals])
 
   useEffect(() => {

@@ -13,31 +13,14 @@ interface Props {
 
 export function Header({ onTimeOut }: Props) {
   const { id, currentStage, timeRemaining } = useExperiment()
-  const [remainingTime, setRemainingTime] = useState(Math.max(timeRemaining, 0))
+  const [didAlert, setDidAlert] = useState(false)
 
   useEffect(() => {
-    let timer: number | null = null
-
-    if (remainingTime > 0) {
-      timer = window.setInterval(() => {
-        const time = Math.max(timeRemaining, 0)
-
-        setRemainingTime(time)
-        if (time <= 0) {
-          onTimeOut?.()
-          if (timer) {
-            window.clearInterval(timer)
-          }
-        }
-      }, 1000)
+    if (timeRemaining === 0 && !didAlert) {
+      setDidAlert(true)
+      onTimeOut?.()
     }
-
-    return () => {
-      if (timer) {
-        window.clearInterval(timer)
-      }
-    }
-  }, [onTimeOut, remainingTime, timeRemaining])
+  }, [didAlert, onTimeOut, timeRemaining])
 
   return (
     <Container>
@@ -46,7 +29,7 @@ export function Header({ onTimeOut }: Props) {
         <ProgressBar currentIndex={currentStage} stageList={SCENARIO.map(stage => stage.name)} />
         <Timer data-prefix={getString('header_timer_prefix')}>
           {SCENARIO[currentStage]?.timeLimit !== 0
-            ? `${Math.floor(remainingTime / 60)}:${String(remainingTime % 60).padStart(2, '0')}`
+            ? `${Math.floor(timeRemaining / 60)}:${String(timeRemaining % 60).padStart(2, '0')}`
             : getString('header_no_time_limit')}
         </Timer>
         {id ? <ParticipantId data-prefix={getString('header_id_prefix')}>{id}</ParticipantId> : ''}

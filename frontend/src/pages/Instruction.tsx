@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { ActionButton } from '../components/ActionButton'
 import { FormatContainer } from '../components/FormatContainer'
 import { Page } from '../components/Page'
+import { SubTitle } from '../components/SubTitle'
+import { Title } from '../components/Title'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { useExperiment } from '../hooks/useExperiment'
 import {
@@ -38,7 +40,7 @@ export function Instruction() {
   return (
     <Page>
       <FormatContainer>
-        <h1>프로그래밍 학습 실험 참여</h1>
+        <Title>프로그래밍 학습 실험 참여</Title>
         <p>
           <b>대상:</b>
           <span> 알고리즘 문제를 풀어본 경험이 있는 학습자</span>
@@ -59,14 +61,14 @@ export function Instruction() {
           실험에 참여해주셔서 감사합니다. 실험 시작 전, 간단하게 연구 배경과 실험 과정, 그리고 유의 사항에 대해
           안내드리겠습니다.
         </p>
-        <h2>{getString('instruction_background')}</h2>
+        <SubTitle>{getString('instruction_background')}</SubTitle>
         <p>
           학습자들은 문제 풀이 과정의 각 단계들이 어떤 역할과 목적을 가지고 사용되었는지 스스로 설명하는 과정을 통해
           문제 풀이에 대한 이해를 높일 수 있습니다. 저희는 이러한 과정을 도와 학습자들이 풀이과정을 더 잘 이해하도록
           돕는 시스템을 목표로 하고 있습니다. 이번 실험에서는 학습자들이 문제 풀이 과정을 스스로 공부하는 것이 학습에
           얼마나 도움이 되는지 확인해보고자 합니다.
         </p>
-        <h2>{getString('instruction_procedure')}</h2>
+        <SubTitle>{getString('instruction_procedure')}</SubTitle>
         <p>
           본 실험은 여러 단계로 나뉘어져 있습니다 (아래 표 참고). 실험의 원활한 진행을 위해 각 단계마다 제한시간을 두고
           있으며, 제한시간이 지나면 다음 단계로 넘어가야 합니다. 시스템 상단에 남은 시간 표시가 되어 있으며, 제한시간이

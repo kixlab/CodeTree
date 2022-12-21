@@ -58,8 +58,8 @@ const Localiztion: Dictionary = {
     en: 'Worked Example',
   },
   progress_bar_stage_practice: {
-    ko: '문제 풀이',
-    en: 'Practice Problem',
+    ko: '전체 탐색으로 문제 풀기',
+    en: '',
   },
   progress_bar_stage_cognitive: {
     ko: '인지 부하 측정',
@@ -526,8 +526,7 @@ const Localiztion: Dictionary = {
     en: ``,
   },
   practice_instruction_easy: {
-    ko: `아래 문제를 brute-force O(n * k)으로 우선 풀어보세요. 
-      "코드 실행" 버튼을 누르면 5개의 테스트 케이스에 대한 자세한 결과를, "코드 채점" 버튼을 누르면 전체 30개의 테스트 결과를 확인할 수 있습니다.`,
+    ko: `아래 문제를 전체 탐색(brute-force) 기법으로 풀어, 문제의 요구사항을 먼저 이해해보세요.`,
     en: ``,
   },
   practice_run: {
@@ -639,7 +638,7 @@ const Localiztion: Dictionary = {
     en: 'We cannot track your participant ID.',
   },
   contact_missing_id_solution: {
-    ko: '새로운 참가자 ID를 발급받아야 합니다. 아래에 있는 연락처를 통해 실험 담당자에게 연락해주세요.',
+    ko: '새로운 참가자 ID를 발급받아야 합니다. 실험 담당자(jinhw@kaist.ac.kr)에게 연락해주세요.',
     en: 'You must acquire a new ID. Please contact to the manager of this experiment. Contact information is provided below.',
   },
   contact_missing_group: {
@@ -647,7 +646,7 @@ const Localiztion: Dictionary = {
     en: 'We cannot track the group that you are assigned to.',
   },
   contact_missing_group_solution: {
-    ko: '새로운 그룹을 배정받아야 합니다. 아래에 있는 연락처를 통해 실험 담당자에게 연락해주세요.',
+    ko: '그룹이 배정되지 않았습니다. 실험 담당자(jinhw@kaist.ac.kr)에게 연락해주세요.',
     en: 'You must be reassigned to a group. Please contact to the manager of this experiment. Contact information is provided below.',
   },
   contact_wrong_url: {

@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SERVER_ADDRESS } from '../environments/Configuration'
-import { Subgoal as SubgoalWithoutId } from '../protocol/Common'
 import { PostSubgoalsParams, PostSubgoalsResults } from '../protocol/PostSubgoals'
 import { Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
@@ -9,7 +8,7 @@ import { saveSubgoals } from '../shared/Utils'
 import { SubgoalNode } from '../types/subgoalNode'
 import { useExperiment } from './useExperiment'
 
-export function useLabelSubmit(lecture: string | undefined, fileName: string | undefined) {
+export function useLabelSubmit(lecture: string | undefined, fileName: string | undefined, noEmptyGroup = true) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const navigate = useNavigate()
   const { id, nextStage } = useExperiment()
@@ -20,8 +19,9 @@ export function useLabelSubmit(lecture: string | undefined, fileName: string | u
         window.alert(getString('label_alert_fill_all_boxes'))
         return
       }
-      if (subgoals.some(subgoal => subgoal.group.length === 0)) {
-        window.alert(getString('label_alert_remove_empty_subgoals'))
+      const emptySubgoal = subgoals.find(subgoal => subgoal.group.length === 0)
+      if (noEmptyGroup && emptySubgoal) {
+        window.alert(`"${emptySubgoal.label}"와 관련된 코드도 선택해주세요.`)
         return
       }
 
@@ -34,13 +34,11 @@ export function useLabelSubmit(lecture: string | undefined, fileName: string | u
           participantId: id,
           lectureName: lecture,
           fileName,
-          subgoals: subgoals.map(
-            subgoal =>
-              ({
-                label: subgoal.label,
-                group: subgoal.group,
-              } as SubgoalWithoutId)
-          ),
+          subgoals: subgoals.map(subgoal => ({
+            label: subgoal.label,
+            group: subgoal.group,
+            parentId: subgoal.parentId,
+          })),
         })
         setIsSubmitting(false)
         if (res) {
@@ -48,7 +46,7 @@ export function useLabelSubmit(lecture: string | undefined, fileName: string | u
         }
       }
     },
-    [fileName, id, lecture, navigate, nextStage]
+    [fileName, id, lecture, navigate, nextStage, noEmptyGroup]
   )
 
   return { isSubmitting, submit }

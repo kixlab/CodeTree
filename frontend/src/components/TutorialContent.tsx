@@ -8,7 +8,6 @@ import { SubgoalNode } from '../types/subgoalNode'
 import { ActionButton } from './ActionButton'
 import { CodeGrouper } from './CodeGrouper'
 import { HierarchyVisualizer } from './HierarchyVisualizer'
-import { InstructionBox } from './InstructionBox'
 import { InstructionContainer } from './InstructionContainer'
 import { SkipButton } from './SkipButton'
 import { SplitView } from './SplitView'
@@ -58,15 +57,12 @@ export function TutorialContent(props: Props) {
         </IntroContainer>
       </Row>
       <Row>
+        <Title>{`${getString('tutorial_practice_title')} 1${getString('tutorial_practice1_goal')}`}</Title>
         <SplitView initialWidths={[3, 6]}>
           <InstructionContainer
             footer={<ActionButton onClick={props.firstCheckAnswer}>{getString('tutorial_check_answer')}</ActionButton>}
           >
-            <InstructionBox>
-              <Title>{`${getString('tutorial_practice_title')} 1${getString('tutorial_practice1_goal')}`}</Title>
-
-              {getString('tutorial_practice1_instruction')}
-            </InstructionBox>
+            {getString('tutorial_practice1_instruction')}
             <SubgoalContainer
               subgoals={props.firstSubgoals}
               selectedSubgoal={props.firstSelectedSubgoal ?? null}
@@ -85,14 +81,12 @@ export function TutorialContent(props: Props) {
         </SplitView>
       </Row>
       <Row>
+        <Title>{`${getString('tutorial_practice_title')} 2${getString('tutorial_practice2_goal')}`}</Title>
         <SplitView initialWidths={[3, 6]}>
           <InstructionContainer
             footer={<ActionButton onClick={props.secondCheckAnswer}>{getString('tutorial_check_answer')}</ActionButton>}
           >
-            <InstructionBox>
-              <Title>{`${getString('tutorial_practice_title')} 2${getString('tutorial_practice2_goal')}`}</Title>
-              {getString('tutorial_practice2_instruction')}
-            </InstructionBox>
+            {getString('tutorial_practice2_instruction')}
             <SubgoalContainer
               subgoals={props.secondSubgoals}
               selectedSubgoal={props.secondSelectedSubgoal ?? null}
@@ -107,14 +101,12 @@ export function TutorialContent(props: Props) {
         </SplitView>
       </Row>
       <Row>
+        <Title>{`${getString('tutorial_practice_title')} 3${getString('tutorial_practice3_goal')}`}</Title>
         <SplitView initialWidths={[3, 6]}>
           <InstructionContainer
             footer={<ActionButton onClick={props.thirdCheckAnswer}>{getString('tutorial_check_answer')}</ActionButton>}
           >
-            <InstructionBox>
-              <Title>{`${getString('tutorial_practice_title')} 3${getString('tutorial_practice3_goal')}`}</Title>
-              {getString('tutorial_practice3_instruction')}
-            </InstructionBox>
+            {getString('tutorial_practice3_instruction')}
             <SubgoalContainer
               subgoals={props.thirdSubgoals}
               selectedSubgoal={props.thirdSelectedSubgoal ?? null}
@@ -136,11 +128,9 @@ export function TutorialContent(props: Props) {
         </SplitView>
       </Row>
       <Row>
-        <InstructionBox>
-          <Title>{getString('tutorial_start_title')}</Title>
-          <p>{getString('tutorial_start_instruction')}</p>
-          <ActionButton onClick={props.onTaskStart}>{getString('tutorial_start')}</ActionButton>
-        </InstructionBox>
+        <Title>{getString('tutorial_start_title')}</Title>
+        <p>{getString('tutorial_start_instruction')}</p>
+        <ActionButton onClick={props.onTaskStart}>{getString('tutorial_start')}</ActionButton>
       </Row>
       {props.couldSkipTutorial && <SkipButton onClick={props.skipTutorial}>{getString('tutorial_skip')}</SkipButton>}
     </Container>
@@ -155,13 +145,13 @@ const Container = styled.div`
 const Row = styled.div`
   margin-bottom: 12px;
   background: ${Color.Gray00};
+  padding: 12px;
 `
 
 const IntroContainer = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: 0.6fr 0.4fr;
-  padding: 12px;
 `
 
 const TaskContainer = styled.div`

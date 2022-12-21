@@ -4,18 +4,22 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ActionButton } from '../components/ActionButton'
 import { CodeEditor } from '../components/CodeEditor'
+import { CodeViewer } from '../components/CodeViewer'
+import { HierarchyVisualizer } from '../components/HierarchyVisualizer'
 import { InstructionBox } from '../components/InstructionBox'
 import { InstructionContainer } from '../components/InstructionContainer'
 import { OutputTerminal } from '../components/OutputTerminal'
 import { Page } from '../components/Page'
-import { ProblemContainer } from '../components/ProblemContainer'
 import { ProgramRunner } from '../components/ProgramRunner'
 import { SplitView } from '../components/SplitView'
+import { SubgoalContainer } from '../components/SubgoalContainer'
 import { useConfirmBeforeLeave } from '../hooks/useConfirmBeforeLeave'
+import { useExperiment } from '../hooks/useExperiment'
 import { useJudgeCode } from '../hooks/useJudgeCode'
-import { useProblem } from '../hooks/useProblem'
-import { useSkeletonCode } from '../hooks/useSkeletonCode'
+import { useMyCode } from '../hooks/useMyCode'
+import { useMySubgoals } from '../hooks/useMySubgoals'
 import { useSubmitCode } from '../hooks/useSubmitCode'
+import { useSuggestionBySubgoals } from '../hooks/useSuggestionBySubgoals'
 import { CodeType } from '../protocol/Common'
 import { Color, SUBMIT_BUTTON_HEIGHT } from '../shared/Common'
 import { HEADER_HEIGHT } from '../shared/Constants'
@@ -26,7 +30,7 @@ type MatchParams = {
   problemId: string
 }
 
-export function Practice() {
+export function Explore() {
   const { category, problemId } = useParams<MatchParams>()
   const [code, setCode] = useState('')
   const [mode, setMode] = useState<CodeType>('python')
@@ -36,16 +40,18 @@ export function Practice() {
     problemId,
     mode
   )
-  const problem = useProblem(category, problemId)
-  const { skeletonCode } = useSkeletonCode(category, problemId, mode)
+  const { id } = useExperiment()
+  const subgoals = useMySubgoals(category, problemId, id)
+  const { code: myCode } = useMyCode(category, problemId, id)
   const [canProceed, setCanProceed] = useState(false)
   const { submit, isSubmitting } = useSubmitCode(category, problemId, code, mode)
+  const { suggestions } = useSuggestionBySubgoals(category, problemId, subgoals)
 
   useConfirmBeforeLeave()
 
   useEffect(() => {
-    setCode(skeletonCode)
-  }, [skeletonCode])
+    setCode(myCode)
+  }, [myCode])
 
   useEffect(() => {
     if (isRunning && !canProceed) {
@@ -64,11 +70,21 @@ export function Practice() {
           }
         >
           <InstructionBox>
-            <Title>전체 탐색으로 문제 풀기</Title>
-            {getString('practice_instruction_easy')}
-            <br />
-            <ProblemContainer problem={problem} />
+            <Title>효율적인 풀이 찾기</Title>
+            {getString('practice_instruction')}
           </InstructionBox>
+          <InstructionBox>
+            <CodeContainer>
+              <HierarchyVisualizer subgoals={subgoals} lineHeight={20} />
+              <CodeViewer code={myCode} lineHeight={20} />
+            </CodeContainer>
+          </InstructionBox>
+          <SubgoalContainer
+            subgoals={subgoals}
+            selectedSubgoal={null}
+            canAddSubgoals={false}
+            suggestions={suggestions}
+          />
         </InstructionContainer>
         <TaskContainer>
           <CodeEditor code={code} onCodeChange={setCode} mode={mode} />
@@ -155,4 +171,12 @@ const TaskContainer = styled.div`
   grid-template-rows: 0.6fr ${SUBMIT_BUTTON_HEIGHT + 8}px 0.4fr;
   height: calc(100vh - ${HEADER_HEIGHT}px);
   border-left: 1px solid ${Color.Gray15};
+`
+
+const CodeContainer = styled.div`
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  background: ${Color.Gray00};
+  margin-bottom: 8px;
+  overflow: auto;
 `
