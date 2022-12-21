@@ -3,10 +3,9 @@ import { SERVER_ADDRESS } from '../environments/Configuration'
 import { CodeType } from '../protocol/Common'
 import { PostPracticeAnswerParams, PostPracticeAnswerResults } from '../protocol/PostPracticeAnswer'
 import { PostPracticeRunParams, PostPracticeRunResults } from '../protocol/PostPracticeRun'
-import { getId } from '../shared/ExperimentHelper'
 import { Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
-import { ID_NOT_FOUND } from './useExperiment'
+import { useExperiment } from './useExperiment'
 
 export function useJudgeCode(
   code: string,
@@ -18,6 +17,7 @@ export function useJudgeCode(
   const [outputCorrect, setOutputCorrect] = useState<boolean | null>(null)
   const [isRunning, setIsRunning] = useState(false)
   const [judgeResult, setJudgeResult] = useState<string>('')
+  const { id } = useExperiment()
 
   const run = useCallback(async () => {
     if (code.trim().length <= 0 || !category || !problemId) {
@@ -32,7 +32,7 @@ export function useJudgeCode(
       category,
       problemId,
       codeType: mode,
-      participantId: getId() ?? ID_NOT_FOUND,
+      participantId: id,
     })
     if (res) {
       setProgramOutput([...res.output])
@@ -40,7 +40,7 @@ export function useJudgeCode(
       setJudgeResult(`${res.correctCases} / ${res.testcases} ${getString('practice_result')}`)
     }
     setIsRunning(false)
-  }, [category, code, mode, problemId])
+  }, [category, code, id, mode, problemId])
 
   const judge = useCallback(async () => {
     if (code.trim().length <= 0 || !category || !problemId) {
@@ -57,7 +57,7 @@ export function useJudgeCode(
         category,
         problemId,
         codeType: mode,
-        participantId: getId() ?? ID_NOT_FOUND,
+        participantId: id,
       }
     )
     if (res) {
@@ -66,7 +66,7 @@ export function useJudgeCode(
       setJudgeResult(`${res.correctCases} / ${res.testcases} ${getString('practice_result')}`)
     }
     setIsRunning(false)
-  }, [category, code, mode, problemId])
+  }, [category, code, id, mode, problemId])
 
   return {
     judge,

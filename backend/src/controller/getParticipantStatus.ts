@@ -9,7 +9,7 @@ export const getParticipantStatusController = Get<GetParticipantStatusParams, Ge
       group,
       lastTimestamp = -1,
       progress,
-    } = await GetData<ParticipantData>(`/experiment/participants/${participantId}}`)
+    } = await GetData<ParticipantData>(`/experiment/participants/${participantId}`)
     const lastStage = progress ? Object.keys(progress).length : -1
     return { group, lastTimestamp, lastStage }
   }

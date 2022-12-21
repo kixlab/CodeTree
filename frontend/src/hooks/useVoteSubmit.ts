@@ -3,11 +3,12 @@ import { SERVER_ADDRESS } from '../environments/Configuration'
 import { ChoiceState } from '../pages/Vote'
 import { VotingItem } from '../protocol/Common'
 import { PostVotingChoicesParams, PostVotingChoicesResults } from '../protocol/PostVotingChoices'
-import { getId, ID_NOT_FOUND } from '../shared/ExperimentHelper'
 import { Post } from '../shared/HttpRequest'
+import { useExperiment } from './useExperiment'
 
 export function useVoteSubmit(lectureName: string | undefined, fileName: string | undefined) {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { id } = useExperiment()
 
   const submit = useCallback(
     async (votingList: VotingItem[], choiceList: ChoiceState[]) => {
@@ -26,12 +27,12 @@ export function useVoteSubmit(lectureName: string | undefined, fileName: string 
               labels,
             }
           }),
-          participantId: getId() ?? ID_NOT_FOUND,
+          participantId: id,
         })
         setIsSubmitting(false)
       }
     },
-    [fileName, lectureName]
+    [fileName, id, lectureName]
   )
 
   return { isSubmitting, submit }

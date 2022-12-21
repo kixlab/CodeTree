@@ -10,13 +10,13 @@ import { Page } from '../components/Page'
 import { ProblemContainer } from '../components/ProblemContainer'
 import { SplitView } from '../components/SplitView'
 import { StageNavigator } from '../components/StageNavigator'
+import { useExperiment } from '../hooks/useExperiment'
 import { useHierarchyVisualier as useHierarchyVisualizer } from '../hooks/useHierarchyVisualizer'
 import { useMyCode } from '../hooks/useMyCode'
 import { useProblem } from '../hooks/useProblem'
 import { useVote } from '../hooks/useVote'
 import { useVoteSubmit } from '../hooks/useVoteSubmit'
 import { useVotingList } from '../hooks/useVotingList'
-import { nextStage } from '../shared/ExperimentHelper'
 import { getString } from '../shared/Localization'
 import { getExampleNumber } from '../shared/Utils'
 
@@ -33,7 +33,8 @@ export interface ChoiceState {
 
 export default function Vote() {
   const { lecture, fileName } = useParams<MatchParams>()
-  const code = useMyCode(lecture, fileName)
+  const { id, nextStage } = useExperiment()
+  const code = useMyCode(lecture, fileName, id)
   const problem = useProblem(lecture, fileName)
   const { votingList } = useVotingList(lecture, fileName)
   const {
@@ -57,8 +58,8 @@ export default function Vote() {
       return
     }
     await submitVote(votingList, choiceList)
-    navigate(nextStage())
-  }, [canProceedToNext, choiceList, navigate, submitVote, votingList])
+    navigate(await nextStage())
+  }, [canProceedToNext, choiceList, navigate, nextStage, submitVote, votingList])
 
   const showActionButton = currentStage === maxStage && showAnswer
 

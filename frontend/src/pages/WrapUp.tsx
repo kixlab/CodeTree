@@ -4,16 +4,16 @@ import { FormatContainer } from '../components/FormatContainer'
 import { Page } from '../components/Page'
 import { Title } from '../components/Title'
 import { SERVER_ADDRESS } from '../environments/Configuration'
+import { useExperiment } from '../hooks/useExperiment'
 import { PostParticipantFinishedParams, PostParticipantFinishedResult } from '../protocol/PostParticipantFinished'
-import { getGroup, getId } from '../shared/ExperimentHelper'
 import { Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 
 export function WrapUp() {
+  const { id, group } = useExperiment()
+
   useEffectOnce(() => {
-    const id = getId()
-    const group = getGroup()
-    if (id && group) {
+    if (group) {
       Post<PostParticipantFinishedParams, PostParticipantFinishedResult>(`${SERVER_ADDRESS}/postParticipantFinished`, {
         participantId: id,
         group,

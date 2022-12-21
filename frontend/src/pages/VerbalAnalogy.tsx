@@ -6,11 +6,11 @@ import { SplitView } from '../components/SplitView'
 import { SubTitle } from '../components/SubTitle'
 import { TestForm } from '../components/TestForm'
 import { Title } from '../components/Title'
-import { getId } from '../shared/ExperimentHelper'
+import { useExperiment } from '../hooks/useExperiment'
 import { getString } from '../shared/Localization'
 
 export function VerbalAnalogy() {
-  const participantID = getId()
+  const { id } = useExperiment()
 
   const onTimeOut = useCallback(() => {
     window.alert(getString('verbal_analogy_timeout_alert'))
@@ -92,7 +92,7 @@ export function VerbalAnalogy() {
           </p>
         </FormatContainer>
         <TestForm
-          testUrl={`https://docs.google.com/forms/d/e/1FAIpQLSf0QXPsxc_tcc1B8Rr80JoZ3yBquO8rWgMp0UYt0gdKQGMMXg/viewform?usp=pp_url&entry.1707229012=${participantID}`}
+          testUrl={`https://docs.google.com/forms/d/e/1FAIpQLSf0QXPsxc_tcc1B8Rr80JoZ3yBquO8rWgMp0UYt0gdKQGMMXg/viewform?usp=pp_url&entry.1707229012=${id}`}
         />
       </SplitView>
     </Page>

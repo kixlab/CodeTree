@@ -10,6 +10,7 @@ import { SplitView } from '../components/SplitView'
 import { SubgoalContainer } from '../components/SubgoalContainer'
 import { Title } from '../components/Title'
 import { useConfirmBeforeLeave } from '../hooks/useConfirmBeforeLeave'
+import { useExperiment } from '../hooks/useExperiment'
 import { useGroupSubgoals } from '../hooks/useGroupSubgoals'
 import { useMyCode } from '../hooks/useMyCode'
 import { useMostSimilarCode } from '../hooks/useSimilarCode'
@@ -22,7 +23,8 @@ type MatchParams = {
 
 export function Abstraction() {
   const { category, problemId } = useParams<MatchParams>()
-  const code = useMyCode(category, problemId)
+  const { id } = useExperiment()
+  const code = useMyCode(category, problemId, id)
   const { mostSimilarCode } = useMostSimilarCode(category, problemId, code)
   const { addSubgoal, removeSubgoal, editSubgoal, selectSubgoal, subgoals, selectedSubgoal } = useGroupSubgoals(
     code.split('\n').length

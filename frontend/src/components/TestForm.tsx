@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import React, { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useExperiment } from '../hooks/useExperiment'
 import { Color } from '../shared/Common'
 import { HEADER_HEIGHT } from '../shared/Constants'
-import { nextStage } from '../shared/ExperimentHelper'
 
 interface Props {
   testUrl: string
@@ -12,14 +12,15 @@ interface Props {
 export function TestForm(props: Props) {
   const [isInitialLoad, setIsInitialLoad] = React.useState(true)
   const navigate = useNavigate()
+  const { nextStage } = useExperiment()
 
-  const onUrlChange = useCallback(() => {
+  const onUrlChange = useCallback(async () => {
     if (isInitialLoad) {
       setIsInitialLoad(false)
     } else {
-      navigate(nextStage())
+      navigate(await nextStage())
     }
-  }, [isInitialLoad, navigate])
+  }, [isInitialLoad, navigate, nextStage])
 
   return (
     <Container>

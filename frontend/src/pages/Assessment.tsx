@@ -7,9 +7,9 @@ import { ProblemContainer } from '../components/ProblemContainer'
 import { SplitView } from '../components/SplitView'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { useConfirmBeforeLeave } from '../hooks/useConfirmBeforeLeave'
+import { useExperiment } from '../hooks/useExperiment'
 import { useProblem } from '../hooks/useProblem'
 import { PostAssessmentCodeParams, PostAssessmentCodeResults } from '../protocol/PostAssessmentCode'
-import { getId, ID_NOT_FOUND, nextStage } from '../shared/ExperimentHelper'
 import { Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 import { getProblemNumber } from '../shared/Utils'
@@ -25,6 +25,7 @@ export function Assessment() {
   const [isSubmitting, setIsSubmitting] = React.useState(false)
   const [code, setCode] = React.useState('')
   const navigate = useNavigate()
+  const { id, nextStage } = useExperiment()
 
   useConfirmBeforeLeave()
 
@@ -34,15 +35,15 @@ export function Assessment() {
     }
     setIsSubmitting(true)
     await Post<PostAssessmentCodeParams, PostAssessmentCodeResults>(`${SERVER_ADDRESS}/postAssessmentCode`, {
-      participantId: getId() ?? ID_NOT_FOUND,
+      participantId: id,
       lectureName: lecture,
       fileName,
       code,
     })
     setIsSubmitting(false)
     setCode('')
-    navigate(nextStage())
-  }, [code, fileName, isSubmitting, lecture, navigate])
+    navigate(await nextStage())
+  }, [code, fileName, id, isSubmitting, lecture, navigate, nextStage])
 
   const moveOnToNextProblem = useCallback(() => {
     if (window.confirm(getString('assessment_confirm_submit'))) {

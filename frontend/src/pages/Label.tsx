@@ -11,6 +11,7 @@ import { SplitView } from '../components/SplitView'
 import { SubgoalContainer } from '../components/SubgoalContainer'
 import { Title } from '../components/Title'
 import { useConfirmBeforeLeave } from '../hooks/useConfirmBeforeLeave'
+import { useExperiment } from '../hooks/useExperiment'
 import { useGroupSubgoals } from '../hooks/useGroupSubgoals'
 import { useLabelSubmit } from '../hooks/useLabelSubmit'
 import { useMyCode } from '../hooks/useMyCode'
@@ -23,7 +24,8 @@ type MatchParams = {
 
 export function Label() {
   const { lecture, fileName } = useParams<MatchParams>()
-  const code = useMyCode(lecture, fileName)
+  const { id } = useExperiment()
+  const code = useMyCode(lecture, fileName, id)
   const {
     addSubgoal,
     removeSubgoal,

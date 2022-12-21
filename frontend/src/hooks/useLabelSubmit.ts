@@ -1,17 +1,18 @@
 import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SERVER_ADDRESS } from '../environments/Configuration'
-import { PostSubgoalsParams, PostSubgoalsResults } from '../protocol/PostSubgoals'
-import { getId, ID_NOT_FOUND, nextStage } from '../shared/ExperimentHelper'
 import { Subgoal as SubgoalWithoutId } from '../protocol/Common'
+import { PostSubgoalsParams, PostSubgoalsResults } from '../protocol/PostSubgoals'
 import { Post } from '../shared/HttpRequest'
 import { getString } from '../shared/Localization'
 import { saveSubgoals } from '../shared/Utils'
 import { SubgoalNode } from '../types/subgoalNode'
+import { useExperiment } from './useExperiment'
 
 export function useLabelSubmit(lecture: string | undefined, fileName: string | undefined) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const navigate = useNavigate()
+  const { id, nextStage } = useExperiment()
 
   const submit = useCallback(
     (subgoals: SubgoalNode[]) => async () => {
@@ -30,7 +31,7 @@ export function useLabelSubmit(lecture: string | undefined, fileName: string | u
         saveSubgoals(subgoals, fileName)
 
         const res = await Post<PostSubgoalsParams, PostSubgoalsResults>(`${SERVER_ADDRESS}/postSubgoals`, {
-          participantId: getId() ?? ID_NOT_FOUND,
+          participantId: id,
           lectureName: lecture,
           fileName,
           subgoals: subgoals.map(
@@ -43,11 +44,11 @@ export function useLabelSubmit(lecture: string | undefined, fileName: string | u
         })
         setIsSubmitting(false)
         if (res) {
-          navigate(nextStage())
+          navigate(await nextStage())
         }
       }
     },
-    [fileName, lecture, navigate]
+    [fileName, id, lecture, navigate, nextStage]
   )
 
   return { isSubmitting, submit }

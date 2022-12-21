@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
 import React, { useEffect, useState } from 'react'
+import { useExperiment } from '../hooks/useExperiment'
 import { Color } from '../shared/Common'
 import { HEADER_HEIGHT } from '../shared/Constants'
-import { getCurrentStage, getId, getTimeRemaining } from '../shared/ExperimentHelper'
 import { getString } from '../shared/Localization'
 import { SCENARIO } from '../shared/Scenario'
 import { ProgressBar } from './ProgressBar'
@@ -12,15 +12,15 @@ interface Props {
 }
 
 export function Header({ onTimeOut }: Props) {
-  const participantId = getId()
-  const [remainingTime, setRemainingTime] = useState(Math.max(getTimeRemaining(), 0))
+  const { id, currentStage, timeRemaining } = useExperiment()
+  const [remainingTime, setRemainingTime] = useState(Math.max(timeRemaining, 0))
 
   useEffect(() => {
     let timer: number | null = null
 
     if (remainingTime > 0) {
       timer = window.setInterval(() => {
-        const time = Math.max(getTimeRemaining(), 0)
+        const time = Math.max(timeRemaining, 0)
 
         setRemainingTime(time)
         if (time <= 0) {
@@ -37,23 +37,19 @@ export function Header({ onTimeOut }: Props) {
         window.clearInterval(timer)
       }
     }
-  }, [onTimeOut, remainingTime])
+  }, [onTimeOut, remainingTime, timeRemaining])
 
   return (
     <Container>
       <Logo>CodeGraph</Logo>
       <Supplement>
-        <ProgressBar currentIndex={getCurrentStage()} stageList={SCENARIO.map(stage => stage.name)} />
+        <ProgressBar currentIndex={currentStage} stageList={SCENARIO.map(stage => stage.name)} />
         <Timer data-prefix={getString('header_timer_prefix')}>
-          {SCENARIO[getCurrentStage()]?.timeLimit !== 0
+          {SCENARIO[currentStage]?.timeLimit !== 0
             ? `${Math.floor(remainingTime / 60)}:${String(remainingTime % 60).padStart(2, '0')}`
             : getString('header_no_time_limit')}
         </Timer>
-        {participantId ? (
-          <ParticipantId data-prefix={getString('header_id_prefix')}>{participantId}</ParticipantId>
-        ) : (
-          ''
-        )}
+        {id ? <ParticipantId data-prefix={getString('header_id_prefix')}>{id}</ParticipantId> : ''}
       </Supplement>
     </Container>
   )

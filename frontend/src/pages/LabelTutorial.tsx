@@ -10,8 +10,8 @@ import {
   PRACTICE_EXAMPLE2,
   PRACTICE_EXAMPLE3,
 } from '../data/SubgoalTutorialExamples'
+import { useExperiment } from '../hooks/useExperiment'
 import { useGroupSubgoals } from '../hooks/useGroupSubgoals'
-import { nextStage } from '../shared/ExperimentHelper'
 import { getString } from '../shared/Localization'
 import { SubgoalNode } from '../types/subgoalNode'
 
@@ -64,19 +64,20 @@ function LabelTutorial() {
   } = useGroupSubgoals(PRACTICE_EXAMPLE3.split('\n').length, practice3Subgoals)
   const { showAnswer: showAnswer3, checkAnswer: checkAnswer3 } = useCheckAnswer()
   const navigate = useNavigate()
+  const { nextStage } = useExperiment()
 
-  const onTaskStart = useCallback(() => {
+  const onTaskStart = useCallback(async () => {
     if (showAnswer1 && showAnswer2 && showAnswer3) {
       window.localStorage.setItem('fract-tutorial-done', 'true')
-      navigate(nextStage())
+      navigate(await nextStage())
     } else {
       window.alert(getString('tutorial_alert_complete_practices'))
     }
-  }, [navigate, showAnswer1, showAnswer2, showAnswer3])
+  }, [navigate, nextStage, showAnswer1, showAnswer2, showAnswer3])
 
-  const skipTutorial = useCallback(() => {
-    navigate(nextStage())
-  }, [navigate])
+  const skipTutorial = useCallback(async () => {
+    navigate(await nextStage())
+  }, [navigate, nextStage])
 
   return (
     <Page onTimeOut={() => window.alert(getString('tutorial_timeout_alert'))}>

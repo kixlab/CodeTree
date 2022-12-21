@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useEffectOnce } from 'react-use'
 import { PRODUCTION, SERVER_ADDRESS } from '../environments/Configuration'
-import { Group } from '../protocol/Common'
+import { Group, ID } from '../protocol/Common'
 import { GetIdAndGroupParams, GetIdAndGroupResults } from '../protocol/GetIdAndGroup'
 import { GetParticipantStatusParams, GetParticipantStatusResults } from '../protocol/GetParticipantStatus'
 import { PostParticipantProgressParams, PostParticipantProgressResult } from '../protocol/PostParticipantProgress'
@@ -14,7 +14,7 @@ const PARTICIPANT_ID_KEY = 'PARTICIPANT_ID_KEY'
 export const ID_NOT_FOUND = 'ID_NOT_FOUND'
 
 export function useExperiment() {
-  const [id, setId] = useState<string | null>(null)
+  const id: ID = localStorage.getItem(PARTICIPANT_ID_KEY) ?? ID_NOT_FOUND
   const [group, setGroup] = useState<Group | null>(null)
   const [stage, setStage] = useState<number>(-1)
   const [timeStamp, setTimeStamp] = useState<number>(-1)
@@ -35,7 +35,7 @@ export function useExperiment() {
 
   const nextStage = useCallback(
     async (jump = 0) => {
-      if (id === null || group === null) {
+      if (group === null) {
         return '/contact'
       }
 
@@ -94,11 +94,9 @@ export function useExperiment() {
   }, [currentStage, timeStamp])
 
   useEffectOnce(() => {
-    const participantId = localStorage.getItem(PARTICIPANT_ID_KEY)
-    if (participantId) {
-      setId(participantId)
+    if (id) {
       Get<GetParticipantStatusParams, GetParticipantStatusResults>(`${SERVER_ADDRESS}/getParticipantStatus`, {
-        participantId,
+        participantId: id,
       }).then(res => {
         if (res) {
           setGroup(res.group)
