@@ -1,6 +1,7 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import produce from 'immer'
+import { isEqual } from 'lodash'
 import React, { DragEvent, useCallback, useEffect } from 'react'
 import { Color } from '../shared/Common'
 
@@ -16,6 +17,7 @@ export function SplitView({ children, initialWidths }: Props) {
   const childrenCnt = React.Children.count(children)
   const [draggedbarIndex, setDraggedBarIndex] = React.useState(-1)
   const [widths, setWidths] = React.useState<number[]>([])
+  const [prevInitialWidths, setPrevInitialWidths] = React.useState(initialWidths)
 
   const dragBarStart = useCallback(
     (i: number) => (event: DragEvent) => {
@@ -50,9 +52,9 @@ export function SplitView({ children, initialWidths }: Props) {
 
   useEffect(() => {
     const observer = new ResizeObserver(() => {
-      const fraction = initialWidths?.reduce((s, n) => s + n, 0) ?? childrenCnt
+      const fraction = prevInitialWidths?.reduce((s, n) => s + n, 0) ?? childrenCnt
       const width = (containerRef.current?.clientWidth ?? 0) / fraction
-      const newWidths = [...Array(childrenCnt)].map((_, i) => (initialWidths?.[i] ?? 1) * width)
+      const newWidths = [...Array(childrenCnt)].map((_, i) => (prevInitialWidths?.[i] ?? 1) * width)
       setWidths(newWidths)
     })
     const container = containerRef.current
@@ -66,7 +68,13 @@ export function SplitView({ children, initialWidths }: Props) {
         observer.unobserve(container)
       }
     }
-  }, [childrenCnt, initialWidths])
+  }, [childrenCnt, prevInitialWidths])
+
+  useEffect(() => {
+    if (!isEqual(initialWidths, prevInitialWidths)) {
+      setPrevInitialWidths(initialWidths)
+    }
+  }, [initialWidths, prevInitialWidths])
 
   return (
     <Container ref={containerRef} onDragOver={dragBarOver}>

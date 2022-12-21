@@ -8,7 +8,7 @@ interface Props {
   children: React.ReactNode
 }
 
-export function ActionButton({ onClick, children, disabled = false }: Props) {
+export function SubButton({ onClick, children, disabled = false }: Props) {
   return (
     <Button onClick={onClick} disabled={disabled}>
       {children}
@@ -19,18 +19,19 @@ export function ActionButton({ onClick, children, disabled = false }: Props) {
 const Button = styled.button`
   width: 100%;
   height: ${SUBMIT_BUTTON_HEIGHT}px;
-  background: ${Color.Blue};
+  background: ${Color.Gray05};
   border: none;
-  color: ${Color.Gray00};
+  color: ${Color.Gray75};
   font-size: 18px;
   cursor: pointer;
 
   &:hover {
-    background: ${Color.Blue20};
+    background: ${Color.Gray15};
   }
 
   &:disabled {
-    background: ${Color.Gray30};
+    background: ${Color.Gray05};
+    color: ${Color.Gray00};
     cursor: not-allowed;
   }
 `

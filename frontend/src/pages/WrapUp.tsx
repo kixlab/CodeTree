@@ -1,7 +1,8 @@
 import React from 'react'
 import { useEffectOnce } from 'react-use'
-import FormatContainer from '../components/FormatContainer/FormatContainer'
+import { FormatContainer } from '../components/FormatContainer'
 import { Page } from '../components/Page'
+import { Title } from '../components/Title'
 import { SERVER_ADDRESS } from '../environments/Configuration'
 import { PostParticipantFinishedParams, PostParticipantFinishedResult } from '../protocol/PostParticipantFinished'
 import { getGroup, getId } from '../shared/ExperimentHelper'
@@ -23,7 +24,7 @@ export function WrapUp() {
   return (
     <Page>
       <FormatContainer>
-        <h1>{getString('wrapup_title')}</h1>
+        <Title>{getString('wrapup_title')}</Title>
         <p>{getString('wrapup_document_submission_instruction')}</p>
         <ul>
           <li>

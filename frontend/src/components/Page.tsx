@@ -23,13 +23,13 @@ export function Page({ children, onTimeOut }: Props) {
   return (
     <Container>
       <Header onTimeOut={onTimeOut} />
-      {children}
+      <div>{children}</div>
     </Container>
   )
 }
 
 const Container = styled.main`
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
   display: grid;
   grid-template-rows: ${HEADER_HEIGHT}px 1fr;
