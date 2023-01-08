@@ -81,33 +81,7 @@ export function Practice() {
           />
           <TaskWrapper>
             {outputCorrect !== null && <Result correct={outputCorrect}>{judgeResult}</Result>}
-            <OutputTerminal>
-              {isRunning
-                ? getString('practice_terminal_running')
-                : programOutput === null
-                ? getString('practice_terminal_output')
-                : programOutput.map(({ input, output, expected, correct }, i) => {
-                    return (
-                      <TestCase key={i}>
-                        <div>
-                          입력값:
-                          <br />
-                          {input}
-                        </div>
-                        <div>
-                          출력값:
-                          <br />
-                          <Output isCorrect={correct}>{output}</Output>
-                        </div>
-                        <div>
-                          기대값:
-                          <br />
-                          {expected}
-                        </div>
-                      </TestCase>
-                    )
-                  })}
-            </OutputTerminal>
+            <OutputTerminal isRunning={isRunning} programOutput={programOutput} />
           </TaskWrapper>
         </TaskContainer>
       </SplitView>
@@ -134,20 +108,6 @@ const Title = styled.div`
   color: ${Color.Gray75};
   font-weight: bold;
   margin-bottom: 12px;
-`
-
-const TestCase = styled.div`
-  border: 1px solid ${Color.Gray60};
-  padding: 4px;
-  margin: 4px;
-`
-
-const Output = styled.div<{ isCorrect: boolean }>`
-  ${({ isCorrect }) => css`
-    display: inline-block;
-    background-color: ${isCorrect ? Color.Green20 : Color.Error20};
-    color: ${Color.Gray00};
-  `}
 `
 
 const TaskContainer = styled.div`

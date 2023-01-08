@@ -378,12 +378,12 @@ const Localiztion: Dictionary = {
     en: 'Worked Example',
   },
   label_instruction: {
-    ko: `풀이에 존재하는 하위 목표들을 찾아보며 코드가 어떠한 하위 목표로 구성되어 있는지 설명해보세요.`,
+    ko: `자신의 풀이와 다른 풀이를 비교해보며, 이 문제를 풀기 위해 필요한 하위 목표들을 모두 나열해보세요.`,
     en: ``,
   },
   label_warning: {
     ko: '작성하신 하위 목표는 다른 학습자들에게 공유되니 학습에 도움이 되는 내용으로 작성해주세요!',
-    en: ' ',
+    en: '',
   },
   label_alert_select_subgoal_first: {
     ko: '왼쪽의 하위 목표를 먼저 선택해주세요.',
@@ -654,11 +654,11 @@ const Localiztion: Dictionary = {
     en: 'You attempted to enter undesignated url.',
   },
   contact_wrong_url_solution: {
-    ko: '링크를 눌러 올바른 페이지로 다시 돌아가세요.',
+    ko: '아래 버튼을 눌러 올바른 페이지로 다시 돌아가세요.',
     en: 'Click the link to go back to where you should be.',
   },
   contact_wrong_url_link: {
-    ko: '링크',
+    ko: '돌아가기',
     en: 'Link',
   },
   present_next: {

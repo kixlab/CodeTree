@@ -83,10 +83,13 @@ export function SubgoalLabel({
         </AddButton>
       )}
       {suggestion.length > 0 && (
-        <>
-          <Highlight>{suggestion?.join(',')}</Highlight>
-          <span>을 사용해보는건 어떨까요?</span>
-        </>
+        <ul>
+          {suggestion.map(s => (
+            <li key={s}>
+              <Highlight>{s}</Highlight>
+            </li>
+          ))}
+        </ul>
       )}
     </Container>
   )
@@ -204,8 +207,18 @@ const AddButton = styled.button<{ disabled: boolean }>`
 `
 
 const Highlight = styled.span`
-  background-color: yellow;
   font-size: 14px;
-`
+  position: relative;
 
-export default SubgoalLabel
+  &::before {
+    content: '';
+    background-color: yellow;
+    width: 100%;
+    height: 6px;
+    display: block;
+    position: absolute;
+    left: 2px;
+    bottom: 4px;
+    z-index: -1;
+  }
+`

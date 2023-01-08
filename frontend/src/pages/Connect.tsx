@@ -8,6 +8,7 @@ import { InstructionBox } from '../components/InstructionBox'
 import { InstructionContainer } from '../components/InstructionContainer'
 import { Page } from '../components/Page'
 import { SplitView } from '../components/SplitView'
+import { StageBar } from '../components/StageBar'
 import { SubgoalContainer } from '../components/SubgoalContainer'
 import { useConfirmBeforeLeave } from '../hooks/useConfirmBeforeLeave'
 import { useExperiment } from '../hooks/useExperiment'
@@ -45,8 +46,10 @@ export function Connect() {
           }
         >
           <InstructionBox>
-            <Title>풀이 단계랑 코드 잇기</Title>
-            <div>{getString('label_instruction')}</div>
+            <Title>하위 목표 학습</Title>
+            <StageBar currentStageIndex={2} />
+            나열한 목표들과 코드를 이어봅니다. 먼저 목표를 하나 클릭한 후, 오른쪽에서 해당되는 코드 줄을 클릭하면
+            됩니다. 혹시 코드 형식을 바꿔야 한다면 이전 단계로 돌아가 수정하세요.
           </InstructionBox>
           <SubgoalContainer
             subgoals={subgoals}

@@ -1,4 +1,7 @@
 export const PythonSolutionTemplate = (code: string, ...args: string[]) => `
+import sys
+sys.tracebacklimit = 0
+
 ${code}
 
 print(solution(${args.join(',')}))

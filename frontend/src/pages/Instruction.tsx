@@ -30,7 +30,7 @@ export function Instruction() {
         setCanParticipate(res.availabiltiy)
       }
     })
-  })
+  }, [])
 
   const onStart = useCallback(async () => {
     await initialize()

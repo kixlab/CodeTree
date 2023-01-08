@@ -12,6 +12,7 @@ import { OutputTerminal } from '../components/OutputTerminal'
 import { Page } from '../components/Page'
 import { ProgramRunner } from '../components/ProgramRunner'
 import { SplitView } from '../components/SplitView'
+import { StageBar } from '../components/StageBar'
 import { SubgoalContainer } from '../components/SubgoalContainer'
 import { useConfirmBeforeLeave } from '../hooks/useConfirmBeforeLeave'
 import { useExperiment } from '../hooks/useExperiment'
@@ -70,8 +71,12 @@ export function Explore() {
           }
         >
           <InstructionBox>
-            <Title>효율적인 풀이 찾기</Title>
-            {getString('practice_instruction')}
+            <Title>하위 목표 학습</Title>
+            <StageBar currentStageIndex={3} />
+            <div>
+              각 목표 당 효율화에 도움이 될 만한 알고리즘을 추천해보았습니다. 이를 참고하여 문제를 더 효율적으로 푸는
+              코드로 수정해봅니다.
+            </div>
           </InstructionBox>
           <InstructionBox>
             <CodeContainer>
@@ -97,33 +102,7 @@ export function Explore() {
           />
           <TaskWrapper>
             {outputCorrect !== null && <Result correct={outputCorrect}>{judgeResult}</Result>}
-            <OutputTerminal>
-              {isRunning
-                ? getString('practice_terminal_running')
-                : programOutput === null
-                ? getString('practice_terminal_output')
-                : programOutput.map(({ input, output, expected, correct }, i) => {
-                    return (
-                      <TestCase key={i}>
-                        <div>
-                          입력값:
-                          <br />
-                          {input}
-                        </div>
-                        <div>
-                          출력값:
-                          <br />
-                          <Output isCorrect={correct}>{output}</Output>
-                        </div>
-                        <div>
-                          기대값:
-                          <br />
-                          {expected}
-                        </div>
-                      </TestCase>
-                    )
-                  })}
-            </OutputTerminal>
+            <OutputTerminal isRunning={isRunning} programOutput={programOutput} />
           </TaskWrapper>
         </TaskContainer>
       </SplitView>
@@ -150,20 +129,6 @@ const Title = styled.div`
   color: ${Color.Gray75};
   font-weight: bold;
   margin-bottom: 12px;
-`
-
-const TestCase = styled.div`
-  border: 1px solid ${Color.Gray60};
-  padding: 4px;
-  margin: 4px;
-`
-
-const Output = styled.div<{ isCorrect: boolean }>`
-  ${({ isCorrect }) => css`
-    display: inline-block;
-    background-color: ${isCorrect ? Color.Green20 : Color.Error20};
-    color: ${Color.Gray00};
-  `}
 `
 
 const TaskContainer = styled.div`

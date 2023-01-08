@@ -43,13 +43,14 @@ const Container = styled.div`
   padding: 8px 12px;
   border-bottom: 1px solid ${Color.Gray15};
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `
 
 const Supplement = styled.div`
-  position: absolute;
-  right: 20px;
-  top: 10px;
   display: flex;
+  align-items: center;
 `
 
 const Logo = styled.div`
@@ -76,10 +77,12 @@ const Timer = styled.div`
   font-size: 18px;
   margin-right: 15px;
   color: ${Color.Error00};
+  font-family: monospace;
 
   &:before {
     content: attr(data-prefix);
     color: ${Color.Gray85};
+    font-family: initial;
   }
 `
 
