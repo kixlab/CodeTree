@@ -37,6 +37,7 @@ export function HierarchyVisualizer({ subgoals, lineHeight = CODE_LINE_HEIGHT }:
 const Container = styled.div`
   position: relative;
   border-right: 1px solid ${Color.Gray15};
+  margin-top: 4px;
 `
 
 const Stick = styled.div<{ color: string; index: number; depth: number; isLast: boolean; lineHeight: number }>`

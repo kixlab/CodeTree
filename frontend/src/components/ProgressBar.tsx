@@ -47,6 +47,7 @@ const Container = styled.div`
     font-size: 18px;
     content: attr(data-prefix);
     white-space: nowrap;
+    color: ${Color.Gray85};
   }
 `
 

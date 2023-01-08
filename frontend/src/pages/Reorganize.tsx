@@ -7,6 +7,7 @@ import { InstructionBox } from '../components/InstructionBox'
 import { InstructionContainer } from '../components/InstructionContainer'
 import { Page } from '../components/Page'
 import { SplitView } from '../components/SplitView'
+import { StageBar } from '../components/StageBar'
 import { SubgoalContainer } from '../components/SubgoalContainer'
 import { useConfirmBeforeLeave } from '../hooks/useConfirmBeforeLeave'
 import { useExperiment } from '../hooks/useExperiment'
@@ -46,12 +47,13 @@ export function Reorganize() {
           }
         >
           <InstructionBox>
-            <Title>코드 정리하기</Title>
-            이제 자신의 코드의 각 줄이 어느 풀이 단계에 해당하는지 설명해봅니다. 그 전에 먼저 자신의 코드를
-            정리해보세요.
+            <Title>하위 목표 학습</Title>
+            <StageBar currentStageIndex={1} />
+            다음 단계에선 앞서 나열한 목표들이 자신의 코드의 어느 부분에 해당하는지 이어 볼 것입니다. 잇기 쉽도록 먼저
+            자신의 코드 형식을 목표에 맞춰 정리해보세요.
             <br />
-            <SubgoalContainer subgoals={subgoals} selectedSubgoal={null} />
           </InstructionBox>
+          <SubgoalContainer subgoals={subgoals} selectedSubgoal={null} />
         </InstructionContainer>
         <TaskContainer>
           <CodeEditor code={code} onCodeChange={setCode} mode={mode} />

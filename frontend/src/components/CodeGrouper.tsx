@@ -76,7 +76,6 @@ const Line = styled.button<{ checkState?: CheckBoxAvailability; selectable: bool
     text-align: left;
     display: flex;
     align-items: center;
-    transition: all 0.2s;
     margin: 0;
     line-height: ${lineHeight}px;
 
@@ -89,8 +88,7 @@ const Line = styled.button<{ checkState?: CheckBoxAvailability; selectable: bool
     checkState !== CheckBoxAvailability.UNAVAILABLE &&
     css`
       &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0px 1px 8px 2px rgb(0 0 0 / 20%);
+        background: ${Color.Orange};
       }
     `}
   `}

@@ -7,6 +7,7 @@ import { InstructionBox } from '../components/InstructionBox'
 import { InstructionContainer } from '../components/InstructionContainer'
 import { Page } from '../components/Page'
 import { SplitView } from '../components/SplitView'
+import { StageBar } from '../components/StageBar'
 import { SubgoalContainer } from '../components/SubgoalContainer'
 import { Title } from '../components/Title'
 import { useCodeToCompare } from '../hooks/useCodeToCompare'
@@ -49,7 +50,9 @@ export function Abstraction() {
           }
         >
           <InstructionBox>
-            <Title>{getString('label_title')}</Title>
+            <Title>하위 목표 학습</Title>
+            <StageBar currentStageIndex={0} />
+
             {getString('label_instruction')}
           </InstructionBox>
           <SubgoalContainer

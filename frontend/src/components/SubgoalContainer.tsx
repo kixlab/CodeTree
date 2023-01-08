@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import SubgoalLabel from './SubgoalLabel'
+import { SubgoalLabel } from './SubgoalLabel'
 import { getString } from '../shared/Localization'
 import { Color } from '../shared/Common'
 import { SubgoalNode } from '../types/subgoalNode'
