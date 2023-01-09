@@ -1,10 +1,10 @@
-name: CD Frontend
+name: CD Frontend Prod
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main]
     paths:
-        - frontend/**
+      - frontend/**
 
 jobs:
   build:
@@ -46,8 +46,8 @@ jobs:
         with:
           args: --acl public-read --delete
         env:
-          AWS_S3_BUCKET: "codetree.com"
+          AWS_S3_BUCKET: 'codetree.com'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: "ap-northeast-2"
-          SOURCE_DIR: "frontend/build"
+          AWS_REGION: 'ap-northeast-2'
+          SOURCE_DIR: 'frontend/build'
