@@ -6,7 +6,6 @@
     "type-check": "tsc --noEmit",
     "start": "yarn build && node -r dotenv/config build/server.js dotenv_config_path=environments/.env.production",
     "start:staging": "yarn build && node -r dotenv/config build/server.js dotenv_config_path=environments/.env.staging",
-    "start:deploy": "yarn build && node -r dotenv/config build/server.js dotenv_config_path=.env",
     "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node -r dotenv/config src/server.ts dotenv_config_path=environments/.env.staging",
     "pm2:restart:staging": "pm2 restart staging",
     "pm2:restart:prod": "pm2 restart prod",

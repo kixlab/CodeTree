@@ -1,12 +1,11 @@
 import bodyParser from 'body-parser'
 import express from 'express'
 import fs from 'fs'
-import http from 'http'
 import https from 'https'
 import { getAlgorithmSuggestionController } from './controller/getAlgorithmSuggestion'
+import { getCodeToCompareController } from './controller/getCodeToCompare'
 import { getHealthController } from './controller/getHealth'
 import { getIdAndGroupController } from './controller/getIdAndGroup'
-import { getCodeToCompareController } from './controller/getCodeToCompare'
 import { getMyProgramCodeController } from './controller/getMyProgramCode'
 import { getMySubgoalsController } from './controller/getMySubgoals'
 import { getNewSubgoalTreeController } from './controller/getNewSubgoalTree'
@@ -64,12 +63,5 @@ app.post('/postParticipantFinished', postParticipantFinishedController)
 app.post('/postPracticeRun', postPracticeRunController)
 app.post('/postPracticeAnswer', postPracticeAnswerController)
 
-if (PORT === 80) {
-  http.createServer(app).listen(80)
-  https.createServer(options, app).listen(443)
-  console.info(`App listening at HTTPS`)
-} else {
-  app.listen(PORT, () => {
-    console.info(`App listening at ${PORT}`)
-  })
-}
+https.createServer(options, app).listen(PORT)
+console.info(`App listening at ${PORT}`)
