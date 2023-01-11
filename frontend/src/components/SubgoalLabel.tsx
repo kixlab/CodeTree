@@ -125,7 +125,7 @@ const Container = styled.div<{
         height: ${distFromParentNode * 74}px;
         position: absolute;
         left: -22px;
-        top: -${distFromParentNode * 74 - 35}px;
+        top: -${distFromParentNode * 74 - 16}px;
         border-left: 2px solid ${Color.Gray30};
         border-bottom: 2px solid ${Color.Gray30};
         z-index: 1;

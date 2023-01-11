@@ -137,7 +137,7 @@ const Bar = styled.div<{ isOnDrag: boolean }>`
       transform: rotate(90deg);
       display: block;
       top: 50%;
-      left: -3px;
+      left: -16px;
       position: absolute;
     }
   `}
