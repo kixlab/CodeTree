@@ -6,4 +6,17 @@ export const CommonCss = css`
       content: '•';
     }
   }
+
+  body {
+    font-size: 18px;
+    line-height: initial;
+  }
+
+  p {
+    margin-bottom: 12px;
+  }
+
+  b {
+    font-weight: bold;
+  }
 `

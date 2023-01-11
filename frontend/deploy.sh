@@ -6,10 +6,8 @@ if [[ $1 != "staging" ]] && [[ $1 != "prod" ]]; then
     exit 0
 fi
 
-./setConfig.sh $1
-
 rm -r ./build
-yarn build
+yarn build:$1
 
 if [ $1 == "staging" ]; then
     yarn firebase use staging

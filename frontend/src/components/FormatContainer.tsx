@@ -23,19 +23,6 @@ const Container = styled.div`
 
   table {
     border: 1px solid ${Color.Gray15};
-    padding: 10px;
-
-    thead {
-      font-weight: bold;
-    }
-
-    tbody {
-      tr {
-        & > td {
-          padding: 0 5px 0 5px;
-        }
-      }
-    }
   }
 
   strong {
